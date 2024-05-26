@@ -1,0 +1,79 @@
+.chart-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%; /* Sesuaikan lebar header dengan kebutuhan */
+    height: 100%; /* Sesuaikan tinggi header dengan kebutuhan */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .header-item {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  /* Atur warna label */
+.mud-label {
+  color: rgb(189, 195, 199); /* Warna latar belakang label 'Mud' */
+}
+
+.gas-label {
+  color: rgb(75, 192, 192); /* Warna latar belakang label 'Gas' */
+}
+
+.torq-label {
+  color: rgb(54, 162, 235); /* Warna latar belakang label 'TORQ' */
+}
+
+.block-position-label {
+  color: rgb(153, 102, 255); /* Warna latar belakang label 'Block Position' */
+}
+
+.header-line {
+  width: 100%;
+  border-top: 3px solid; /* Atur gaya garis, misalnya menjadi garis solid */
+}
+
+  canvas {
+    margin-top: 0px; /* Sesuaikan jarak antara header dan grafik dengan kebutuhan */
+  }
+  
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.legend-item span {
+    margin-left: 5px;
+}
+
+.legend-square {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+#stackedChart {
+  height: 1000px;
+}
+
+.container {
+  grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
+  grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+}
