@@ -34,3 +34,6 @@ Route::get('/homepage', function () {
 Route::get('/coba', function () {
     return view('coba');
 });
+Route::get('/coba', function () {
+    return view('coba');
+});
