@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Well extends Model
 {
+    protected $keyType = 'string';
     protected $fillable = ['id', 'name', 'address', 'latitude', 'longitude', 'placeId'];
+
+    public function place()
+    {
+        return $this->belongsTo(Place::class, 'placeId');
+    }
 }

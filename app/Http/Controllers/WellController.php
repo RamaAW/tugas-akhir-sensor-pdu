@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WellStoreRequest;
+use App\Http\Requests\WellUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Well;
+use Illuminate\Validation\ValidationException;
 
 class WellController extends Controller
 {
@@ -39,29 +42,41 @@ class WellController extends Controller
     /**
      * Store a new well
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\WellStoreRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(WellStoreRequest $request)
     {
-        $well = Well::create($request->all());
-        return response()->json(["message" => "Well Added."], 201);
+        try {
+            $well = Well::create($request->validated());
+            return response()->json(["message" => "Well Added."], 201);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation errors',
+                'errors' => $e->errors(),
+            ], 422);
+        }
     }
 
     /**
-     * Update a well
+     * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\WellUpdateRequest  $request
      * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(WellUpdateRequest $request, $id)
     {
-        if (Well::where('id', $id)->exists()) {
+        try {
             $well = Well::findOrFail($id);
-            $well->update($request->all());
+            $well->update($request->validated());
             return response()->json(["message" => "Well updated successfully."], 200);
-        } else {
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation errors',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
             return response()->json(["message" => "Well not found."], 404);
         }
     }

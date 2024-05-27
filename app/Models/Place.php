@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     protected $fillable = ['id', 'name', 'address', 'latitude', 'longitude', 'companyId'];
+    protected $keyType = 'string';
+
+    public function wells()
+    {
+        return $this->hasMany(Well::class, 'placeId');
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'companyId');
+    }
 }
