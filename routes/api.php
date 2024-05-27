@@ -6,6 +6,8 @@ use App\Http\Controllers\WellController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EmployeeController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('companies', CompanyController::class);
 Route::apiResource('places', PlaceController::class);
 Route::apiResource('wells', WellController::class);
+Route::apiResource('employees', EmployeeController::class);
 Route::apiResource('do-login', LoginController::class);

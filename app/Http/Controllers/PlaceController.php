@@ -83,7 +83,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * Delete a well
+     * Delete a place
      *
      * @param string $id
      * @return \Illuminate\Http\Response

@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    use HasFactory;
+    protected $keyType = 'string';
+    protected $fillable = ['id', 'name', 'email', 'companyId', 'role', 'password'];
+
+    public function companies()
+    {
+        return $this->belongsTo(Company::class, 'companyId');
+    }
 }

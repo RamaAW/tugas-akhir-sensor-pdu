@@ -12,18 +12,18 @@ use Illuminate\Validation\ValidationException;
 class CompanyController extends Controller
 {
     /**
-     * Get all places
+     * Get all companies
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $places = Company::all();
-        return response()->json($places);
+        $company = Company::all();
+        return response()->json($company);
     }
 
     /**
-     * Get a specific place
+     * Get a specific company
      *
      * @param  string  $id
      * @return \Illuminate\Http\Response
@@ -43,7 +43,7 @@ class CompanyController extends Controller
     /**
      * Store a new Company
      *
-     * @param  \App\Http\Requests\WellStoreRequest  $request
+     * @param  \App\Http\Requests\CompanyStoreRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CompanyStoreRequest $request)
@@ -94,10 +94,13 @@ class CompanyController extends Controller
         try {
             $company = Company::findOrFail($id);
 
-            $relatedPlacesCount = $company->place()->where('companyId', $id)->count();
+            $relatedPlacesCount = $company->places()->where('companyId', $id)->count();
 
-            if ($relatedPlacesCount > 0) {
-                return response()->json(['message' => 'Cannot delete this place because there are wells related to another place.'], 409);
+            $relatedEmployeesCount = $company->employees()->where('companyId', $id)->count();
+
+
+            if ($relatedPlacesCount > 0 || $relatedEmployeesCount > 0) {
+                return response()->json(['message' => 'Cannot delete this company because there are places or employees related to another place.'], 409);
             }
 
             $company->delete();

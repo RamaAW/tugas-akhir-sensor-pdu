@@ -10,7 +10,7 @@ class Well extends Model
     protected $keyType = 'string';
     protected $fillable = ['id', 'name', 'address', 'latitude', 'longitude', 'placeId'];
 
-    public function place()
+    public function places()
     {
         return $this->belongsTo(Place::class, 'placeId');
     }

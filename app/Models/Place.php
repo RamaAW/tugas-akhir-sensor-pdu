@@ -14,7 +14,7 @@ class Place extends Model
     {
         return $this->hasMany(Well::class, 'placeId');
     }
-    public function company()
+    public function companies()
     {
         return $this->belongsTo(Company::class, 'companyId');
     }
