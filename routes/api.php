@@ -7,6 +7,8 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +28,6 @@ Route::apiResource('companies', CompanyController::class);
 Route::apiResource('places', PlaceController::class);
 Route::apiResource('wells', WellController::class);
 Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('records', RecordController::class);
+Route::apiResource('notifications', NotificationController::class);
 Route::apiResource('do-login', LoginController::class);

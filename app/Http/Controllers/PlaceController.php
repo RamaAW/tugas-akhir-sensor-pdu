@@ -96,7 +96,7 @@ class PlaceController extends Controller
             $relatedWellsCount = $place->wells()->where('placeId', $id)->count();
 
             if ($relatedWellsCount > 0) {
-                return response()->json(['message' => 'Cannot delete this place because there are wells related to another place.'], 409);
+                return response()->json(['message' => 'Cannot delete this place because there are wells related to this Place.'], 409);
             }
 
             $place->delete();

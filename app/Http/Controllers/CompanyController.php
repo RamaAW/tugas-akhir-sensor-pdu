@@ -99,8 +99,12 @@ class CompanyController extends Controller
             $relatedEmployeesCount = $company->employees()->where('companyId', $id)->count();
 
 
-            if ($relatedPlacesCount > 0 || $relatedEmployeesCount > 0) {
-                return response()->json(['message' => 'Cannot delete this company because there are places or employees related to another place.'], 409);
+            if ($relatedPlacesCount > 0) {
+                return response()->json(['message' => 'Cannot delete this company because there are places related to this Company.'], 409);
+            }
+
+            if ($relatedEmployeesCount > 0) {
+                return response()->json(['message' => 'Cannot delete this company because there are employees related to this Company.'], 409);
             }
 
             $company->delete();

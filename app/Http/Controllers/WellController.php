@@ -6,6 +6,7 @@ use App\Http\Requests\WellStoreRequest;
 use App\Http\Requests\WellUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Well;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 class WellController extends Controller
@@ -89,12 +90,25 @@ class WellController extends Controller
      */
     public function destroy($id)
     {
-        if (Well::where('id', $id)->exists()) {
+        try {
             $well = Well::findOrFail($id);
+
+            $relatedRecordsCount = $well->records()->where('wellId', $id)->count();
+
+            $relatedNotificationsCount = $well->notifications()->where('wellId', $id)->count();
+
+            if ($relatedRecordsCount > 0) {
+                return response()->json(['message' => 'Cannot delete this Well because there are records related to this Well.'], 409);
+            }
+
+            if ($relatedNotificationsCount > 0) {
+                return response()->json(['message' => 'Cannot delete this Well because there are notifications related to this Well.'], 409);
+            }
+
             $well->delete();
-            return response()->json(["message" => "Well with ID $id has been successfully deleted."], 200);
-        } else {
-            return response()->json(["message" => "Well not found."], 404);
+            return response()->json(['message' => "Well with ID $id has been successfully deleted."], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Well not found.'], 404);
         }
     }
 }
