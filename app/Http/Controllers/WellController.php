@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class WellController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Get all wells
      *

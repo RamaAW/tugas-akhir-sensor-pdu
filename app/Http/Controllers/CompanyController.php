@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddEmployeeToCompanyRequest;
+use App\Http\Requests\AddPlaceToCompanyRequest;
 use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Requests\CompanyUpdateRequest;
+use App\Http\Requests\CreatePlaceForCompanyRequest;
 use App\Models\Company;
+use App\Models\Employee;
+use App\Models\Place;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Get all companies
      *
@@ -56,6 +66,31 @@ class CompanyController extends Controller
                 'message' => 'Validation errors',
                 'errors' => $e->errors(),
             ], 422);
+        }
+    }
+
+    /**
+     * Create a new place for the company.
+     *
+     * @param  \App\Http\Requests\CreatePlaceForCompanyRequest  $request
+     * @param  string  $companyId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createPlace(CreatePlaceForCompanyRequest $request, $companyId)
+    {
+        try {
+            $company = Company::findOrFail($companyId);
+
+            // Create a new place associated with this company
+            $placeData = $request->validated();
+            $place = new Place($placeData);
+            $company->places()->save($place);
+
+            return response()->json(["message" => "Place created for company."], 201);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Company not found.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(["message" => "Failed to create place for company."], 500);
         }
     }
 

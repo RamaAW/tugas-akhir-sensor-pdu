@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
+use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Get all employee
      *

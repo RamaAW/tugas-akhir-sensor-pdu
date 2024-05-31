@@ -11,7 +11,7 @@ class NotificationUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class NotificationUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string',
+            'message' => 'required|string',
+            'wellId' => 'required|string|exists:wells,id',
+            'seen' => 'sometimes|boolean',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'The title field is required.',
+            'message.required' => 'The message field is required.',
+            'wellId.required' => 'The wellId field is required.',
+            'wellId.exists' => 'The selected wellId is invalid.',
+            'seen.boolean' => 'The seen field must be true or false.',
         ];
     }
 }

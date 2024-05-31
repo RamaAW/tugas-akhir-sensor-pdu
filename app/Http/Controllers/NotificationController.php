@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationStoreRequest;
+use App\Http\Requests\NotificationUpdateRequest;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('store');
+    }
     /**
      * Get all notifications
      *
@@ -64,21 +69,19 @@ class NotificationController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(NotificationUpdateRequest $request, $id)
     {
         try {
             $notification = Notification::findOrFail($id);
-            $notification->update($request->all());
-            return response()->json(["message" => "Notification Updated."], 200);
+            $notification->update($request->validated());
+            return response()->json(["message" => "Notification updated successfully."], 200);
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Validation errors',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Notification Not Found',
-            ], 404);
+            return response()->json(["message" => "Notification not found."], 404);
         }
     }
 

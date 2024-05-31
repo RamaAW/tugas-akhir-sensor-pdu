@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateWellForPlaceRequest;
 use App\Http\Requests\PlaceStoreRequest;
 use App\Http\Requests\PlaceUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Place;
+use App\Models\Well;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 class PlaceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
     /**
      * Get all places
      *
@@ -56,6 +62,36 @@ class PlaceController extends Controller
                 'message' => 'Validation errors',
                 'errors' => $e->errors(),
             ], 422);
+        }
+    }
+
+    /**
+     * Create a new well for the place.
+     *
+     * @param  \App\Http\Requests\CreateWellForPlaceRequest  $request
+     * @param  string  $companyId
+     * @param  string  $placeId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createWell(CreateWellForPlaceRequest $request, $companyId, $placeId)
+    {
+        try {
+            // Cari tempat (place) berdasarkan placeId yang terkait dengan perusahaan (companyId)
+            $place = Place::where('id', $placeId)
+                ->where('companyId', $companyId)
+                ->firstOrFail();
+
+            // Buat objek well berdasarkan data yang diterima dari request
+            $wellData = $request->validated();
+            $wellData['placeId'] = $placeId; // Tetapkan placeId untuk well
+
+            $well = Well::create($wellData);
+
+            return response()->json(["message" => "Well created for place."], 201);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Place not found.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(["message" => "Failed to create well for place."], 500);
         }
     }
 
