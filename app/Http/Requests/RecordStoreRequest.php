@@ -22,7 +22,6 @@ class RecordStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|unique:records',
             'Date-Time' => 'required|date_format:Y-m-d H:i:s',
             'BitDepth' => 'nullable|numeric',
             'Scfm' => 'nullable|numeric',
@@ -53,8 +52,6 @@ class RecordStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'The id field is required.',
-            'id.unique' => 'The id must be unique.',
             'Date-Time.required' => 'The Date-Time field is required.',
             'Date-Time.date_format' => 'The Date-Time must be in the format Y-m-d H:i:s.',
             'BitDepth.numeric' => 'The BitDepth must be a number.',

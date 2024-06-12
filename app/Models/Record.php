@@ -10,7 +10,6 @@ class Record extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id',
         'Date-Time',
         'BitDepth',
         'Scfm',

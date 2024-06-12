@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('employees', [EmployeeController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('employee/{id}', [EmployeeController::class, 'show'])->middleware('role:user,admin,superAdmin');
     Route::post('employee', [EmployeeController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin,superAdmin');;
+    // Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin,superAdmin');;
 
     //company
     Route::get('companies', [CompanyController::class, 'index'])->middleware('role:user,admin,superAdmin');
@@ -51,6 +51,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('company/{companyId}/place/{placeId}/well', [PlaceController::class, 'createWell'])->middleware('role:admin,superAdmin');
     Route::get('wells', [WellController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('well/{id}', [WellController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('/companies/{companyId}/wells', [WellController::class, 'showByCompanyId'])->middleware('role:user,admin,superAdmin');
+    Route::get('/companies/{companyId}/places/{placeId?}', [WellController::class, 'showByPlaceId'])->middleware('role:user,admin,superAdmin');
 
     //yang sementara tidak dipakai (possible for delete)
     Route::put('employees/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
@@ -65,6 +67,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('records', [RecordController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('records/{id}', [RecordController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('records/well/{wellId}', [RecordController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
     Route::delete('records/{id}', [RecordController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
     Route::post('wells', [WellController::class, 'store'])->middleware('role:admin,superAdmin');

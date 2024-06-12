@@ -34,3 +34,9 @@ Route::get('/homepage', function () {
 Route::get('/coba', function () {
     return view('coba');
 });
+Route::get('/login', function () {
+    return view('login');
+});
+Route::get('/chooseCompany-Well', function () {
+    return view('company-well');
+});

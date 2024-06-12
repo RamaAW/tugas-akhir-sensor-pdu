@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WellStoreRequest;
 use App\Http\Requests\WellUpdateRequest;
+use App\Models\Company;
+use App\Models\Place;
 use Illuminate\Http\Request;
 use App\Models\Well;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -44,6 +46,75 @@ class WellController extends Controller
             ], 404);
         }
     }
+
+    public function showByCompanyId($companyId)
+    {
+        $company = Company::find($companyId);
+
+        if (is_null($company)) {
+            return response()->json([
+                "message" => "Company Not Found"
+            ], 404);
+        }
+        // Retrieve all places associated with the company (without filtering by specific placeId)
+        $places = Place::where('companyId', $companyId)->get();
+
+        // Prepare an empty array to store all wells from all places
+        $allWells = [];
+
+        // Iterate through each place and fetch its associated wells
+        foreach ($places as $place) {
+            $placeWells = Well::where('placeId', $place->id)->get();
+            $allWells = array_merge($allWells, $placeWells->toArray()); // Merge wells from each place into the main array
+        }
+
+        return response()->json($allWells);
+    }
+
+    /**
+     * Get a specific record by Well Id
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showByPlaceId($companyId, $placeId = null)
+    {
+        $company = Company::find($companyId);
+        if (is_null($company)) {
+            return response()->json([
+                "message" => "Company Not Found"
+            ], 404);
+        }
+
+        $places = $company->places()->with('wells'); // Eager load wells
+        if ($placeId) {
+            $place = $places->where('id', $placeId)->first();
+            if (is_null($place)) {
+                return response()->json([
+                    "message" => "Place Not Found"
+                ], 404);
+            }
+        } else {
+            $place = $places->first();
+        }
+
+        if (empty($place)) {
+            return response()->json([
+                "message" => "No places found for this company"
+            ], 404);
+        }
+
+        $wells = $place->wells;
+
+        if (empty($wells)) {
+            return response()->json([
+                "message" => "No wells found for this place"
+            ], 404);
+        }
+
+        return response()->json($wells);
+    }
+
 
     /**
      * Store a new well

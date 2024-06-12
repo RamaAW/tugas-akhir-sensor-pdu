@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RecordStoreRequest;
 use App\Models\Record;
+use App\Models\Well;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Faker\Factory as Faker;
@@ -12,7 +13,7 @@ class RecordController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('store', 'generateDummyRecord');
+        $this->middleware('auth:sanctum')->except('store');
     }
     /**
      * Get all records
@@ -44,6 +45,31 @@ class RecordController extends Controller
     }
 
     /**
+     * Get a specific record by Well Id
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showByWellId($wellId)
+    {
+        $well = Well::find($wellId);
+        if (is_null($well)) {
+            return response()->json([
+                "message" => "Well Not Found"
+            ], 404);
+        }
+
+        $record = Record::where('wellId', $wellId)->get();
+        if (!empty($record)) {
+            return response()->json($record);
+        } else {
+            return response()->json([
+                "message" => "No Records"
+            ], 404);
+        }
+    }
+
+    /**
      * Store a new record
      *
      * @param  \App\Http\Requests\WellStoreRequest  $request
@@ -60,42 +86,6 @@ class RecordController extends Controller
                 'errors' => $e->errors(),
             ], 422);
         }
-    }
-
-    public function generateDummyRecord()
-    {
-        $faker = Faker::create();
-
-        $record = new Record([
-            'Date-Time' => $faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
-            'BitDepth' => $faker->randomFloat(2, 0, 5000),
-            'Scfm' => $faker->randomFloat(2, 0, 100),
-            'MudCondIn' => $faker->randomFloat(2, 0, 10),
-            'BlockPos' => $faker->randomFloat(2, 0, 100),
-            'WOB' => $faker->randomFloat(2, 0, 50),
-            'ROPi' => $faker->randomFloat(2, 0, 100),
-            'BVDepth' => $faker->randomFloat(2, 0, 5000),
-            'MudCondOut' => $faker->randomFloat(2, 0, 10),
-            'Torque' => $faker->randomFloat(2, 0, 100),
-            'RPM' => $faker->randomFloat(2, 0, 200),
-            'Hkld' => $faker->randomFloat(2, 0, 1000),
-            'LogDepth' => $faker->randomFloat(2, 0, 5000),
-            'H2S_1' => $faker->randomFloat(2, 0, 100),
-            'MudFlowOutp' => $faker->randomFloat(2, 0, 1000),
-            'TotSPM' => $faker->randomFloat(2, 0, 200),
-            'SpPress' => $faker->randomFloat(2, 0, 500),
-            'MudFlowIn' => $faker->randomFloat(2, 0, 1000),
-            'CO2_1' => $faker->randomFloat(2, 0, 100),
-            'Gas' => $faker->randomFloat(2, 0, 100),
-            'MudTempIn' => $faker->randomFloat(2, 0, 200),
-            'MudTempOut' => $faker->randomFloat(2, 0, 200),
-            'TankVolTot' => $faker->randomFloat(2, 0, 10000),
-            'WellId' => 'well-001'
-        ]);
-
-        $record->save();
-
-        return response()->json(['message' => 'Dummy record generated successfully', 'data' => $record], 201);
     }
 
     /**
