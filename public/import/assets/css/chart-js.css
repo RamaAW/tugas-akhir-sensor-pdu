@@ -1,50 +1,80 @@
+.chart-container {
+    position: relative;
+    height: 250px;
+}
+
 .chart-header {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%; /* Sesuaikan lebar header dengan kebutuhan */
-    height: 100%; /* Sesuaikan tinggi header dengan kebutuhan */
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.8);
     font-family: Arial, sans-serif;
     font-size: 14px;
+}
+
+.header-item {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.header-number {
+    background-color: #b1b1b1;
+    display: inline-flex;
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .header-item {
-    text-align: center;
-    font-size: 10px;
-  }
-
-  /* Atur warna label */
-.mud-label {
-  color: rgb(189, 195, 199); /* Warna latar belakang label 'Mud' */
-}
-
-.gas-label {
-  color: rgb(75, 192, 192); /* Warna latar belakang label 'Gas' */
-}
-
-.torq-label {
-  color: rgb(54, 162, 235); /* Warna latar belakang label 'TORQ' */
-}
-
-.block-position-label {
-  color: rgb(153, 102, 255); /* Warna latar belakang label 'Block Position' */
 }
 
 .header-line {
-  width: 100%;
-  border-top: 3px solid; /* Atur gaya garis, misalnya menjadi garis solid */
+    width: 100%;
+    border-top: 3px solid;
+    margin: 0px 0; /* Sesuaikan jarak antara teks dan garis */
 }
 
-  canvas {
-    margin-top: 0px; /* Sesuaikan jarak antara header dan grafik dengan kebutuhan */
-  }
-  
+.header-scale {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+    position: relative;
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Color classes for flexibility */
+.blue {
+    color: rgb(0, 0, 255);
+}
+
+.bright-green {
+    color: rgb(50, 205, 50);
+}
+
+.pink {
+    color: rgb(255, 0, 140);
+}
+
+.bright-red {
+    color: rgb(255, 35, 35);
+}
+
+.red {
+    color: rgb(164, 0, 0);
+}
+
+.bright-blue {
+    color: rgb(0, 191, 255);
+}
 .chart-legend {
     display: flex;
     justify-content: center;
@@ -70,10 +100,10 @@
 }
 
 #stackedChart {
-  height: 1000px;
+    height: 1000px;
 }
 
 .container {
-  grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
-  grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+    grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
+    grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
 }

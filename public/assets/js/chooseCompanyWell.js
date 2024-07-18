@@ -91,7 +91,7 @@ $(document).ready(function () {
             var selectedWellId = localStorage.getItem("selectedWellId");
 
             if (selectedCompanyId && selectedWellId) {
-                window.location.href = "/coba";
+                window.location.href = "/homepage-home";
             } else {
                 alert("Please select both a company and a well.");
             }

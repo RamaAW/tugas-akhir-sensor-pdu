@@ -40,12 +40,12 @@
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="email">Email address</label>
-                                            <input type="email" id="email" class="form-control form-control-lg" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
+                                            <input type="email" id="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="password">Password</label>
-                                            <input type="password" id="password" class="form-control form-control-lg" placeholder="Password" />
+                                            <input type="password" id="password" class="form-control" placeholder="Password" />
                                         </div>
 
                                         <div class="pt-1 mb-4">

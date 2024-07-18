@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PlaceController;
-use App\Http\Controllers\WellController;
+use App\Livewire\About;
+use App\Livewire\Records\Chart;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -17,26 +17,25 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::view('real-time-chart', 'charts.realTime-Chart');
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/chart-js', function () {
-    return view('chart-js');
-});
-Route::get('/homepage', function () {
-    return view('homepage');
-});
-Route::get('/coba', function () {
-    return view('coba');
-});
 Route::get('/login', function () {
     return view('login');
 });
+
 Route::get('/chooseCompany-Well', function () {
     return view('company-well');
 });
+
+Route::get('/homepage', function () {
+    return view('homepage');
+});
+
+Route::get('/homepage-home', function () {
+    return view('homepage-backup');
+});
+
+Route::get('/coba', function () {
+    return view('coba');
+});
+
+#Livewire
+Route::get('/records', Chart::class)->name('records.chart');
