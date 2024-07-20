@@ -44,69 +44,36 @@ $(document).ready(function () {
             });
         }
 
-        function fetchDataRecords(wellId) {
-            $.ajax({
-                url: `http://project-akhir.test/api/records/well/${wellId}`,
-                method: "GET",
-                dataType: "json",
-                headers: {
-                    Authorization: "Bearer " + authToken,
-                },
-                success: function (data) {
-                    if (Array.isArray(data) && data.length > 0) {
-                        const latestData = data[data.length - 1];
-                        $("#bitDepth, .bitDepth").text(latestData.BitDepth);
-                        $("#scfm, .scfm").text(latestData.Scfm);
-                        $("#mudCondIn, .mudCondIn").text(latestData.MudCondIn);
-                        $("#blockPos, .blockPos").text(latestData.BlockPos);
-                        $("#wob, .wob").text(latestData.WOB);
-                        $("#rop, .rop").text(latestData.ROPi);
-                        $("#bvDepth, .bvDepth").text(latestData.BVDepth);
-                        $("#mudCondOut, .mudCondOut").text(
-                            latestData.MudCondOut
-                        );
-                        $("#torque, .torque").text(latestData.Torque);
-                        $("#rpm, .rpm").text(latestData.RPM);
-                        $("#hkld, .hkld").text(latestData.Hkld);
-                        $("#logDepth, .logDepth").text(latestData.LogDepth);
-                        $("#h2s1, .h2s1").text(latestData.H2S_1);
-                        $("#mudFlowOutp, .mudFlowOutp").text(
-                            latestData.MudFlowOutp
-                        );
-                        $("#totSPM, .totSPM").text(latestData.TotSPM);
-                        $("#spPress, .spPress").text(latestData.SpPress);
-                        $("#mudFlowIn, .mudFlowIn").text(latestData.MudFlowIn);
-                        $("#co21, .co21").text(latestData.CO2_1);
-                        $("#gas, .gas").text(latestData.Gas);
-                        $("#mudTempIn, .mudTempIn").text(latestData.MudTempIn);
-                        $("#mudTempOut, .mudTempOut").text(
-                            latestData.MudTempOut
-                        );
-                        $("#tankVolTot, .tankVolTot").text(
-                            latestData.TankVolTot
-                        );
+        function updateUI(data) {
+            if (Array.isArray(data) && data.length > 0) {
+                const latestData = data[data.length - 1];
+                $("#bitDepth, .bitDepth").text(latestData.BitDepth);
+                $("#scfm, .scfm").text(latestData.Scfm);
+                $("#mudCondIn, .mudCondIn").text(latestData.MudCondIn);
+                $("#blockPos, .blockPos").text(latestData.BlockPos);
+                $("#wob, .wob").text(latestData.WOB);
+                $("#rop, .rop").text(latestData.ROPi);
+                $("#bvDepth, .bvDepth").text(latestData.BVDepth);
+                $("#mudCondOut, .mudCondOut").text(latestData.MudCondOut);
+                $("#torque, .torque").text(latestData.Torque);
+                $("#rpm, .rpm").text(latestData.RPM);
+                $("#hkld, .hkld").text(latestData.Hkld);
+                $("#logDepth, .logDepth").text(latestData.LogDepth);
+                $("#h2s1, .h2s1").text(latestData.H2S_1);
+                $("#mudFlowOutp, .mudFlowOutp").text(latestData.MudFlowOutp);
+                $("#totSPM, .totSPM").text(latestData.TotSPM);
+                $("#spPress, .spPress").text(latestData.SpPress);
+                $("#mudFlowIn, .mudFlowIn").text(latestData.MudFlowIn);
+                $("#co21, .co21").text(latestData.CO2_1);
+                $("#gas, .gas").text(latestData.Gas);
+                $("#mudTempIn, .mudTempIn").text(latestData.MudTempIn);
+                $("#mudTempOut, .mudTempOut").text(latestData.MudTempOut);
+                $("#tankVolTot, .tankVolTot").text(latestData.TankVolTot);
 
-                        $("#wellDetails").text(latestData.WellId);
+                $("#wellDetails").text(latestData.WellId);
 
-                        updateCharts(data);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data:", error);
-                },
-            });
-        }
-
-        function startAutoUpdate(wellId) {
-            if (updateInterval) {
-                clearInterval(updateInterval);
+                updateCharts(data);
             }
-
-            fetchDataRecords(wellId);
-
-            updateInterval = setInterval(function () {
-                fetchDataRecords(wellId);
-            }, 5000);
         }
 
         function updateCharts(data) {
@@ -215,8 +182,62 @@ $(document).ready(function () {
             myChart4.update();
         }
 
+        function fetchInitialData(wellId) {
+            $.ajax({
+                url: `http://project-akhir.test/api/records/well/${wellId}`,
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                success: function (data) {
+                    updateUI(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching initial data:", error);
+                    alert(
+                        "Failed to fetch initial data. Please try again later."
+                    );
+                },
+            });
+        }
         fetchCompaniesDetails(selectedCompanyId);
         fetchWellDetails(selectedWellId);
-        startAutoUpdate(selectedWellId);
+        fetchInitialData(selectedWellId);
+
+        const socket = new WebSocket(
+            `ws://project-akhir.test:6001/app/61d055de2a7a9f7b1f0d`
+        );
+
+        socket.onopen = function (e) {
+            console.log("WebSocket connection established");
+            socket.send(
+                JSON.stringify({
+                    event: "pusher:subscribe",
+                    data: { channel: `well.${selectedWellId}` },
+                })
+            );
+        };
+
+        socket.onmessage = function (event) {
+            const response = JSON.parse(event.data);
+            if (response.event === "WellDataUpdated") {
+                const wellData = JSON.parse(response.data);
+                updateUI(wellData);
+            }
+        };
+
+        socket.onerror = function (error) {
+            console.error(`WebSocket Error: ${error}`);
+        };
+
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                console.log(
+                    `WebSocket connection closed cleanly, code=${event.code}, reason=${event.reason}`
+                );
+            } else {
+                console.error("WebSocket connection died");
+            }
+        };
     }
 });

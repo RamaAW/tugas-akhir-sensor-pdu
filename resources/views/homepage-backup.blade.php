@@ -12,19 +12,29 @@
     <title>DOME STUDIO</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{asset('import/assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('import/assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('import/assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('import/assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-    <link href="{{asset('import/assets/css/chart-js.css')}}" rel="stylesheet">
+
+    <!-- Chart.js Plugin for Zoom -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for charts -->
+    <link href="{{ asset('import/assets/css/chart-js.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@latest/dist/echo.iife.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
     <style>
         .card {
             flex: 1;
@@ -50,11 +60,12 @@
 
         .value-box {
             width: 100px;
-            background-color: black;
+            background-color: #2b2b2b;
             color: white;
             border-radius: 5px;
             text-align: center;
             padding: 2px 2px;
+            font-weight: bold;
         }
 
         .unit-text {
@@ -105,8 +116,15 @@
                             <span style="font-size: 16px;">
                                 <span>Company Name </span><strong id="companyDetails" style="color:red"></strong>
                             </span>
+                            <!-- <form class="user" id="wellForm">
+                                <span class="form-group">
+                                    <select class="form-control" id="wellSelect" disabled required>
+                                        <option value=""></option>
+                                    </select>
+                                </span>
+                            </form> -->
                             <span style="font-size: 16px; margin-left: 30px;">
-                                <span>Well Name </span><strong id="wellDetails" style="color:red"></strong>
+                                <span>Well Name </span><strong id="wellDetails" style="color:red" data-company-id="" data-well-id="">Select Well</strong>
                             </span>
                             <span style="font-size: 16px; margin-left: 30px;">
                                 <span>Rig Name</span><strong id="rigName" style="color:red"></strong>
@@ -127,7 +145,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="{{ asset('import/assets/img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -315,21 +333,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- INSIDE THE BOX -->
-                            <!-- <div class="row border p-1 mb-1 align-items-center">
-                                    <div class="col-6 text-start ps-0">Mud Cond In</div>
-                                    <div class="col-6 d-flex justify-content-between align-items-center">
-                                        <span class="value-box">2.5<span class="unit-text">scfm</span></span>
-                                    </div>
-                                </div>
-                                <div class="row border p-1 mb-1 align-items-center">
-                                    <div class="col-6 text-start ps-0">Block Pos</div>
-                                    <div class="col-6 d-flex justify-content-between align-items-center">
-                                        <span class="value-box">10<span class="unit-text">m</span></span>
-                                    </div>
-                                </div>
-                                 -->
                         </div>
                     </div>
 
@@ -820,14 +823,16 @@
                                                 intersect: true,
                                             },
                                             zoom: {
-                                                pan: {
+                                                wheel: {
                                                     enabled: true,
-                                                    mode: 'x',
                                                 },
-                                                zoom: {
+                                                drag: {
                                                     enabled: true,
-                                                    mode: 'x',
-                                                }
+                                                },
+                                                pinch: {
+                                                    enabled: true,
+                                                },
+                                                mode: 'x',
                                             }
                                         },
                                     }
@@ -866,14 +871,16 @@
                                                 intersect: true,
                                             },
                                             zoom: {
-                                                pan: {
+                                                wheel: {
                                                     enabled: true,
-                                                    mode: 'x',
                                                 },
-                                                zoom: {
+                                                drag: {
                                                     enabled: true,
-                                                    mode: 'x',
-                                                }
+                                                },
+                                                pinch: {
+                                                    enabled: true,
+                                                },
+                                                mode: 'x',
                                             }
                                         },
                                     }
@@ -912,14 +919,16 @@
                                                 intersect: true,
                                             },
                                             zoom: {
-                                                pan: {
+                                                wheel: {
                                                     enabled: true,
-                                                    mode: 'x',
                                                 },
-                                                zoom: {
+                                                drag: {
                                                     enabled: true,
-                                                    mode: 'x',
-                                                }
+                                                },
+                                                pinch: {
+                                                    enabled: true,
+                                                },
+                                                mode: 'x',
                                             }
                                         },
                                     }
@@ -958,14 +967,16 @@
                                                 intersect: true,
                                             },
                                             zoom: {
-                                                pan: {
+                                                wheel: {
                                                     enabled: true,
-                                                    mode: 'x',
                                                 },
-                                                zoom: {
+                                                drag: {
                                                     enabled: true,
-                                                    mode: 'x',
-                                                }
+                                                },
+                                                pinch: {
+                                                    enabled: true,
+                                                },
+                                                mode: 'x',
                                             }
                                         },
                                     }
@@ -1066,12 +1077,29 @@
         <!-- Page level custom scripts -->
         <script src="{{asset('import/assets/js/demo/chart-area-demo.js')}}"></script>
         <script src="{{asset('import/assets/js/demo/chart-pie-demo.js')}}"></script>
-        <script src="{{asset('assets/js/record.js')}}"></script>
+        <script type="module" src="{{asset('assets/js/record.js')}}"></script>
+        <script src="{{asset('assets/js/chooseWell.js')}}"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
 </html>
+
+
+<!-- INSIDE THE BOX -->
+<!-- <div class="row border p-1 mb-1 align-items-center">
+                                    <div class="col-6 text-start ps-0">Mud Cond In</div>
+                                    <div class="col-6 d-flex justify-content-between align-items-center">
+                                        <span class="value-box">2.5<span class="unit-text">scfm</span></span>
+                                    </div>
+                                </div>
+                                <div class="row border p-1 mb-1 align-items-center">
+                                    <div class="col-6 text-start ps-0">Block Pos</div>
+                                    <div class="col-6 d-flex justify-content-between align-items-center">
+                                        <span class="value-box">10<span class="unit-text">m</span></span>
+                                    </div>
+                                </div>
+                                 -->
 
 <!-- // window.setInterval(mycallback, 5000); -->
 

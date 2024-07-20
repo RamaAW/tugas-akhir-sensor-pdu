@@ -105,3 +105,18 @@ class RecordController extends Controller
         }
     }
 }
+
+// WEBSOCKETS STORE
+// public function store(RecordStoreRequest $request)
+// {
+//     try {
+//         $record = Record::create($request->validated());
+//         event(new WellDataUpdated($record->WellId, $record->toArray()));
+//         return response()->json(["message" => "Record Added."], 201);
+//     } catch (ValidationException $e) {
+//         return response()->json([
+//             'message' => 'Validation errors',
+//             'errors' => $e->errors(),
+//         ], 422);
+//     }
+// }
