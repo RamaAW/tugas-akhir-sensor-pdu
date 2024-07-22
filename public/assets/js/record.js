@@ -6,7 +6,7 @@ $(document).ready(function () {
     console.log("au:", authToken);
     console.log("comp:", selectedCompanyId);
     console.log("well:", selectedWellId);
-    if (!selectedCompanyId || !selectedWellId) {
+    if (!authToken || !selectedCompanyId || !selectedWellId) {
         window.location.href = "/chooseCompany-Well";
     } else {
         // Function to fetch companies
@@ -35,7 +35,7 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (data) {
-                    $("#wellDetails").html(data.name);
+                    $("#wellName").html(data.name);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching companies:", error);
@@ -106,7 +106,7 @@ $(document).ready(function () {
 
             updateInterval = setInterval(function () {
                 fetchDataRecords(wellId);
-            }, 5000);
+            }, 3000);
         }
 
         function updateCharts(data) {

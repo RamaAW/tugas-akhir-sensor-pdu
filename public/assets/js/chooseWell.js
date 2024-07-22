@@ -15,18 +15,31 @@ $(document).ready(function () {
                 Authorization: "Bearer " + authToken,
             },
             success: function (wellData) {
-                var wellOptions =
-                    `<option value="">` + wellData.name + `</option>`;
+                var wellOptions = "";
                 wellData.forEach(function (well) {
                     wellOptions +=
-                        '<option value="' +
+                        '<a class="dropdown-item" href="#" data-well-id="' +
                         well.id +
+                        '" data-well-name="' +
+                        well.name +
                         '">' +
                         well.name +
-                        "</option>";
+                        "</a>";
                 });
-                $("#wellSelect").html(wellOptions).prop("disabled", false);
-                $("#wellForm").show();
+                $("#wellDropdownMenu").html(wellOptions);
+                if (selectedWellId) {
+                    var selectedWellName = $(
+                        "#wellDropdownMenu a[data-well-id='" +
+                            selectedWellId +
+                            "']"
+                    ).data("well-name");
+                    $("#wellName")
+                        .text(selectedWellName)
+                        .attr("data-well-id", selectedWellId);
+                } else {
+                    $("#wellName").text("Select Well").attr("data-well-id", "");
+                }
+                $("#wellName").dropdown("update");
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching wells:", error);
@@ -42,24 +55,12 @@ $(document).ready(function () {
     }
 
     // Handle click on well details to select a well
-    $(document).on("change", "#wellSelect", function () {
-        var wellId = $(this).val();
-        var wellName = $(this).find("option:selected").text();
-        $("#wellDetails").text(wellName).attr("data-well-id", wellId);
-        $("#wellDetails").attr("data-company-id", selectedCompanyId);
+    $(document).on("click", "#wellDropdownMenu .dropdown-item", function () {
+        var wellId = $(this).data("well-id");
+        var wellName = $(this).text();
+        $("#wellName").text(wellName).attr("data-well-id", wellId);
         localStorage.setItem("selectedWellId", wellId);
-        $("#submitSelection").prop("disabled", false);
+        localStorage.setItem("selectedWellName", wellName);
+        location.reload(); // Reload the page
     });
-
-    // Redirect to homepage if both selections are made
-    $("#submitSelection").click(function () {
-        var selectedWellId = localStorage.getItem("selectedWellId");
-
-        if (selectedCompanyId && selectedWellId) {
-            window.location.href = "/homepage-home";
-        } else {
-            alert("Please select both a company and a well.");
-        }
-    });
-    fetchWellsByCompany(selectedCompanyId);
 });

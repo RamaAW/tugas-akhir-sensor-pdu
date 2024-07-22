@@ -34,6 +34,7 @@
     <link href="{{ asset('import/assets/css/chart-js.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/laravel-echo@latest/dist/echo.iife.js"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 
     <style>
         .card {
@@ -116,16 +117,17 @@
                             <span style="font-size: 16px;">
                                 <span>Company Name </span><strong id="companyDetails" style="color:red"></strong>
                             </span>
-                            <!-- <form class="user" id="wellForm">
-                                <span class="form-group">
-                                    <select class="form-control" id="wellSelect" disabled required>
-                                        <option value=""></option>
-                                    </select>
+                            <div class="dropdown">
+                                <span style="font-size: 16px; margin-left: 30px;">
+                                    <span>Well Name </span>
+                                    <a class="dropdown-toggle" id="wellName" style="color:red; font-weight:bold" data-toggle="dropdown" href="#">
+                                        Select Well
+                                    </a>
+                                    <div class="dropdown-menu" id="wellDropdownMenu">
+                                        <!-- Well options will be populated here -->
+                                    </div>
                                 </span>
-                            </form> -->
-                            <span style="font-size: 16px; margin-left: 30px;">
-                                <span>Well Name </span><strong id="wellDetails" style="color:red" data-company-id="" data-well-id="">Select Well</strong>
-                            </span>
+                            </div>
                             <span style="font-size: 16px; margin-left: 30px;">
                                 <span>Rig Name</span><strong id="rigName" style="color:red"></strong>
                             </span>
@@ -169,6 +171,26 @@
                             </div>
                         </li>
                     </ul>
+                    <!-- Logout Modal -->
+                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to log out?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary logout-btn">Logout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
@@ -1079,6 +1101,7 @@
         <script src="{{asset('import/assets/js/demo/chart-pie-demo.js')}}"></script>
         <script type="module" src="{{asset('assets/js/record.js')}}"></script>
         <script src="{{asset('assets/js/chooseWell.js')}}"></script>
+        <script src="{{asset('assets/js/logout.js')}}"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 </body>

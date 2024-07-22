@@ -26,6 +26,7 @@ class EmployeeAuthController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+        $employee->tokens()->delete();
 
         $token = $employee->createToken('authToken', [
             'id' => $employee->id,
