@@ -14,6 +14,47 @@
         <!-- Main Content -->
         <div id="content">
             @include('layouts.nav')
+            <div class="d-flex text-center p-1 pt-0" style="margin: 5px;">
+                <form>
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <input type="date" class="form-control d-inline" id="input1" placeholder="Input 1" style="width: 212px;">
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="me-2">
+                                <label for="timeStart" class="form-label" style="font-weight: bold;">Start Time</label>
+                                <input type="time" class="form-control d-inline" id="timeStart" style="width: 212px;">
+                            </div>
+                            <div class="me-2">
+                                <label for="timeEnd" class="form-label" style="font-weight: bold;">End Time</label>
+                                <input type="time" class="form-control d-inline" id="timeEnd" style="width: 212px;">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="validateTimes()">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <script>
+                function validateTimes() {
+                    // Ambil nilai input waktu
+                    const timeStart = document.getElementById('timeStart').value;
+                    const timeEnd = document.getElementById('timeEnd').value;
+
+                    // Periksa apakah kedua input waktu diisi
+                    if (!timeStart || !timeEnd) {
+                        alert('Please select both start time and end time.');
+                        return;
+                    }
+
+                    // Bandingkan waktu mulai dan waktu akhir
+                    if (timeEnd < timeStart) {
+                        alert('End time cannot be earlier than start time.');
+                    } else {
+                        alert('Times are valid.');
+                        // Lakukan tindakan lain jika validasi berhasil
+                    }
+                }
+            </script>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="d-flex text-center p-1 pt-0">
