@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Livewire\About;
-use App\Livewire\Records\Chart;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -17,25 +15,41 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Auth::routes();
+
 Route::get('/login', function () {
-    return view('login');
-});
+    return view('page.login');
+})->name('login')->middleware('checkToken');
 
 Route::get('/chooseCompany-Well', function () {
-    return view('company-well');
+    return view('page.dashboard-user.company-well');
+});
+
+Route::get('/dashboard', function () {
+    return view('page.dashboard-user.homepage-backup');
 });
 
 Route::get('/homepage', function () {
-    return view('homepage');
+    return view('page.dashboard-user.homepage');
 });
 
-Route::get('/homepage-home', function () {
-    return view('homepage-backup');
-});
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('page.dashboard-admin.company.getCompany');
+    });
+    Route::get('/addCompany', function () {
+        return view('page.dashboard-admin.company.addCompany');
+    });
+    Route::get('/editCompany', function () {
+        return view('page.dashboard-admin.company.editCompany');
+    });
 
-Route::get('/coba', function () {
-    return view('coba');
+    Route::get('/employee', function () {
+        return view('page.dashboard-admin.employee.getEmployee');
+    });
+    Route::get('/addEmployee', function () {
+        return view('page.dashboard-admin.employee.addEmployee');
+    });
+    Route::get('/editEmployee', function () {
+        return view('page.dashboard-admin.employee.editEmployee');
+    });
 });
-
-#Livewire
-Route::get('/records', Chart::class)->name('records.chart');

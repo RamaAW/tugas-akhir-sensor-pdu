@@ -9114,7 +9114,7 @@ a:focus {
 }
 .bg-gradient-primary {
     background-color: #4e73df;
-    background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    background-image: linear-gradient(180deg, #ffffff 10%, #ffffff 100%);
     background-size: cover;
 }
 .bg-gradient-secondary {
@@ -9668,7 +9668,7 @@ a:focus {
     }
     .sidebar.toggled {
         overflow: visible;
-        width: 2.5rem !important;
+        width: 4rem !important;
     }
     .sidebar.toggled .nav-item .collapse {
         position: absolute;

@@ -36,6 +36,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 
     <style>
+        .bg-grey {
+            background-color: #b62d3a;
+        }
+
+        /* rgb(54 54 105) */
+
+        .item-divider {
+            margin: 0;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .sidebar .nav-item.active a,
+        .sidebar .nav-item a:active,
+        .sidebar .nav-item a:focus,
+        .sidebar .nav-item a:hover {
+            background-color: white !important;
+            color: black
+        }
+
+        .sidebar .nav-item a {
+            color: white;
+            /* Default color */
+            transition: color 0.3s ease;
+            /* Smooth transition for color change */
+        }
+
         .card {
             flex: 1;
             margin: 0 5px;
@@ -74,6 +101,28 @@
 
 <body id="page-top">
     @yield('content')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebarItems = document.querySelectorAll('#accordionSidebar .nav-item');
+
+            sidebarItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    sidebarItems.forEach(function(i) {
+                        i.classList.remove('active');
+                    });
+
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+
+                // Check if the current page matches the link's href
+                if (item.querySelector('a').getAttribute('href') === window.location.pathname) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

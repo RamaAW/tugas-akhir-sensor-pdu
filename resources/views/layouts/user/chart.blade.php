@@ -283,40 +283,40 @@
                         data: [],
                         borderColor: 'rgb(0, 0, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Mud Conduct In',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Block Position',
                         data: [],
                         borderColor: 'rgb(255, 0, 140)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'WOB',
                         data: [],
                         borderColor: 'rgb(164, 0, 0)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'ROP',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     }
                 ]
             };

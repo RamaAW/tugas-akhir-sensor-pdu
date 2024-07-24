@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-2 static-top shadow">
+<nav class="navbar navbar-expand navbar-light bg-grey topbar mb-2 static-top shadow">
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
@@ -7,13 +7,13 @@
     <!-- Topbar Search -->
     <div class="d-none d-sm-inline-block mr-auto my-2 my-md-0 mw-100">
         <div class="d-flex">
-            <span style="font-size: 16px;">
-                <span>Company Name </span><strong id="companyDetails" style="color:red"></strong>
+            <span style="font-size: 16px; font-weight:bold">
+                <span style="color:white;">Company Name: </span><strong id="companyDetails" style="color:yellow"></strong>
             </span>
             <div class="dropdown">
-                <span style="font-size: 16px; margin-left: 30px;">
-                    <span>Well Name </span>
-                    <a class="dropdown-toggle" id="wellName" style="color:red; font-weight:bold" data-toggle="dropdown" href="#">
+                <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
+                    <span style="color:white;">Well Name: </span>
+                    <a class="dropdown-toggle" id="wellName" style="color:yellow;" data-toggle="dropdown" href="#">
                         Select Well
                     </a>
                     <div class="dropdown-menu" id="wellDropdownMenu">
@@ -21,14 +21,14 @@
                     </div>
                 </span>
             </div>
-            <span style="font-size: 16px; margin-left: 30px;">
-                <span>Rig Name</span><strong id="rigName" style="color:red"></strong>
+            <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
+                <span style="color:white;">Rig Name: </span><strong id="rigName" style="color:yellow"></strong>
             </span>
-            <span style="font-size: 16px; margin-left: 30px;">
-                <span>Rig Activity </span><strong id="rigActivity" style="color:red"></strong>
+            <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
+                <span style="color:white;">Rig Activity: </span><strong id="rigActivity" style="color:yellow"></strong>
             </span>
-            <span style="font-size: 16px; margin-left: 30px;">
-                <span>Date Time </span><strong id="dateTime" style="color:red"></strong>
+            <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
+                <span style="color:white;">Date Time: </span><strong id="dateTime" style="color:yellow"></strong>
             </span>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <span class="mr-2 d-none d-lg-inline text-white-600 small">Douglas McGee</span>
                 <img class="img-profile rounded-circle" src="{{ asset('import/assets/img/undraw_profile.svg') }}">
             </a>
             <!-- Dropdown - User Information -->
@@ -47,14 +47,6 @@
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

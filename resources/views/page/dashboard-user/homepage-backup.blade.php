@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('title', 'History of Well')
 
@@ -6,28 +6,28 @@
 
 <div id="wrapper" class="font-custom">
     <!-- Sidebar -->
-    @include('layouts.sidebar')
+    @include('layouts.user.sidebar')
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
         <div id="content">
-            @include('layouts.nav')
+            @include('layouts.user.nav')
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="d-flex text-center p-1 pt-0">
                 <!-- Content-1 -->
-                @include('layouts.side-content')
+                @include('layouts.user.side-content')
                 <!-- Content-2 -->
                 <!-- Header -->
-                @include('layouts.chart')
+                @include('layouts.user.chart')
             </div>
 
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('layouts.footer')
+            @include('layouts.user.footer')
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->

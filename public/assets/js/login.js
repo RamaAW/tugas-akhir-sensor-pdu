@@ -1,9 +1,21 @@
 $(document).ready(function () {
+    // Check if a token exists in local storage when the page loads
+    var token = localStorage.getItem("authToken");
+    if (token) {
+        window.location.href = "/dashboard";
+        return; // Exit the function if token exists
+    }
     $("#loginForm").on("submit", function (e) {
         e.preventDefault();
 
         const email = $("#email").val();
         const password = $("#password").val();
+
+        // Validate input fields
+        if (!email || !password) {
+            alert("Email and password must be filled out.");
+            return;
+        }
 
         $.ajax({
             url: "http://project-akhir.test/api/login",

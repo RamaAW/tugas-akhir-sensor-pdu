@@ -26,7 +26,6 @@ class EmployeeAuthController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-        $employee->tokens()->delete();
 
         $token = $employee->createToken('authToken', [
             'id' => $employee->id,
@@ -44,7 +43,7 @@ class EmployeeAuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Successfully logged out.']);
     }

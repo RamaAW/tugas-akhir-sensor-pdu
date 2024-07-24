@@ -55,8 +55,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/companies/{companyId}/places/{placeId?}', [WellController::class, 'showByPlaceId'])->middleware('role:user,admin,superAdmin');
 
     //yang sementara tidak dipakai (possible for delete)
-    Route::put('employees/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('employees/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
     Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin,superAdmin');
     Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:superAdmin');

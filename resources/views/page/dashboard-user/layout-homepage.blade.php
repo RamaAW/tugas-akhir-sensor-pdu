@@ -87,7 +87,7 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
             <li class="nav-item">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="homepage-home">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
                     <i class="fas fa-laugh-wink"></i>
                 </a>
             </li>
