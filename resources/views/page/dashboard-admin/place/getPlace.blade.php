@@ -15,7 +15,7 @@
             <div class="container mt-5 mb-5">
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <div class="mb-3">
-                    <a href="{{ url('/admin/addPlace') }}" class="btn btn-primary">Add Place</a>
+                    <a href="{{ url('/admin/place/add') }}" class="btn btn-primary">Add Place</a>
                 </div>
                 <div class="table-responsive">
                     <table id="placeTable" class="table table-striped table-bordered">

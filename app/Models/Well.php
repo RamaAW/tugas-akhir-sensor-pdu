@@ -20,6 +20,11 @@ class Well extends Model
         return $this->hasMany(Record::class, 'wellId');
     }
 
+    public function rigs()
+    {
+        return $this->hasMany(Rig::class, 'wellId');
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'wellId');

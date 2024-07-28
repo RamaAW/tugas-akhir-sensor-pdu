@@ -10,6 +10,7 @@ use App\Http\Controllers\EmployeeAuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\RigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,16 +37,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('employee/{id}', [EmployeeController::class, 'show'])->middleware('role:user,admin,superAdmin');
     Route::post('employee', [EmployeeController::class, 'store'])->middleware('role:admin,superAdmin');
     // Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin,superAdmin');;
+    Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
     //company
     Route::get('companies', [CompanyController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('company/{id}', [CompanyController::class, 'show'])->middleware('role:user,admin,superAdmin');
     Route::post('company', [CompanyController::class, 'store'])->middleware('role:superAdmin');
+    Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:superAdmin');
 
     //place
     Route::post('company/{companyId}/place', [CompanyController::class, 'createPlace'])->middleware('role:admin,superAdmin');
     Route::get('places', [PlaceController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('place/{id}', [PlaceController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::post('places', [PlaceController::class, 'store'])->middleware('role:admin,superAdmin');
+    Route::put('place/{id}', [PlaceController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('place/{id}', [PlaceController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
     //well
     Route::post('company/{companyId}/place/{placeId}/well', [PlaceController::class, 'createWell'])->middleware('role:admin,superAdmin');
@@ -54,26 +62,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/companies/{companyId}/wells', [WellController::class, 'showByCompanyId'])->middleware('role:user,admin,superAdmin');
     Route::get('/companies/{companyId}/places/{placeId?}', [WellController::class, 'showByPlaceId'])->middleware('role:user,admin,superAdmin');
 
-    //yang sementara tidak dipakai (possible for delete)
-    Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::post('wells', [WellController::class, 'store'])->middleware('role:admin,superAdmin');
+    Route::put('well/{id}', [WellController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('well/{id}', [WellController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
-    Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:superAdmin');
+    //rig
+    Route::post('rig', [RigController::class, 'store'])->middleware('role:admin,superAdmin');
+    Route::get('rigs', [RigController::class, 'index'])->middleware('role:user,admin,superAdmin');
+    Route::get('rig/{id}', [RigController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::put('rig/{id}', [RigController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('rig/{id}', [RigController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
-    Route::post('places', [PlaceController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::put('place/{id}', [PlaceController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('place/{id}', [PlaceController::class, 'destroy'])->middleware('role:admin,superAdmin');
-
+    //record
     Route::get('records', [RecordController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('records/{id}', [RecordController::class, 'show'])->middleware('role:user,admin,superAdmin');
     Route::get('records/well/{wellId}', [RecordController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
     Route::delete('records/{id}', [RecordController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
-    Route::post('wells', [WellController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::put('well/{id}', [WellController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('well/{id}', [WellController::class, 'destroy'])->middleware('role:admin,superAdmin');
-
+    //notification
     Route::get('notifications', [NotificationController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('notifications/{id}', [NotificationController::class, 'show'])->middleware('role:user,admin,superAdmin');
     Route::put('notifications/{id}', [NotificationController::class, 'update'])->middleware('role:admin,superAdmin');

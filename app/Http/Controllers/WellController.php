@@ -182,15 +182,23 @@ class WellController extends Controller
             $well = Well::findOrFail($id);
 
             $relatedRecordsCount = $well->records()->where('wellId', $id)->count();
-
+            $relatedRigsCount = $well->rigs()->where('wellId', $id)->count();
             $relatedNotificationsCount = $well->notifications()->where('wellId', $id)->count();
 
+            $messages = [];
+
             if ($relatedRecordsCount > 0) {
-                return response()->json(['message' => 'Cannot delete this Well because there are records related to this Well.'], 409);
+                $messages[] = 'Cannot delete this Well because there are RECORDS related to this Well.';
+            }
+            if ($relatedRigsCount > 0) {
+                $messages[] = 'Cannot delete this Well because there are RIGS related to this Well.';
+            }
+            if ($relatedNotificationsCount > 0) {
+                $messages[] = 'Cannot delete this Well because there are NOTIFICATIONS related to this Well.';
             }
 
-            if ($relatedNotificationsCount > 0) {
-                return response()->json(['message' => 'Cannot delete this Well because there are notifications related to this Well.'], 409);
+            if (!empty($messages)) {
+                return response()->json(['messages' => $messages], 409);
             }
 
             $well->delete();

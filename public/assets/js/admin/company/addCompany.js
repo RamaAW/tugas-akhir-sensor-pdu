@@ -20,7 +20,7 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (data) {
-                    window.location.href = "/admin/dashboard";
+                    window.location.href = "/admin/company";
                     console.log("Company Registered:", data);
                     // Handle success
                 },

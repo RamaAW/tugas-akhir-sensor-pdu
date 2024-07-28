@@ -43,7 +43,7 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         console.log("Company Updated:", data);
-                        window.location.href = "/admin/dashboard";
+                        window.location.href = "/admin/company";
                     },
                     error: function (error) {
                         console.error("Error updating company:", error);
@@ -52,7 +52,7 @@ $(document).ready(function () {
             });
         } else {
             console.error("Company ID not found in URL.");
-            window.location.href = "/admin/dashboard";
+            window.location.href = "/admin/company";
         }
     }
 });

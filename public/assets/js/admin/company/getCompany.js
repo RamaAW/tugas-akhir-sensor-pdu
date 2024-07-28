@@ -6,9 +6,15 @@ $(document).ready(function () {
     } else {
         function displayErrors(errors) {
             var errorMessages = "";
-            for (var key in errors) {
-                if (errors.hasOwnProperty(key)) {
-                    errorMessages += errors[key] + "<br>";
+            if (Array.isArray(errors.messages)) {
+                errors.messages.forEach(function (message) {
+                    errorMessages += message + "<br>";
+                });
+            } else {
+                for (var key in errors) {
+                    if (errors.hasOwnProperty(key)) {
+                        errorMessages += errors[key] + "<br>";
+                    }
                 }
             }
             $("#error-messages").html(errorMessages).show();
@@ -34,7 +40,7 @@ $(document).ready(function () {
                         render: function (data, type, row) {
                             return `
                                 <div class="action-btns">
-                                    <a href="/admin/editCompany?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/company/edit?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}"><i class="fas fa-trash"></i></button>
                                 </div>
                             `;
@@ -60,12 +66,16 @@ $(document).ready(function () {
                         alert("Company deleted successfully.");
                         $("#companyTable").DataTable().ajax.reload(); // Reload the table data
                     },
-                    error: function (xhr) {
-                        console.error("Error Deleting COmpany:", xhr);
-                        if (xhr.responseJSON && xhr.responseJSON.errors) {
-                            displayErrors(xhr.responseJSON.errors);
-                        } else {
-                            displayErrors({ general: xhr.responseText });
+                    error: function (xhr, status, error) {
+                        console.error("Error deleting company:", error);
+                        try {
+                            const errorData = JSON.parse(xhr.responseText);
+                            displayErrors(errorData.errors || errorData);
+                        } catch (err) {
+                            displayErrors({
+                                general:
+                                    "An unexpected error occurred. Please try again later.",
+                            });
                         }
                     },
                 });
@@ -74,7 +84,7 @@ $(document).ready(function () {
 
         $("#companyTable tbody").on("click", ".edit-btn", function () {
             var id = $(this).data("id");
-            window.location.href = `/admin/editCompany`;
+            window.location.href = `/admin/company/edit`;
         });
     }
 });

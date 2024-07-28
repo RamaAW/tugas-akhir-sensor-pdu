@@ -20,10 +20,10 @@ $(document).ready(function () {
             $("#error-messages").html(errorMessages).show();
         }
 
-        function fetchPlaces() {
-            $("#placeTable").DataTable({
+        function fetchRigs() {
+            $("#rigTable").DataTable({
                 ajax: {
-                    url: "http://project-akhir.test/api/places/",
+                    url: "http://project-akhir.test/api/rigs/",
                     type: "GET",
                     headers: {
                         Authorization: "Bearer " + authToken,
@@ -32,10 +32,14 @@ $(document).ready(function () {
                 },
                 columns: [
                     { data: "id" },
-                    { data: "name" },
-                    { data: "address" },
-                    { data: "latitude" },
-                    { data: "longitude" },
+                    { data: "rigName" },
+                    { data: "rigType" },
+                    { data: "rigPower" },
+                    { data: "rigActivity" },
+                    { data: "wellId" },
+                    { data: "wellName" },
+                    { data: "placeId" },
+                    { data: "placeName" },
                     { data: "companyId" },
                     { data: "companyName" },
                     {
@@ -44,7 +48,7 @@ $(document).ready(function () {
                         render: function (data, type, row) {
                             return `
                                 <div class="action-btns">
-                                    <a href="/admin/place/edit?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/rig/edit?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}"><i class="fas fa-trash"></i></button>
                                 </div>
                             `;
@@ -53,21 +57,21 @@ $(document).ready(function () {
                 ],
             });
         }
-        fetchPlaces();
-        $("#placeTable").on("click", ".delete-btn", function () {
-            var placeId = $(this).data("id");
+        fetchRigs();
+        $("#rigTable").on("click", ".delete-btn", function () {
+            var rigId = $(this).data("id");
 
-            if (confirm("Are you sure you want to delete this place?")) {
+            if (confirm("Are you sure you want to delete this rig?")) {
                 $.ajax({
-                    url: `http://project-akhir.test/api/place/${placeId}`,
+                    url: `http://project-akhir.test/api/rig/${rigId}`,
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + authToken,
                     },
                     success: function () {
-                        alert("Place deleted successfully.");
-                        $("#placeTable").DataTable().ajax.reload();
+                        alert("Rig deleted successfully.");
+                        $("#rigTable").DataTable().ajax.reload();
                     },
                     error: function (xhr, status, error) {
                         console.error("Error deleting company:", error);
@@ -85,10 +89,10 @@ $(document).ready(function () {
             }
         });
 
-        $("#placeTable tbody").on("click", ".edit-btn", function () {
+        $("#rigTable tbody").on("click", ".edit-btn", function () {
             var id = $(this).data("id");
             // Implement your edit logic here
-            window.location.href = "/admin/place/edit";
+            window.location.href = "/admin/rig/edit";
         });
     }
 });

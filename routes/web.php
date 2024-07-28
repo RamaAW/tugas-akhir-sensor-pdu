@@ -33,43 +33,63 @@ Route::get('/homepage', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('page.dashboard-admin.company.getCompany');
-    });
-    Route::get('/addCompany', function () {
-        return view('page.dashboard-admin.company.addCompany');
-    });
-    Route::get('/editCompany', function () {
-        return view('page.dashboard-admin.company.editCompany');
-    });
-
-    Route::get('/employee', function () {
-        return view('page.dashboard-admin.employee.getEmployee');
-    });
-    Route::get('/addEmployee', function () {
-        return view('page.dashboard-admin.employee.addEmployee');
-    });
-    Route::get('/editEmployee', function () {
-        return view('page.dashboard-admin.employee.editEmployee');
+    Route::prefix('company')->group(function () {
+        Route::get('/', function () {
+            return view('page.dashboard-admin.company.getCompany');
+        });
+        Route::get('/add', function () {
+            return view('page.dashboard-admin.company.addCompany');
+        });
+        Route::get('/edit', function () {
+            return view('page.dashboard-admin.company.editCompany');
+        });
     });
 
-    Route::get('/place', function () {
-        return view('page.dashboard-admin.place.getPlace');
-    });
-    Route::get('/addPlace', function () {
-        return view('page.dashboard-admin.place.addPlace');
-    });
-    Route::get('/editPlace', function () {
-        return view('page.dashboard-admin.place.editPlace');
+    Route::prefix('employee')->group(function () {
+        Route::get('/', function () {
+            return view('page.dashboard-admin.employee.getEmployee');
+        });
+        Route::get('/add', function () {
+            return view('page.dashboard-admin.employee.addEmployee');
+        });
+        Route::get('/edit', function () {
+            return view('page.dashboard-admin.employee.editEmployee');
+        });
     });
 
-    Route::get('/well', function () {
-        return view('page.dashboard-admin.well.getWell');
+    Route::prefix('place')->group(function () {
+        Route::get('/', function () {
+            return view('page.dashboard-admin.place.getPlace');
+        });
+        Route::get('/add', function () {
+            return view('page.dashboard-admin.place.addPlace');
+        });
+        Route::get('/edit', function () {
+            return view('page.dashboard-admin.place.editPlace');
+        });
     });
-    Route::get('/addWell', function () {
-        return view('page.dashboard-admin.well.addWell');
+
+    Route::prefix('well')->group(function () {
+        Route::get('/', function () {
+            return view('page.dashboard-admin.well.getWell');
+        });
+        Route::get('/add', function () {
+            return view('page.dashboard-admin.well.addWell');
+        });
+        Route::get('/edit', function () {
+            return view('page.dashboard-admin.well.editWell');
+        });
     });
-    Route::get('/editWell', function () {
-        return view('page.dashboard-admin.well.editWell');
+
+    Route::prefix('rig')->group(function () {
+        Route::get('/', function () {
+            return view('page.dashboard-admin.rig.getRig');
+        });
+        Route::get('/add', function () {
+            return view('page.dashboard-admin.rig.addRig');
+        });
+        Route::get('/edit', function () {
+            return view('page.dashboard-admin.rig.editRig');
+        });
     });
 });
