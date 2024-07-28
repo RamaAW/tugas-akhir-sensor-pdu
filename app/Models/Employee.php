@@ -38,4 +38,9 @@ class Employee extends Model
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function getCompanyNameAttribute()
+    {
+        return $this->companies ? $this->companies->name : null;
+    }
 }

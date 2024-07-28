@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Register Employee')
+@section('title', 'Register Well')
 
 @section('content')
 
@@ -13,40 +13,36 @@
         <div id="content">
             @include('layouts.admin.nav')
             <div class="container mt-5">
-                <h2>Register Employee</h2>
+                <h2>Register Well</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
-                <form id="employeeForm" method="POST">
+                <form id="wellForm" method="POST">
                     <div class="form-group">
-                        <label for="employeeId">Employee ID</label>
-                        <input type="text" class="form-control" id="employeeId" name="id" required>
+                        <label for="wellId">Well ID</label>
+                        <input type="text" class="form-control" id="wellId" name="id" required>
                     </div>
                     <div class="form-group">
-                        <label for="employeeName">Name</label>
-                        <input type="text" class="form-control" id="employeeName" name="name" required>
+                        <label for="wellName">Well Name</label>
+                        <input type="text" class="form-control" id="wellName" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="wellAddress">Address</label>
+                        <input type="text" class="form-control" id="wellAddress" name="address" required>
                     </div>
                     <div class="form-group">
-                        <label for="companySelect">Choose Company</label>
-                        <select class="form-control" id="companySelect" name="companyId" required>
-                            <option value="">Select Company</option>
+                        <label for="placeSelect">Choose Place</label>
+                        <select class="form-control" id="placeSelect" name="placeId" required>
+                            <option value="">Select Place</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="superAdmin">Super Admin</option>
-                        </select>
+                        <label for="wellLatitude">Well Latitude</label>
+                        <input type="text" class="form-control" id="wellLatitude" name="latitude" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <label for="wellLongitude">Well Longitude</label>
+                        <input type="text" class="form-control" id="wellLongitude" name="longitude" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Employee to Company</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Well to Place</button>
                 </form>
             </div>
 
@@ -59,7 +55,7 @@
     <!-- Include DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <!-- Custom JS for company management -->
-    <script src="{{ asset('assets/js/admin/employee/addEmployee.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/well/addWell.js') }}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>
     <!-- Custom scripts for logout -->

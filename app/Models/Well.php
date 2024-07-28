@@ -24,4 +24,19 @@ class Well extends Model
     {
         return $this->hasMany(Notification::class, 'wellId');
     }
+
+    public function getPlaceNameAttribute()
+    {
+        return $this->places ? $this->places->name : null;
+    }
+
+    public function getCompanyNameAttribute()
+    {
+        return $this->places && $this->places->companies ? $this->places->companies->name : null;
+    }
+
+    public function getCompanyIdAttribute()
+    {
+        return $this->places && $this->places->companies ? $this->places->companies->id : null;
+    }
 }

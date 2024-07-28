@@ -25,8 +25,20 @@ class WellController extends Controller
      */
     public function index()
     {
-        $wells = Well::all();
-        return response()->json($wells);
+        $wells = Well::with('places.companies')->get();
+        return response()->json($wells->map(function ($well) {
+            return [
+                'id' => $well->id,
+                'name' => $well->name,
+                'address' => $well->address,
+                'latitude' => $well->latitude,
+                'longitude' => $well->longitude,
+                'placeId' => $well->placeId,
+                'placeName' => $well->placeName,
+                'companyId' => $well->companyId,
+                'companyName' => $well->companyName,
+            ];
+        }));
     }
 
     /**

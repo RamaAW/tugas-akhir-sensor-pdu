@@ -52,4 +52,24 @@ Route::prefix('admin')->group(function () {
     Route::get('/editEmployee', function () {
         return view('page.dashboard-admin.employee.editEmployee');
     });
+
+    Route::get('/place', function () {
+        return view('page.dashboard-admin.place.getPlace');
+    });
+    Route::get('/addPlace', function () {
+        return view('page.dashboard-admin.place.addPlace');
+    });
+    Route::get('/editPlace', function () {
+        return view('page.dashboard-admin.place.editPlace');
+    });
+
+    Route::get('/well', function () {
+        return view('page.dashboard-admin.well.getWell');
+    });
+    Route::get('/addWell', function () {
+        return view('page.dashboard-admin.well.addWell');
+    });
+    Route::get('/editWell', function () {
+        return view('page.dashboard-admin.well.editWell');
+    });
 });

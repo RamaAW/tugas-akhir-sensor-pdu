@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Register Employee')
+@section('title', 'Register Place')
 
 @section('content')
 
@@ -13,20 +13,20 @@
         <div id="content">
             @include('layouts.admin.nav')
             <div class="container mt-5">
-                <h2>Register Employee</h2>
+                <h2>Register Place</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
-                <form id="employeeForm" method="POST">
+                <form id="placeForm" method="POST">
                     <div class="form-group">
-                        <label for="employeeId">Employee ID</label>
-                        <input type="text" class="form-control" id="employeeId" name="id" required>
+                        <label for="placeId">Place ID</label>
+                        <input type="text" class="form-control" id="placeId" name="id" required>
                     </div>
                     <div class="form-group">
-                        <label for="employeeName">Name</label>
-                        <input type="text" class="form-control" id="employeeName" name="name" required>
+                        <label for="placeName">Place Name</label>
+                        <input type="text" class="form-control" id="placeName" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="placeAddress" name="address" required>
                     </div>
                     <div class="form-group">
                         <label for="companySelect">Choose Company</label>
@@ -35,18 +35,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="superAdmin">Super Admin</option>
-                        </select>
+                        <label for="placeLatitude">Latitude</label>
+                        <input type="text" class="form-control" id="placeLatitude" name="latitude" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <label for="placeLongitude">Longitude</label>
+                        <input type="text" class="form-control" id="placeLongitude" name="longitude" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Employee to Company</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Place to Company</button>
                 </form>
             </div>
 
@@ -59,7 +55,7 @@
     <!-- Include DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <!-- Custom JS for company management -->
-    <script src="{{ asset('assets/js/admin/employee/addEmployee.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/place/addPlace.js') }}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>
     <!-- Custom scripts for logout -->

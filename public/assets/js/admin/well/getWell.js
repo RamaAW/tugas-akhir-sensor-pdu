@@ -14,10 +14,10 @@ $(document).ready(function () {
             $("#error-messages").html(errorMessages).show();
         }
 
-        function fetchCompanies() {
-            $("#companyTable").DataTable({
+        function fetchWells() {
+            $("#wellTable").DataTable({
                 ajax: {
-                    url: "http://project-akhir.test/api/companies/",
+                    url: "http://project-akhir.test/api/wells/",
                     type: "GET",
                     headers: {
                         Authorization: "Bearer " + authToken,
@@ -28,13 +28,19 @@ $(document).ready(function () {
                     { data: "id" },
                     { data: "name" },
                     { data: "address" },
+                    { data: "latitude" },
+                    { data: "longitude" },
+                    { data: "placeId" },
+                    { data: "placeName" },
+                    { data: "companyId" },
+                    { data: "companyName" },
                     {
                         data: null,
                         className: "action-column",
                         render: function (data, type, row) {
                             return `
                                 <div class="action-btns">
-                                    <a href="/admin/editCompany?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/editWell?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}"><i class="fas fa-trash"></i></button>
                                 </div>
                             `;
@@ -43,25 +49,24 @@ $(document).ready(function () {
                 ],
             });
         }
+        fetchWells();
+        $("#wellTable").on("click", ".delete-btn", function () {
+            var wellId = $(this).data("id");
 
-        fetchCompanies();
-
-        $("#companyTable").on("click", ".delete-btn", function () {
-            var companyId = $(this).data("id");
-
-            if (confirm("Are you sure you want to delete this company?")) {
+            if (confirm("Are you sure you want to delete this well?")) {
                 $.ajax({
-                    url: `http://project-akhir.test/api/company/${companyId}`,
-                    type: "DELETE",
+                    url: `http://project-akhir.test/api/well/${wellId}`,
+                    method: "DELETE",
                     headers: {
+                        "Content-Type": "application/json",
                         Authorization: "Bearer " + authToken,
                     },
                     success: function () {
-                        alert("Company deleted successfully.");
-                        $("#companyTable").DataTable().ajax.reload(); // Reload the table data
+                        alert("Well deleted successfully.");
+                        $("#wellTable").DataTable().ajax.reload();
                     },
                     error: function (xhr) {
-                        console.error("Error Deleting COmpany:", xhr);
+                        console.error("Error deleting well: ", xhr);
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             displayErrors(xhr.responseJSON.errors);
                         } else {
@@ -72,9 +77,10 @@ $(document).ready(function () {
             }
         });
 
-        $("#companyTable tbody").on("click", ".edit-btn", function () {
+        $("#wellTable tbody").on("click", ".edit-btn", function () {
             var id = $(this).data("id");
-            window.location.href = `/admin/editCompany`;
+            // Implement your edit logic here
+            window.location.href = "/admin/editWell";
         });
     }
 });

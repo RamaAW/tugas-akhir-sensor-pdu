@@ -11,9 +11,32 @@
     <link href="{{ asset('import/assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
 
     <style>
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .table thead th {
+            font-weight: bold;
+        }
+
+        .action-column {
+            width: 10%;
+            text-align: center;
+        }
+
+        .action-btns {
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-btns .btn {
+            margin: 0 2px;
+        }
+
         .bg-grey {
             background-color: #b62d3a;
         }
@@ -37,36 +60,6 @@
             /* Default color */
             transition: color 0.3s ease;
             /* Smooth transition for color change */
-        }
-
-        .card {
-            flex: 1;
-            margin: 0 5px;
-            overflow: hidden;
-        }
-
-        .value-unit-container {
-            display: flex;
-            align-items: center;
-            width: 100px;
-            justify-content: flex-end;
-        }
-
-        .value-box {
-            width: 100px;
-            background-color: #2b2b2b;
-            color: white;
-            border-radius: 5px;
-            text-align: center;
-            padding: 2px 2px;
-            font-weight: bold;
-        }
-
-        .unit-text {
-            width: 40px;
-            margin-left: 5px;
-            color: red;
-            text-align: left;
         }
     </style>
 </head>

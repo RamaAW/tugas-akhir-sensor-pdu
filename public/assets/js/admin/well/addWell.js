@@ -4,42 +4,42 @@ $(document).ready(function () {
     if (!authToken) {
         window.location.href = "/login";
     } else {
-        function fetchCompanies() {
+        function fetchPlaces() {
             $.ajax({
-                url: "http://project-akhir.test/api/companies/",
+                url: "http://project-akhir.test/api/places/",
                 type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (data) {
-                    var options = '<option value="">Select Company</option>';
-                    data.forEach(function (company) {
+                    var options = '<option value="">Select Place</option>';
+                    data.forEach(function (place) {
                         options +=
                             '<option value="' +
-                            company.id +
+                            place.id +
                             '">' +
-                            company.name +
+                            place.name +
                             "</option>";
                     });
-                    $("#companySelect").html(options);
+                    $("#placeSelect").html(options);
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error fetching companies:", error);
-                    alert("Failed to fetch companies. Please try again later.");
+                    console.error("Error fetching places:", error);
+                    alert("Failed to fetch places. Please try again later.");
                 },
             });
         }
-        fetchCompanies();
+        fetchPlaces();
 
         $(document).ready(function () {
-            $("#employeeForm").on("submit", function (e) {
+            $("#wellForm").on("submit", function (e) {
                 e.preventDefault();
 
                 let formData = new FormData(this);
                 let jsonData = Object.fromEntries(formData.entries());
 
                 $.ajax({
-                    url: "http://project-akhir.test/api/employee",
+                    url: "http://project-akhir.test/api/wells",
                     type: "POST",
                     data: JSON.stringify(jsonData),
                     contentType: "application/json",
@@ -47,12 +47,12 @@ $(document).ready(function () {
                         Authorization: "Bearer " + authToken,
                     },
                     success: function (data) {
-                        window.location.href = "/admin/employee";
-                        console.log("Employee Registered:", data);
+                        window.location.href = "/admin/well";
+                        console.log("Well Registered:", data);
                         // Handle success
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error registering employee:", error);
+                        console.error("Error updating well:", error);
                         try {
                             const errorData = JSON.parse(xhr.responseText);
                             displayErrors(

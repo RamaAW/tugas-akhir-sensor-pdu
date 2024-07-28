@@ -1,4 +1,3 @@
-// edit-company.js
 $(document).ready(function () {
     var authToken = localStorage.getItem("authToken");
 
@@ -11,21 +10,21 @@ $(document).ready(function () {
 
         if (companyId) {
             // Fetch company details and populate the form
-            fetch(`http://project-akhir.test/api/company/${companyId}`, {
-                method: "GET",
+            $.ajax({
+                url: `http://project-akhir.test/api/company/${companyId}`,
+                type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
                 },
-            })
-                .then((response) => response.json())
-                .then((data) => {
+                success: function (data) {
                     $("#companyId").val(data.id);
                     $("#companyName").val(data.name);
                     $("#companyAddress").val(data.address);
-                })
-                .catch((error) => {
+                },
+                error: function (error) {
                     console.error("Error fetching company details:", error);
-                });
+                },
+            });
 
             // Handle form submission
             $("#editCompanyForm").on("submit", function (e) {
@@ -34,25 +33,22 @@ $(document).ready(function () {
                 let formData = new FormData(this);
                 let updatedData = Object.fromEntries(formData.entries());
 
-                fetch(
-                    `http://project-akhir.test/api/company/${updatedData.id}`,
-                    {
-                        method: "PUT",
-                        body: JSON.stringify(updatedData),
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + authToken,
-                        },
-                    }
-                )
-                    .then((response) => response.json())
-                    .then((data) => {
+                $.ajax({
+                    url: `http://project-akhir.test/api/company/${updatedData.id}`,
+                    type: "PUT",
+                    data: JSON.stringify(updatedData),
+                    contentType: "application/json",
+                    headers: {
+                        Authorization: "Bearer " + authToken,
+                    },
+                    success: function (data) {
                         console.log("Company Updated:", data);
                         window.location.href = "/admin/dashboard";
-                    })
-                    .catch((error) => {
+                    },
+                    error: function (error) {
                         console.error("Error updating company:", error);
-                    });
+                    },
+                });
             });
         } else {
             console.error("Company ID not found in URL.");

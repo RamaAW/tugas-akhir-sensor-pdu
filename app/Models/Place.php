@@ -18,4 +18,8 @@ class Place extends Model
     {
         return $this->belongsTo(Company::class, 'companyId');
     }
+    public function getCompanyNameAttribute()
+    {
+        return $this->companies ? $this->companies->name : null;
+    }
 }

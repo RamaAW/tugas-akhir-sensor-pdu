@@ -24,8 +24,18 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $places = Place::all();
-        return response()->json($places);
+        $places = Place::with('companies')->get();
+        return response()->json($places->map(function ($place) {
+            return [
+                'id' => $place->id,
+                'name' => $place->name,
+                'address' => $place->address,
+                'latitude' => $place->latitude,
+                'longitude' => $place->longitude,
+                'companyId' => $place->companyId,
+                'companyName' => $place->companyName, // Add companyName
+            ];
+        }));
     }
 
     /**

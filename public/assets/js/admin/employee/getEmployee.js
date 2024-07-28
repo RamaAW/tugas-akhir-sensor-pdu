@@ -4,6 +4,16 @@ $(document).ready(function () {
     if (!authToken) {
         window.location.href = "/login";
     } else {
+        function displayErrors(errors) {
+            var errorMessages = "";
+            for (var key in errors) {
+                if (errors.hasOwnProperty(key)) {
+                    errorMessages += errors[key] + "<br>";
+                }
+            }
+            $("error-messages").html(errorMessages).show();
+        }
+
         function fetchEmployees() {
             $("#employeeTable").DataTable({
                 ajax: {
@@ -19,13 +29,17 @@ $(document).ready(function () {
                     { data: "name" },
                     { data: "email" },
                     { data: "companyId" },
+                    { data: "companyName" },
                     { data: "role" },
                     {
                         data: null,
+                        className: "action-column",
                         render: function (data, type, row) {
                             return `
-                                <a href="/admin/editEmployee?id=${row.id}" class="btn btn-sm btn-primary">Edit</a>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}">Delete</button>
+                                <div class="action-btns">
+                                    <a href="/admin/editEmployee?id=${row.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                    <button class="btn btn-sm btn-danger delete-btn" data-id="${row.id}"><i class="fas fa-trash"></i></button>
+                                </div>
                             `;
                         },
                     },
@@ -33,31 +47,31 @@ $(document).ready(function () {
             });
         }
         fetchEmployees();
+
         $("#employeeTable").on("click", ".delete-btn", function () {
             var employeeId = $(this).data("id");
 
             if (confirm("Are you sure you want to delete this employee?")) {
-                fetch(`http://project-akhir.test/api/employee/${employeeId}`, {
+                $.ajax({
+                    url: `http://project-akhir.test/api/employee/${employeeId}`,
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + authToken,
                     },
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            alert("Employee deleted successfully.");
-                            $("#employeeTable").DataTable().ajax.reload(); // Reload the table data
+                    success: function () {
+                        alert("Employee deleted successfully.");
+                        $("#employeeTable").DataTable().ajax.reload();
+                    },
+                    error: function (xhr) {
+                        console.error("Error Deleting Employee:", xhr);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            displayErrors(xhr.responseJSON.errors);
                         } else {
-                            return response.text().then((text) => {
-                                throw new Error(text);
-                            });
+                            displayErrors({ general: xhr.responseText });
                         }
-                    })
-                    .catch((error) => {
-                        console.error("Error deleting employee:", error);
-                        alert("Error deleting employee. Please try again.");
-                    });
+                    },
+                });
             }
         });
 
@@ -65,10 +79,6 @@ $(document).ready(function () {
             var id = $(this).data("id");
             // Implement your edit logic here
             window.location.href = "/admin/editEmployee";
-        });
-
-        $("#employeeTable tbody").on("click", ".delete-btn", function () {
-            var id = $(this).data("id");
         });
     }
 });

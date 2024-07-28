@@ -12,23 +12,27 @@
         <!-- Main Content -->
         <div id="content">
             @include('layouts.admin.nav')
-            <div class="container mt-5">
-                <table id="employeeTable" class="table table-striped">
-                    <div class="mb-3">
-                        <a href="{{ url('/admin/addEmployee') }}" class="btn btn-primary">Add User</a>
-                    </div>
-                    <thead class="bg-success" style="font-weight: bold;">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Company</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="container mt-5 mb-5">
+                <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
+                <div class="mb-3">
+                    <a href="{{ url('/admin/addEmployee') }}" class="btn btn-primary">Add User</a>
+                </div>
+                <div class="table-responsive">
+                    <table id="employeeTable" class="table table-striped table-bordered">
+                        <thead class="bg-success text-white">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Company Id</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col" class="action-column">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

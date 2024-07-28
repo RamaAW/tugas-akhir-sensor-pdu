@@ -329,32 +329,32 @@
                         data: [],
                         borderColor: 'rgb(0, 0, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Torque',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'RPM Total',
                         data: [],
                         borderColor: 'rgb(255, 0, 140)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Hookload',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     }
                 ]
             };
@@ -367,40 +367,40 @@
                         data: [],
                         borderColor: 'rgb(0, 0, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Mud Flow Out(%)',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Total SPM',
                         data: [],
                         borderColor: 'rgb(255, 0, 140)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Standpipe Press',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Mud Flow In',
                         data: [],
                         borderColor: 'rgb(164, 0, 0)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     }
                 ]
             };
@@ -413,40 +413,40 @@
                         data: [],
                         borderColor: 'rgb(255, 35, 35)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Gas',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Mud Temp In',
                         data: [],
                         borderColor: 'rgb(255, 0, 140)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Mud Temp Out',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     },
                     {
                         label: 'Tank Vol. (total)',
                         data: [],
                         borderColor: 'rgb(164, 0, 0)',
                         lineTension: 0,
-                        borderWidth: 1.5,
-                        pointRadius: 2
+                        borderWidth: 1,
+                        pointRadius: 1
                     }
                 ]
             };

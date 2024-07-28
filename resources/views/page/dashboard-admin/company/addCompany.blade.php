@@ -14,6 +14,7 @@
             @include('layouts.admin.nav')
             <div class="container mt-5">
                 <h2>Register Company</h2>
+                <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <form id="companyForm" method="POST">
                     <div class="form-group">
                         <label for="companyId">Company ID</label>
@@ -30,7 +31,6 @@
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             </div>
-
         </div>
     </div>
     <!-- Include jQuery -->

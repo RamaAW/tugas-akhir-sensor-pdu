@@ -15,13 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Employee::create([
-            'id' => 'employee-001',
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'companyId' => 'company-001',
-            'role' => 'admin',
-            'password' => 'admin1234',
-        ]);
+        Employee::updateOrCreate(
+            ['id' => 'employee-001'],
+            [
+                'name' => 'Super Admin PDU',
+                'email' => 'superadmin@gmail.com',
+                'companyId' => 'company-001',
+                'role' => 'superAdmin',
+                'password' => 'superadmin1234',
+            ]
+        );
     }
 }

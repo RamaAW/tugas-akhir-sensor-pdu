@@ -23,8 +23,17 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = Employee::all();
-        return response()->json($employee);
+        $employees = Employee::with('companies')->get();
+        return response()->json($employees->map(function ($employee) {
+            return [
+                'id' => $employee->id,
+                'name' => $employee->name,
+                'email' => $employee->email,
+                'companyId' => $employee->companyId,
+                'companyName' => $employee->companyName, // Add companyName
+                'role' => $employee->role,
+            ];
+        }));
     }
 
     /**
