@@ -13,10 +13,8 @@
         <div id="content">
             @include('layouts.admin.nav')
             <div class="container mt-5 mb-5">
+                <h2 class="text-danger" style="font-family: 'Arial', sans-serif; font-weight:bold;">User</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
-                <div class="mb-3">
-                    <a href="{{ url('/admin/employee/add') }}" class="btn btn-primary">Add User</a>
-                </div>
                 <div class="table-responsive">
                     <table id="employeeTable" class="table table-striped table-bordered">
                         <thead class="bg-success text-white">
@@ -32,6 +30,9 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                    <div class="mb-3">
+                        <a href="{{ url('/admin/employee/add') }}" class="btn btn-primary">Add User</a>
+                    </div>
                 </div>
             </div>
         </div>

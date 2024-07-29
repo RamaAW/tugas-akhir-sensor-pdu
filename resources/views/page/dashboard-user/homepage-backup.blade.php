@@ -14,17 +14,20 @@
         <!-- Main Content -->
         <div id="content">
             @include('layouts.user.nav')
-            <!-- End of Topbar -->
             <!-- Begin Page Content -->
-            <div class="d-flex text-center p-1 pt-0">
-                <!-- Content-1 -->
-                @include('layouts.user.side-content')
-                <!-- Content-2 -->
-                <!-- Header -->
-                @include('layouts.user.chart')
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Content-1 -->
+                    <div class="col-lg-2 col-md-3 col-sm-12 p-1 pt-0">
+                        @include('layouts.user.side-content')
+                    </div>
+                    <!-- Content-2 -->
+                    <div class="col-lg-10 col-md-9 col-sm-12 p-1 pt-0">
+                        @include('layouts.user.chart')
+                    </div>
+                </div>
             </div>
-
-            <!-- End of Main Content -->
+            <!-- End of Page Content -->
 
             <!-- Footer -->
             @include('layouts.user.footer')
