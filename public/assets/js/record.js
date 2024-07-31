@@ -3,6 +3,8 @@ $(document).ready(function () {
     var selectedCompanyId = localStorage.getItem("selectedCompanyId");
     var selectedWellId = localStorage.getItem("selectedWellId");
     let updateInterval;
+    let currentStart = 0;
+    let dataWindowSize = 30;
     console.log("au:", authToken);
     console.log("comp:", selectedCompanyId);
     console.log("well:", selectedWellId);
@@ -44,9 +46,9 @@ $(document).ready(function () {
             });
         }
 
-        function fetchDataRecords(wellId) {
+        function fetchDataRecords(wellId, start, limit) {
             $.ajax({
-                url: `http://project-akhir.test/api/records/well/${wellId}`,
+                url: `http://project-akhir.test/api/records/well/${wellId}?start=${start}&limit=${limit}`,
                 method: "GET",
                 dataType: "json",
                 headers: {
@@ -97,15 +99,52 @@ $(document).ready(function () {
             });
         }
 
+        function fetchNotifications(wellId) {
+            $.ajax({
+                url: "http://project-akhir.test/api/notifications/",
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                data: {
+                    wellId: wellId,
+                },
+                success: function (data) {
+                    $("#notificationContainer").empty();
+
+                    data.forEach(function (notification) {
+                        var recordDate = notification.records["Date-Time"];
+                        var notificationHtml = `
+                            <div class="text-start" style="font-weight: bold;">
+                                <strong style="font-weight: bold; color:red; font-size:15px">${notification.title}</strong>
+                                <div>${notification.message}</div>
+                                <div style="font-weight: bold; color:red;">${recordDate}</div>
+                                <hr class="item-divider">
+                            </div>
+                        `;
+                        $("#notificationContainer").append(notificationHtml);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching notifications:", error);
+                    alert(
+                        "Failed to fetch notifications. Please try again later."
+                    );
+                },
+            });
+        }
+
         function startAutoUpdate(wellId) {
             if (updateInterval) {
                 clearInterval(updateInterval);
             }
 
-            fetchDataRecords(wellId);
+            fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
+            fetchNotifications(selectedWellId);
 
             updateInterval = setInterval(function () {
-                fetchDataRecords(wellId);
+                fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
+                fetchNotifications(selectedWellId);
             }, 3000);
         }
 
@@ -215,6 +254,17 @@ $(document).ready(function () {
             myChart4.update();
         }
 
+        // Scroll event handler
+        $(".chart-container").on("scroll", function () {
+            // Check if scrolled to the bottom
+            if (
+                $(this).scrollTop() + $(this).innerHeight() >=
+                this.scrollHeight
+            ) {
+                currentStart += dataWindowSize;
+                fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
+            }
+        });
         fetchCompaniesDetails(selectedCompanyId);
         fetchWellDetails(selectedWellId);
         startAutoUpdate(selectedWellId);

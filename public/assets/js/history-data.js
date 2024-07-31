@@ -8,7 +8,6 @@ $(document).ready(function () {
     if (!authToken || !selectedCompanyId || !selectedWellId) {
         window.location.href = "/chooseCompany-Well";
     } else {
-        // Function to fetch companies
         function fetchCompaniesDetails(companyId) {
             $.ajax({
                 url: "http://project-akhir.test/api/company/" + companyId,
@@ -43,6 +42,58 @@ $(document).ready(function () {
             });
         }
 
+        function fetchNotifications(wellId, startDateTime, endDateTime) {
+            $.ajax({
+                url: `http://project-akhir.test/api/notifications/?wellId=${wellId}`,
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                success: function (data) {
+                    const filteredNotifications = data.filter(
+                        (notification) => {
+                            const recordDateTime =
+                                notification.records["Date-Time"];
+                            return (
+                                recordDateTime >= startDateTime &&
+                                recordDateTime <= endDateTime
+                            );
+                        }
+                    );
+                    displayNotifications(filteredNotifications);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching notifications:", error);
+                    alert(
+                        "Failed to fetch notifications. Please try again later."
+                    );
+                },
+            });
+        }
+
+        function displayNotifications(notifications) {
+            const notificationsContainer = $("#notificationContainer");
+            notificationsContainer.empty(); // Clear the notifications container
+
+            if (notifications.length > 0) {
+                notifications.forEach((notification) => {
+                    const notificationHtml = `
+                        <div class="text-start" style="font-weight: bold;">
+                            <strong style="font-weight: bold; color:red;">${notification.title}</strong>
+                            <div>${notification.message}</div>
+                            <div style="font-weight: bold; color:red;">${notification.records["Date-Time"]}</div>
+                            <hr class="item-divider">
+                        </div>
+                    `;
+                    notificationsContainer.append(notificationHtml);
+                });
+            } else {
+                notificationsContainer.html(
+                    "<p>No notifications found for the selected time range.</p>"
+                );
+            }
+        }
+
         function validateTimes() {
             // Ambil nilai input waktu dan tanggal
             const inputDate = document.getElementById("inputDate").value;
@@ -60,8 +111,15 @@ $(document).ready(function () {
                 alert("End time cannot be earlier than start time.");
             } else {
                 fetchDataBetweenTimes(inputDate, timeStart, timeEnd);
+                fetchNotifications(
+                    selectedWellId,
+                    `${inputDate} ${timeStart}`,
+                    `${inputDate} ${timeEnd}`
+                );
             }
         }
+
+        // Function to display notifications
 
         function fetchDataBetweenTimes(date, startTime, endTime) {
             // Format datetime strings for comparison

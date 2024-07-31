@@ -13,12 +13,20 @@ class Notification extends Model
         'id',
         'title',
         'message',
-        'wellId',
+        'recordId',
         'seen'
     ];
 
-    public function wells()
+    public function records()
     {
-        return $this->belongsTo(Well::class, 'wellId');
+        return $this->belongsTo(Record::class, 'recordId');
+    }
+    public function getWellNameAttribute()
+    {
+        return $this->records && $this->records->wells ? $this->records->wells->name : null;
+    }
+    public function getWellIdAttribute()
+    {
+        return $this->records && $this->records->wells ? $this->records->wells->id : null;
     }
 }

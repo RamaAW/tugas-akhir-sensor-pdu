@@ -81,12 +81,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //notification
     Route::get('notifications', [NotificationController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('notifications/{id}', [NotificationController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::put('notifications/{id}', [NotificationController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('notifications/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::get('notification/{id}', [NotificationController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('notifications/well/{wellId}', [NotificationController::class, 'getNotificationsByWellId'])->middleware('role:user,admin,superAdmin');
+    Route::put('notification/{id}', [NotificationController::class, 'update'])->middleware('role:admin,superAdmin');
+    Route::delete('notification/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin,superAdmin');
 });
 Route::post('records', [RecordController::class, 'store']);
-Route::post('notifications', [NotificationController::class, 'store']);
+Route::post('notification', [NotificationController::class, 'store']);
 Route::post('generate-dummy-record', [RecordController::class, 'generateDummyRecord']);
 
 Route::post('/logout', [EmployeeAuthController::class, 'logout'])->middleware('auth:sanctum');

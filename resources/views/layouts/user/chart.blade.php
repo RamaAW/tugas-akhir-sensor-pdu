@@ -247,12 +247,6 @@
             </div>
         </div>
     </div>
-    <div class="buttons mt-3">
-        <button onclick="scrollUp()">Scroll Up</button>
-        <button onclick="scrollDown()">Scroll Down</button>
-        <button onclick="zoomIn()">Zoom In</button>
-        <button onclick="zoomOut()">Zoom Out</button>
-    </div>
     <footer>
         <script>
             function updateDateTime() {
@@ -425,7 +419,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Mud Temp In',
+                        label: 'MudTempIn',
                         data: [],
                         borderColor: 'rgb(255, 0, 140)',
                         lineTension: 0,
@@ -433,7 +427,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Mud Temp Out',
+                        label: 'MudTempOut',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
@@ -450,7 +444,6 @@
                     }
                 ]
             };
-
 
             var stackedConfig = {
                 type: 'line',
@@ -483,16 +476,22 @@
                             intersect: true,
                         },
                         zoom: {
-                            wheel: {
-                                enabled: true,
+                            zoom: {
+                                wheel: {
+                                    enabled: true, // Enable zooming with mouse wheel
+                                    speed: 0.01,
+                                },
+                                pinch: {
+                                    enabled: true, // Enable zooming with pinch gestures
+                                    speed: 0.01,
+                                },
+                                mode: 'xy', // Allow zooming in both x and y axes
                             },
-                            drag: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true,
-                            },
-                            mode: 'x',
+                            pan: {
+                                enabled: true, // Enable panning
+                                speed: 0.01,
+                                mode: 'xy', // Allow panning in both x and y axes
+                            }
                         }
                     },
                 }
@@ -642,6 +641,8 @@
                 }
             };
 
+            Chart.register(ChartZoom);
+            var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(
                 document.getElementById('stackedChart'),
                 stackedConfig
@@ -663,18 +664,6 @@
             );
 
             allCharts = [myChart, myChart2, myChart3, myChart4];
-
-            function zoomIn() {
-                allCharts.forEach(chart => {
-                    chart.zoom(1.1);
-                })
-            }
-
-            function zoomOut() {
-                allCharts.forEach(chart => {
-                    chart.zoom(0.9);
-                })
-            }
         </script>
     </footer>
 </div>

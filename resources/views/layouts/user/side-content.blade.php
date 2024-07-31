@@ -2,33 +2,8 @@
     <div class="card-body p-2" style="background-color: red;">
         <div class="text-center" style="font-weight: bold; color:white; font-size: medium;" id="headerReport">Well Report</div>
     </div>
-    <div class="card-body p-2" style="max-height: 250px; overflow-y: auto;">
-        <div class="text-start" style="font-weight: bold;">RIG STUCK Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
-        <hr class="item-divider">
-        <div class="text-start" style="font-weight: bold;">Drilling Stuck Incidents</div>
-        <div class="text-start" style="font-weight: bold; color:red;">20/06/2024 14:24:30</div>
+    <div class="card-body p-2" style="max-height: 300px; overflow-y: auto;" id="notificationContainer">
+        <!-- Notifications will be inserted here dynamically -->
     </div>
 </div>
 

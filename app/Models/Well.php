@@ -25,10 +25,10 @@ class Well extends Model
         return $this->hasMany(Rig::class, 'wellId');
     }
 
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class, 'wellId');
-    }
+    // public function notifications()
+    // {
+    //     return $this->hasMany(Notification::class, 'wellId');
+    // }
 
     public function getPlaceNameAttribute()
     {

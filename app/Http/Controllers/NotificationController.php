@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationStoreRequest;
-use App\Http\Requests\NotificationUpdateRequest;
 use App\Models\Notification;
+use App\Models\Record;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -19,9 +19,36 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notifications = Notification::all();
+        $wellId = $request->input('wellId');
+        $notifications = Notification::whereHas('records', function ($query) use ($wellId) {
+            $query->where('WellId', $wellId);
+        })->with('records')->get()->map(function ($notification) {
+            return [
+                'id' => $notification->id,
+                'title' => $notification->title,
+                'message' => $notification->message,
+                'recordId' => $notification->recordId,
+                'created_at' => $notification->created_at,
+                'updated_at' => $notification->updated_at,
+                'seen' => $notification->seen,
+                'records' => [
+                    'Date-Time' => $notification->records->{"Date-Time"},
+                    'Torque' => $notification->records->Torque
+                ]
+            ];
+        });
+        return response()->json($notifications);
+    }
+
+    //pake gak ya
+    public function getNotificationsByWellId($wellId)
+    {
+        $recordIds = Record::where('wellId', $wellId)->pluck('id');
+
+        // Mengambil notifikasi yang terkait dengan recordIds
+        $notifications = Notification::whereIn('recordId', $recordIds)->get();
         return response()->json($notifications);
     }
 
@@ -69,7 +96,7 @@ class NotificationController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(NotificationUpdateRequest $request, $id)
+    public function update(NotificationStoreRequest $request, $id)
     {
         try {
             $notification = Notification::findOrFail($id);

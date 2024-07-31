@@ -22,10 +22,9 @@ class NotificationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|unique:notifications',
             'title' => 'required|string',
             'message' => 'required|string',
-            'wellId' => 'required|string|exists:wells,id',
+            'recordId' => 'required|integer|exists:records,id',
             'seen' => 'sometimes|boolean',
         ];
     }
@@ -33,12 +32,10 @@ class NotificationStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'The id field is required.',
-            'id.unique' => 'The id must be unique.',
             'title.required' => 'The title field is required.',
             'message.required' => 'The message field is required.',
-            'wellId.required' => 'The wellId field is required.',
-            'wellId.exists' => 'The selected wellId is invalid.',
+            'recordId.required' => 'The recordId field is required.',
+            'recordId.exists' => 'The selected recordId is invalid.',
             'seen.boolean' => 'The seen field must be true or false.',
         ];
     }
