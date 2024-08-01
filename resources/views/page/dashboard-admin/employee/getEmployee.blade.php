@@ -21,7 +21,7 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Employee Name</th>
-                                <th scope="col">Email</th>
+                                <th scope="col">Username</th>
                                 <th scope="col">Company Id</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col">Role</th>

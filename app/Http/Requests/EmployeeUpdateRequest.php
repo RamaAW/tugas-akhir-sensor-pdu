@@ -27,19 +27,18 @@ class EmployeeUpdateRequest extends FormRequest
             'name' => 'required|string',
             'companyId' => 'required|string|exists:companies,id',
             'role' => 'required|string',
-            'password' => 'required|string|min:8',
+            'password' => 'nullable|string|min:8',
         ];
 
         $employee = Employee::find($this->route('id'));
         if ($employee) {
-            $rules['email'] = [
+            $rules['username'] = [
                 'required',
                 'string',
-                'email',
-                Rule::unique('employees')->ignore($employee->id),
+                'unique:employees,username,' . $employee->id,
             ];
         } else {
-            $rules['email'] = 'required|string|email';
+            $rules['username'] = 'required|string|unique:employees,username';
         }
 
         return $rules;
@@ -49,13 +48,11 @@ class EmployeeUpdateRequest extends FormRequest
     {
         return [
             'name.required' => 'The name field is required.',
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
+            'username.required' => 'The username field is required.',
+            'username.unique' => 'The username has already been taken.',
             'companyId.required' => 'The companyId field is required.',
             'companyId.exists' => 'The selected companyId is invalid.',
             'role.required' => 'The role field is required.',
-            'password.required' => 'The password field is required.',
             'password.min' => 'The password must be at least 8 characters.',
         ];
     }

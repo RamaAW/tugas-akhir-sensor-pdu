@@ -22,7 +22,7 @@ class EmployeeLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|exists:employees,email',
+            'username' => 'required|string|exists:employees,username',
             'password' => 'required|string|min:8',
         ];
     }
@@ -30,7 +30,7 @@ class EmployeeLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.exists' => 'The selected email is invalid.',
+            'username.exists' => 'The selected username is invalid.',
             'password.required' => 'The password field is required.',
             'password.min' => 'The password must be at least 8 characters.',
         ];

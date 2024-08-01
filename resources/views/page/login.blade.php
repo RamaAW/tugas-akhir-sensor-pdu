@@ -39,8 +39,8 @@
                                         <h5 class="fw-normal mb-3 pb-3"><b>Login into your account</b></h5>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label" for="email">Email address</label>
-                                            <input type="email" id="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
+                                            <label class="form-label" for="username">Username</label>
+                                            <input type="text" id="username" class="form-control" placeholder="Username" />
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
@@ -71,19 +71,3 @@
 </body>
 
 </html>
-
-<!-- <div class="text-center">
-    <h1 class="h4 text-gray-900 mb-4">Login Employee</h1>
-</div>
-<form class="user" id="loginForm">
-    @csrf
-    <div class="form-group">
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
-    </div>
-    <div class="form-group">
-        <input type="password" class="form-control" id="password" placeholder="Password" required>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block">
-        Login
-    </button>
-</form> -->

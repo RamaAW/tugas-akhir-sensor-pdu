@@ -19,11 +19,11 @@ class EmployeeAuthController extends Controller
      */
     public function login(EmployeeLoginRequest $request)
     {
-        $employee = Employee::where('email', $request->email)->first();
+        $employee = Employee::where('username', $request->username)->first();
 
         if (!$employee || !Hash::check($request->password, $employee->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'username' => ['The provided credentials are incorrect.'],
             ]);
         }
 

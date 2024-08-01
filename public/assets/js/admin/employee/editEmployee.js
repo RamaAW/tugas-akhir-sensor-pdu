@@ -50,7 +50,7 @@ $(document).ready(function () {
                 success: function (data) {
                     $("#employeeId").val(data.id);
                     $("#employeeName").val(data.name);
-                    $("#employeeEmail").val(data.email);
+                    $("#employeeUsername").val(data.username);
                     $("#employeeRole").val(data.role);
                     $("#employeePassword").val(data.password);
                     $("#employeeCompany").data(

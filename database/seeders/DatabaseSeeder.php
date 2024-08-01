@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             ['id' => 'employee-001'],
             [
                 'name' => 'Super Admin PDU',
-                'email' => 'superadmin@gmail.com',
+                'username' => 'superadmin',
                 'companyId' => 'company-001',
                 'role' => 'superAdmin',
                 'password' => 'superadmin1234',

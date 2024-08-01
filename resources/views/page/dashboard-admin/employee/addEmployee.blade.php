@@ -25,8 +25,8 @@
                         <input type="text" class="form-control" id="employeeName" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="employeeUsername">Username</label>
+                        <input type="text" class="form-control" id="employeeUsername" name="username" required>
                     </div>
                     <div class="form-group">
                         <label for="companySelect">Choose Company</label>

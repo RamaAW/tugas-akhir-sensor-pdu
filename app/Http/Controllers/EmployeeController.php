@@ -28,7 +28,7 @@ class EmployeeController extends Controller
             return [
                 'id' => $employee->id,
                 'name' => $employee->name,
-                'email' => $employee->email,
+                'username' => $employee->username,
                 'companyId' => $employee->companyId,
                 'companyName' => $employee->companyName, // Add companyName
                 'role' => $employee->role,
@@ -84,7 +84,11 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::findOrFail($id);
-            $employee->update($request->validated());
+            $data = $request->except('password');
+            if ($request->filled('password')) {
+                $data['password'] = $request->input('password');
+            }
+            $employee->update($data);
             return response()->json(["message" => "Employee updated successfully."], 200);
         } catch (ValidationException $e) {
             return response()->json([

@@ -18,15 +18,11 @@ class Employee extends Model
 
 
     protected $fillable = [
-        'id', 'name', 'email', 'companyId', 'role', 'password'
+        'id', 'name', 'username', 'companyId', 'role', 'password'
     ];
 
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     public function companies()

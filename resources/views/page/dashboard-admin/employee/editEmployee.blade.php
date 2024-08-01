@@ -22,8 +22,8 @@
                         <input type="text" class="form-control" id="employeeName" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="employeeEmail">Email</label>
-                        <input type="email" class="form-control" id="employeeEmail" name="email" required>
+                        <label for="employeeUsername">Username</label>
+                        <input type="text" class="form-control" id="employeeUsername" name="username" required>
                     </div>
                     <div class="form-group">
                         <label for="companySelect">Choose Company</label>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <label for="employeePassword">Password</label>
-                        <input type="password" class="form-control" id="employeePassword" name="password" required>
+                        <input type="password" class="form-control" id="employeePassword" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>

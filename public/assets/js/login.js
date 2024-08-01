@@ -8,12 +8,12 @@ $(document).ready(function () {
     $("#loginForm").on("submit", function (e) {
         e.preventDefault();
 
-        const email = $("#email").val();
+        const username = $("#username").val();
         const password = $("#password").val();
 
         // Validate input fields
-        if (!email || !password) {
-            alert("Email and password must be filled out.");
+        if (!username || !password) {
+            alert("Username and password must be filled out.");
             return;
         }
 
@@ -23,7 +23,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify({
-                email: email,
+                username: username,
                 password: password,
             }),
             success: function (response) {

@@ -33,7 +33,7 @@ $(document).ready(function () {
                 columns: [
                     { data: "id" },
                     { data: "name" },
-                    { data: "email" },
+                    { data: "username" },
                     { data: "companyId" },
                     { data: "companyName" },
                     { data: "role" },
