@@ -65,6 +65,31 @@ $(document).ready(function () {
             });
         }
 
+        function fetchRigsByWell(wellId) {
+            console.log("Fetching rigs for well ID:", wellId); // Debugging line
+            $.ajax({
+                url: "http://project-akhir.test/api/rig/well/" + wellId,
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                success: function (rigData) {
+                    console.log("Rig Data Response:", rigData); // Debugging line
+                    if (rigData.length > 0) {
+                        // Save the first rig to localStorage
+                        localStorage.setItem("selectedRigId", rigData[0].id);
+                        console.log("Selected Rig ID saved:", rigData[0].id);
+                    } else {
+                        localStorage.removeItem("selectedRigId");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching rigs:", error);
+                    alert("Failed to fetch rigs. Please try again later.");
+                },
+            });
+        }
+
         // Handle company form submission
         $("#companyForm").change(function (event) {
             event.preventDefault();
@@ -82,6 +107,7 @@ $(document).ready(function () {
             if (wellId) {
                 localStorage.setItem("selectedWellId", wellId);
                 $("#submitSelection").prop("disabled", false);
+                fetchRigsByWell(wellId);
             }
         });
 
@@ -89,11 +115,12 @@ $(document).ready(function () {
         $("#submitSelection").click(function () {
             var selectedCompanyId = localStorage.getItem("selectedCompanyId");
             var selectedWellId = localStorage.getItem("selectedWellId");
+            var selectedRigId = localStorage.getItem("selectedRigId");
 
-            if (selectedCompanyId && selectedWellId) {
+            if (selectedCompanyId && selectedWellId && selectedRigId) {
                 window.location.href = "/dashboard";
             } else {
-                alert("Please select both a company and a well.");
+                alert("Please select a company, a well, and a rig.");
             }
         });
 

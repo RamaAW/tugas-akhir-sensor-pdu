@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('wellId');
             $table->timestamps();
 
-            $table->foreign('wellId')->references('id')->on('wells');
+            $table->foreign('wellId')->references('id')->on('wells')->onDelete('cascade');
         });
     }
 

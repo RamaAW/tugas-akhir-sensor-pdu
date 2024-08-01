@@ -15,20 +15,10 @@ class Well extends Model
         return $this->belongsTo(Place::class, 'placeId');
     }
 
-    public function records()
-    {
-        return $this->hasMany(Record::class, 'wellId');
-    }
-
     public function rigs()
     {
         return $this->hasMany(Rig::class, 'wellId');
     }
-
-    // public function notifications()
-    // {
-    //     return $this->hasMany(Notification::class, 'wellId');
-    // }
 
     public function getPlaceNameAttribute()
     {

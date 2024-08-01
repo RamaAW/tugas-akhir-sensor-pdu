@@ -45,7 +45,7 @@ class RecordStoreRequest extends FormRequest
             'MudTempIn' => 'nullable|numeric',
             'MudTempOut' => 'nullable|numeric',
             'TankVolTot' => 'nullable|numeric',
-            'WellId' => 'required|string|exists:wells,id',
+            'RigId' => 'required|string|exists:rigs,id',
         ];
     }
 
@@ -76,8 +76,8 @@ class RecordStoreRequest extends FormRequest
             'MudTempIn.numeric' => 'The MudTempIn must be a number.',
             'MudTempOut.numeric' => 'The MudTempOut must be a number.',
             'TankVolTot.numeric' => 'The TankVolTot must be a number.',
-            'WellId.required' => 'The WellId field is required.',
-            'WellId.exists' => 'The selected WellId is invalid.',
+            'RigId.required' => 'The Rig Id field is required.',
+            'RigId.exists' => 'The selected Rig Id is invalid.',
         ];
     }
 }

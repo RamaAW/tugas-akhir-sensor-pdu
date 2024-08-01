@@ -14,10 +14,10 @@ class Rig extends Model
         return $this->belongsTo(Well::class, 'wellId');
     }
 
-    // public function records()
-    // {
-    //     return $this->hasMany(Record::class, 'wellId');
-    // }
+    public function records()
+    {
+        return $this->hasMany(Record::class, 'RigId');
+    }
 
     public function getWellNameAttribute()
     {

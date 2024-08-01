@@ -2,10 +2,12 @@ $(document).ready(function () {
     var authToken = localStorage.getItem("authToken");
     var selectedCompanyId = localStorage.getItem("selectedCompanyId");
     var selectedWellId = localStorage.getItem("selectedWellId");
+    var selectedRigId = localStorage.getItem("selectedRigId");
     console.log("au:", authToken);
-    console.log("comp:", selectedCompanyId);
+    console.log("company:", selectedCompanyId);
     console.log("well:", selectedWellId);
-    if (!authToken || !selectedCompanyId || !selectedWellId) {
+    console.log("rig:", selectedRigId);
+    if (!authToken || !selectedCompanyId || !selectedWellId || !selectedRigId) {
         window.location.href = "/chooseCompany-Well";
     } else {
         function fetchCompaniesDetails(companyId) {
@@ -42,9 +44,9 @@ $(document).ready(function () {
             });
         }
 
-        function fetchNotifications(wellId, startDateTime, endDateTime) {
+        function fetchNotifications(rigId, startDateTime, endDateTime) {
             $.ajax({
-                url: `http://project-akhir.test/api/notifications/?wellId=${wellId}`,
+                url: `http://project-akhir.test/api/notifications/?rigId=${rigId}`,
                 type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
@@ -112,7 +114,7 @@ $(document).ready(function () {
             } else {
                 fetchDataBetweenTimes(inputDate, timeStart, timeEnd);
                 fetchNotifications(
-                    selectedWellId,
+                    selectedRigId,
                     `${inputDate} ${timeStart}`,
                     `${inputDate} ${timeEnd}`
                 );
@@ -128,8 +130,8 @@ $(document).ready(function () {
 
             $.ajax({
                 url:
-                    "http://project-akhir.test/api/records/well/" +
-                    localStorage.getItem("selectedWellId"),
+                    "http://project-akhir.test/api/records/rig/" +
+                    localStorage.getItem("selectedRigId"),
                 method: "GET",
                 dataType: "json",
                 headers: {
@@ -185,7 +187,7 @@ $(document).ready(function () {
             $("#mudTempOut, .mudTempOut").text(latestData.MudTempOut);
             $("#tankVolTot, .tankVolTot").text(latestData.TankVolTot);
 
-            $("#wellDetails").text(latestData.WellId);
+            $("#rigDetails").text(latestData.RigId);
         }
 
         function updateCharts(data) {

@@ -21,12 +21,12 @@ class Notification extends Model
     {
         return $this->belongsTo(Record::class, 'recordId');
     }
+    public function getRigNameAttribute()
+    {
+        return $this->records && $this->records->rigs ? $this->records->rigs->rigName : null;
+    }
     public function getWellNameAttribute()
     {
-        return $this->records && $this->records->wells ? $this->records->wells->name : null;
-    }
-    public function getWellIdAttribute()
-    {
-        return $this->records && $this->records->wells ? $this->records->wells->id : null;
+        return $this->records && $this->records->rigs && $this->records->rigs->wells ? $this->records->rigs->wells->name : null;
     }
 }

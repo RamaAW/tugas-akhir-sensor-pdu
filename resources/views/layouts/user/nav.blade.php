@@ -21,9 +21,17 @@
                     </div>
                 </span>
             </div>
-            <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
-                <span style="color:white;">Rig Name: </span><strong id="rigName" style="color:yellow"></strong>
-            </span>
+            <div class="dropdown">
+                <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
+                    <span style="color:white;">Rig Name: </span>
+                    <a class="dropdown-toggle" id="rigName" style="color:yellow;" data-toggle="dropdown" href="#">
+                        Select Rig
+                    </a>
+                    <div class="dropdown-menu" id="rigDropdownMenu">
+                        <!-- Rig options will be populated here -->
+                    </div>
+                </span>
+            </div>
             <span style="font-size: 16px; font-weight:bold; margin-left: 30px;">
                 <span style="color:white;">Rig Activity: </span><strong id="rigActivity" style="color:yellow"></strong>
             </span>

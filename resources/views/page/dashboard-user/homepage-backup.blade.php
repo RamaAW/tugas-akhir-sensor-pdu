@@ -1,6 +1,6 @@
 @extends('layouts.user.app')
 
-@section('title', 'History of Well')
+@section('title', 'Dashboard of Well')
 
 @section('content')
 

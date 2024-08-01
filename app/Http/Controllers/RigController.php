@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RigStoreRequest;
 use App\Models\Rig;
+use App\Models\Well;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -58,6 +59,28 @@ class RigController extends Controller
         }
     }
 
+    public function showByWellId($wellId)
+    {
+        $well = Well::find($wellId);
+
+        if (is_null($well)) {
+            return response()->json([
+                "message" => "Well Not Found"
+            ], 404);
+        }
+
+        $rig = $well->rigs;
+
+        if (is_null($rig)) {
+            return response()->json([
+                "message" => "Rig not found for the given well"
+            ], 404);
+        }
+
+        // Return data rig
+        return response()->json($rig);
+    }
+
     /**
      * Store a new rig
      *
@@ -110,23 +133,13 @@ class RigController extends Controller
     {
         try {
             $rig = Rig::findOrFail($id);
-
-            // Check for related records or notifications if applicable
-            // $relatedRecordsCount = $rig->records()->where('rigId', $id)->count();
-            // $relatedNotificationsCount = $rig->notifications()->where('rigId', $id)->count();
-
-            // if ($relatedRecordsCount > 0) {
-            //     return response()->json(['message' => 'Cannot delete this Rig because there are records related to this Rig.'], 409);
-            // }
-
-            // if ($relatedNotificationsCount > 0) {
-            //     return response()->json(['message' => 'Cannot delete this Rig because there are notifications related to this Rig.'], 409);
-            // }
-
             $rig->delete();
             return response()->json(['message' => "Rig with ID $id has been successfully deleted."], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Rig not found.'], 404);
+        } catch (\Exception $e) {
+            // Handle any other exceptions that might occur during deletion
+            return response()->json(['message' => 'An error occurred while deleting the well.'], 500);
         }
     }
 }

@@ -2,13 +2,15 @@ $(document).ready(function () {
     var authToken = localStorage.getItem("authToken");
     var selectedCompanyId = localStorage.getItem("selectedCompanyId");
     var selectedWellId = localStorage.getItem("selectedWellId");
+    var selectedRigId = localStorage.getItem("selectedRigId");
     let updateInterval;
     let currentStart = 0;
     let dataWindowSize = 30;
     console.log("au:", authToken);
-    console.log("comp:", selectedCompanyId);
+    console.log("company:", selectedCompanyId);
     console.log("well:", selectedWellId);
-    if (!authToken || !selectedCompanyId || !selectedWellId) {
+    console.log("rig:", selectedRigId);
+    if (!authToken || !selectedCompanyId || !selectedWellId || !selectedRigId) {
         window.location.href = "/chooseCompany-Well";
     } else {
         // Function to fetch companies
@@ -40,15 +42,32 @@ $(document).ready(function () {
                     $("#wellName").html(data.name);
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error fetching companies:", error);
-                    alert("Failed to fetch companies. Please try again later.");
+                    console.error("Error fetching wells:", error);
+                    alert("Failed to fetch wells. Please try again later.");
                 },
             });
         }
 
-        function fetchDataRecords(wellId, start, limit) {
+        function fetchRigDetails(rigId) {
             $.ajax({
-                url: `http://project-akhir.test/api/records/well/${wellId}?start=${start}&limit=${limit}`,
+                url: "http://project-akhir.test/api/rig/" + rigId,
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                success: function (data) {
+                    $("#rigName").html(data.rigName);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching rigs:", error);
+                    alert("Failed to fetch rigs. Please try again later.");
+                },
+            });
+        }
+
+        function fetchDataRecords(rigId, start, limit) {
+            $.ajax({
+                url: `http://project-akhir.test/api/records/rig/${rigId}?start=${start}&limit=${limit}`,
                 method: "GET",
                 dataType: "json",
                 headers: {
@@ -88,7 +107,7 @@ $(document).ready(function () {
                             latestData.TankVolTot
                         );
 
-                        $("#wellDetails").text(latestData.WellId);
+                        $("#rigDetails").text(latestData.RigId);
 
                         updateCharts(data);
                     }
@@ -99,7 +118,7 @@ $(document).ready(function () {
             });
         }
 
-        function fetchNotifications(wellId) {
+        function fetchNotifications(rigId) {
             $.ajax({
                 url: "http://project-akhir.test/api/notifications/",
                 type: "GET",
@@ -107,7 +126,7 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 data: {
-                    wellId: wellId,
+                    rigId: rigId,
                 },
                 success: function (data) {
                     $("#notificationContainer").empty();
@@ -134,17 +153,17 @@ $(document).ready(function () {
             });
         }
 
-        function startAutoUpdate(wellId) {
+        function startAutoUpdate(rigId) {
             if (updateInterval) {
                 clearInterval(updateInterval);
             }
 
-            fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
-            fetchNotifications(selectedWellId);
+            fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
+            fetchNotifications(selectedRigId);
 
             updateInterval = setInterval(function () {
-                fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
-                fetchNotifications(selectedWellId);
+                fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
+                fetchNotifications(selectedRigId);
             }, 3000);
         }
 
@@ -262,11 +281,11 @@ $(document).ready(function () {
                 this.scrollHeight
             ) {
                 currentStart += dataWindowSize;
-                fetchDataRecords(selectedWellId, currentStart, dataWindowSize);
+                fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
             }
         });
         fetchCompaniesDetails(selectedCompanyId);
         fetchWellDetails(selectedWellId);
-        startAutoUpdate(selectedWellId);
+        startAutoUpdate(selectedRigId);
     }
 });

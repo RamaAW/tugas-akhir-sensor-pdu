@@ -21,31 +21,36 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $wellId = $request->input('wellId');
-        $notifications = Notification::whereHas('records', function ($query) use ($wellId) {
-            $query->where('WellId', $wellId);
-        })->with('records')->get()->map(function ($notification) {
-            return [
-                'id' => $notification->id,
-                'title' => $notification->title,
-                'message' => $notification->message,
-                'recordId' => $notification->recordId,
-                'created_at' => $notification->created_at,
-                'updated_at' => $notification->updated_at,
-                'seen' => $notification->seen,
-                'records' => [
-                    'Date-Time' => $notification->records->{"Date-Time"},
-                    'Torque' => $notification->records->Torque
-                ]
-            ];
-        });
+        $rigId = $request->input('rigId');
+        $notifications = Notification::whereHas('records', function ($query) use ($rigId) {
+            $query->where('RigId', $rigId);
+        })
+            ->with('records.rigs.wells')
+            ->get()
+            ->map(function ($notification) {
+                return [
+                    'id' => $notification->id,
+                    'title' => $notification->title,
+                    'message' => $notification->message,
+                    'recordId' => $notification->recordId,
+                    'created_at' => $notification->created_at,
+                    'updated_at' => $notification->updated_at,
+                    'seen' => $notification->seen,
+                    'records' => [
+                        'Date-Time' => $notification->records->{"Date-Time"},
+                        'Torque' => $notification->records->Torque,
+                        'RigName' => $notification->records->rigs->rigName,
+                        'WellName' => $notification->records->rigs->wells->name
+                    ]
+                ];
+            });
         return response()->json($notifications);
     }
 
     //pake gak ya
-    public function getNotificationsByWellId($wellId)
+    public function getNotificationsByRigId($rigId)
     {
-        $recordIds = Record::where('wellId', $wellId)->pluck('id');
+        $recordIds = Record::where('RigId', $rigId)->pluck('id');
 
         // Mengambil notifikasi yang terkait dengan recordIds
         $notifications = Notification::whereIn('recordId', $recordIds)->get();

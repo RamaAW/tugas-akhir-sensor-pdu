@@ -36,10 +36,10 @@ return new class extends Migration
             $table->decimal('MudTempIn', 8, 2)->nullable();
             $table->decimal('MudTempOut', 8, 2)->nullable();
             $table->decimal('TankVolTot', 8, 2)->nullable();
-            $table->string('WellId');
+            $table->unsignedBigInteger('RigId');
             $table->timestamps();
 
-            $table->foreign('wellId')->references('id')->on('wells');
+            $table->foreign('RigId')->references('id')->on('rigs')->onDelete('cascade');
         });
     }
 

@@ -180,31 +180,13 @@ class WellController extends Controller
     {
         try {
             $well = Well::findOrFail($id);
-
-            $relatedRecordsCount = $well->records()->where('wellId', $id)->count();
-            $relatedRigsCount = $well->rigs()->where('wellId', $id)->count();
-            $relatedNotificationsCount = $well->notifications()->where('wellId', $id)->count();
-
-            $messages = [];
-
-            if ($relatedRecordsCount > 0) {
-                $messages[] = 'Cannot delete this Well because there are RECORDS related to this Well.';
-            }
-            if ($relatedRigsCount > 0) {
-                $messages[] = 'Cannot delete this Well because there are RIGS related to this Well.';
-            }
-            if ($relatedNotificationsCount > 0) {
-                $messages[] = 'Cannot delete this Well because there are NOTIFICATIONS related to this Well.';
-            }
-
-            if (!empty($messages)) {
-                return response()->json(['messages' => $messages], 409);
-            }
-
             $well->delete();
             return response()->json(['message' => "Well with ID $id has been successfully deleted."], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Well not found.'], 404);
+        } catch (\Exception $e) {
+            // Handle any other exceptions that might occur during deletion
+            return response()->json(['message' => 'An error occurred while deleting the well.'], 500);
         }
     }
 }
