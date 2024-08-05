@@ -57,8 +57,8 @@
     <script src="{{asset('import/assets/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('import/assets/js/demo/chart-pie-demo.js')}}"></script>
     <script type="module" src="{{asset('assets/js/record.js')}}"></script>
+    <script src="{{asset('assets/js/userDetails.js')}}"></script>
     <script src="{{asset('assets/js/chooseWell.js')}}"></script>
-    <!-- <script src="{{asset('assets/js/fetchNotifications.js')}}"></script> -->
     <script src="{{asset('assets/js/logout.js')}}"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </div>

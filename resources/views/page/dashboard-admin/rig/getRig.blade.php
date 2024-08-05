@@ -24,6 +24,7 @@
                                 <th scope="col">Rig Type</th>
                                 <th scope="col">Rig Power</th>
                                 <th scope="col">Rig Activity</th>
+                                <th scope="col">Rig Status</th>
                                 <th scope="col">Well Id</th>
                                 <th scope="col">Well Name</th>
                                 <th scope="col">Place Id</th>
@@ -52,6 +53,7 @@
     <script src="{{ asset('assets/js/admin/rig/getRig.js') }}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{asset('assets/js/userDetails.js')}}"></script>
     <!-- Custom scripts for logout -->
     <script src="{{ asset('assets/js/logout.js') }}"></script>
 </div>

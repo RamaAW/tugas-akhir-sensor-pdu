@@ -34,6 +34,13 @@
                         <input type="text" class="form-control" id="rigActivity" name="rigActivity" required>
                     </div>
                     <div class="form-group">
+                        <label for="isActive">Rig Status</label>
+                        <select class="form-control" id="isActive" name="isActive">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="rigWell">Choose Well</label>
                         <select class="form-control" id="rigWell" name="wellId" required>
                             <option value="">Select Well</option>
