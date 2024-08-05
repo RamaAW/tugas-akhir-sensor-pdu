@@ -48,6 +48,7 @@
     <script src="{{ asset('assets/js/admin/place/getPlace.js') }}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{asset('assets/js/userDetails.js')}}"></script>
     <!-- Custom scripts for logout -->
     <script src="{{ asset('assets/js/logout.js') }}"></script>
 </div>

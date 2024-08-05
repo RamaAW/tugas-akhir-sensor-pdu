@@ -42,6 +42,7 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <!-- Custom JS for company management -->
     <script src="{{ asset('assets/js/admin/company/getCompany.js') }}"></script>
+    <script src="{{asset('assets/js/userDetails.js')}}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>
     <!-- Custom scripts for logout -->

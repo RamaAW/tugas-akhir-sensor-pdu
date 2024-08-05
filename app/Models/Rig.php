@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rig extends Model
 {
-    protected $fillable = ['id', 'rigName', 'rigType', 'rigPower', 'rigActivity', 'wellId'];
+    protected $fillable = ['id', 'rigName', 'rigType', 'rigPower', 'rigActivity', 'wellId', 'isActive'];
 
     public function wells()
     {

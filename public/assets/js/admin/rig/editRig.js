@@ -52,6 +52,7 @@ $(document).ready(function () {
                     $("#rigType").val(data.rigType);
                     $("#rigPower").val(data.rigPower);
                     $("#rigActivity").val(data.rigActivity);
+                    $("#isActive").val(data.isActive);
                     $("#rigWell").val(data.wellId);
                 },
                 error: function (error) {

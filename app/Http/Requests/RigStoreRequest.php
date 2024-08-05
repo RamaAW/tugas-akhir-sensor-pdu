@@ -27,6 +27,7 @@ class RigStoreRequest extends FormRequest
             'rigPower' => 'required|string',
             'rigActivity' => 'required|string',
             'wellId' => 'required|exists:wells,id',
+            'isActive' => 'sometimes|boolean',
         ];
     }
 
@@ -44,6 +45,7 @@ class RigStoreRequest extends FormRequest
             'rigActivity.required' => 'The rigActivity field is required.',
             'wellId.required' => 'The wellId field is required.',
             'wellId.exists' => 'The selected wellId is invalid.',
+            'isActive.boolean' => 'The isActive field must be true or false.',
         ];
     }
 }

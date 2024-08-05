@@ -7,7 +7,7 @@ $(document).ready(function () {
         // Function to fetch companies
         function fetchCompanies() {
             $.ajax({
-                url: "http://project-akhir.test/api/companies/",
+                url: "http://project-akhir.test/api/companies-for-employee/",
                 type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
@@ -117,10 +117,14 @@ $(document).ready(function () {
             var selectedWellId = localStorage.getItem("selectedWellId");
             var selectedRigId = localStorage.getItem("selectedRigId");
 
-            if (selectedCompanyId && selectedWellId && selectedRigId) {
-                window.location.href = "/dashboard";
+            if (!selectedCompanyId) {
+                alert("Please select a company.");
+            } else if (!selectedWellId) {
+                alert("Please select a well.");
+            } else if (!selectedRigId) {
+                alert("There is No Rig In this Well");
             } else {
-                alert("Please select a company, a well, and a rig.");
+                window.location.href = "/dashboard";
             }
         });
 

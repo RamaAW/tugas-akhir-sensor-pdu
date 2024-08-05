@@ -29,7 +29,9 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 var authToken = response.token;
-                localStorage.setItem("authToken", authToken);
+                var userId = response.id;
+                localStorage.setCookie("authToken", authToken);
+                localStorage.setCookie("userId", userId);
                 window.location.href = "/chooseCompany-Well";
             },
             error: function (xhr, status, error) {

@@ -48,23 +48,6 @@ $(document).ready(function () {
             });
         }
 
-        function fetchRigDetails(rigId) {
-            $.ajax({
-                url: "http://project-akhir.test/api/rig/" + rigId,
-                type: "GET",
-                headers: {
-                    Authorization: "Bearer " + authToken,
-                },
-                success: function (data) {
-                    $("#rigName").html(data.rigName);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching rigs:", error);
-                    alert("Failed to fetch rigs. Please try again later.");
-                },
-            });
-        }
-
         function fetchDataRecords(rigId, start, limit) {
             $.ajax({
                 url: `http://project-akhir.test/api/records/rig/${rigId}?start=${start}&limit=${limit}`,

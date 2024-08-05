@@ -50,6 +50,14 @@ class CompanyController extends Controller
         }
     }
 
+    public function getCompaniesForEmployee(Request $request)
+    {
+        $employee = $request->user(); // Mengambil pengguna yang sedang login
+        $companies = Company::where('id', $employee->companyId)->get(); // Menyesuaikan dengan ID perusahaan karyawan
+
+        return response()->json($companies);
+    }
+
     /**
      * Store a new Company
      *

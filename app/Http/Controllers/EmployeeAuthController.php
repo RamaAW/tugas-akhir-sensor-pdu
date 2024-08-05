@@ -32,7 +32,10 @@ class EmployeeAuthController extends Controller
             'role' => $employee->role,
         ])->plainTextToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'token' => $token,
+            'id' => $employee->id,
+        ], 200);
     }
 
     /**

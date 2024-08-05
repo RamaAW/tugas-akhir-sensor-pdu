@@ -31,6 +31,7 @@ class RigController extends Controller
                 'rigType' => $rig->rigType,
                 'rigPower' => $rig->rigPower,
                 'rigActivity' => $rig->rigActivity,
+                'isActive' => $rig->isActive,
                 'wellId' => $rig->wellId,
                 'wellName' => $rig->wellName,
                 'placeId' => $rig->placeId,
@@ -111,7 +112,16 @@ class RigController extends Controller
     {
         try {
             $rig = Rig::findOrFail($id);
+
+            // Update the rig with validated data
             $rig->update($request->validated());
+
+            // If isActive is set in the request, update the isActive status
+            if ($request->has('isActive')) {
+                $rig->isActive = $request->input('isActive');
+                $rig->save();
+            }
+
             return response()->json(["message" => "Rig updated successfully."], 200);
         } catch (ValidationException $e) {
             return response()->json([

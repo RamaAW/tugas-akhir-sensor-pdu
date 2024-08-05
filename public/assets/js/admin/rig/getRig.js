@@ -36,6 +36,14 @@ $(document).ready(function () {
                     { data: "rigType" },
                     { data: "rigPower" },
                     { data: "rigActivity" },
+                    {
+                        data: "isActive",
+                        render: function (data) {
+                            return data
+                                ? '<span class="font-weight-bold text-primary">Active</span>'
+                                : '<span class="font-weight-bold text-danger">Inactive</span>';
+                        },
+                    },
                     { data: "wellId" },
                     { data: "wellName" },
                     { data: "placeId" },
