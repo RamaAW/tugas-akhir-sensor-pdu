@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WellRequest;
 use App\Http\Requests\WellStoreRequest;
 use App\Http\Requests\WellUpdateRequest;
 use App\Models\Company;
@@ -134,7 +135,7 @@ class WellController extends Controller
      * @param  \App\Http\Requests\WellStoreRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(WellStoreRequest $request)
+    public function store(WellRequest $request)
     {
         try {
             $well = Well::create($request->validated());
@@ -154,7 +155,7 @@ class WellController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(WellUpdateRequest $request, $id)
+    public function update(WellRequest $request, $id)
     {
         try {
             $well = Well::findOrFail($id);

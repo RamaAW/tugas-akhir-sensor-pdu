@@ -17,10 +17,6 @@
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <form id="placeForm" method="POST">
                     <div class="form-group">
-                        <label for="placeId">Place ID</label>
-                        <input type="text" class="form-control" id="placeId" name="id" required>
-                    </div>
-                    <div class="form-group">
                         <label for="placeName">Place Name</label>
                         <input type="text" class="form-control" id="placeName" name="name" required>
                     </div>

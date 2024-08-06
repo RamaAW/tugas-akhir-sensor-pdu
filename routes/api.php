@@ -6,6 +6,7 @@ use App\Http\Controllers\WellController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CsvUploadController;
 use App\Http\Controllers\EmployeeAuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\NotificationController;
@@ -43,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //company
     Route::get('companies', [CompanyController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('company/{id}', [CompanyController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('companies-for-employee', [CompanyController::class, 'getCompaniesForEmployee'])->middleware('role:user,admin,superAdmin');
     Route::post('company', [CompanyController::class, 'store'])->middleware('role:superAdmin');
     Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin,superAdmin');
     Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:superAdmin');
@@ -70,12 +72,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('rig', [RigController::class, 'store'])->middleware('role:admin,superAdmin');
     Route::get('rigs', [RigController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('rig/{id}', [RigController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('rig/well/{wellId}', [RigController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
     Route::put('rig/{id}', [RigController::class, 'update'])->middleware('role:admin,superAdmin');
     Route::delete('rig/{id}', [RigController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
     //record
     Route::get('records', [RecordController::class, 'index'])->middleware('role:user,admin,superAdmin');
     Route::get('records/{id}', [RecordController::class, 'show'])->middleware('role:user,admin,superAdmin');
+    Route::get('records/rig/{rigId}', [RecordController::class, 'showByRigId'])->middleware('role:user,admin,superAdmin');
     Route::get('records/well/{wellId}', [RecordController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
     Route::delete('records/{id}', [RecordController::class, 'destroy'])->middleware('role:admin,superAdmin');
 
@@ -87,6 +91,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('notification/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin,superAdmin');
 });
 Route::post('records', [RecordController::class, 'store']);
+Route::post('records/uploadCsv', [RecordController::class, 'uploadCsv']);
+Route::get('records/save-csv/{rigId}', [RecordController::class, 'saveCsv'])->name('save.csv');
 Route::post('notification', [NotificationController::class, 'store']);
 Route::post('generate-dummy-record', [RecordController::class, 'generateDummyRecord']);
 

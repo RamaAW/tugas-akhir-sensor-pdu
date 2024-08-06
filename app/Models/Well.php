@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Well extends Model
 {
+
+    public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = ['id', 'name', 'address', 'latitude', 'longitude', 'placeId'];
 
@@ -33,5 +36,15 @@ class Well extends Model
     public function getCompanyIdAttribute()
     {
         return $this->places && $this->places->companies ? $this->places->companies->id : null;
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
     }
 }

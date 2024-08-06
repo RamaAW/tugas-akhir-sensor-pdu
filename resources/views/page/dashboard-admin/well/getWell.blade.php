@@ -24,9 +24,7 @@
                                 <th scope="col">Well Address</th>
                                 <th scope="col">Well Latitude</th>
                                 <th scope="col">Well Longitude</th>
-                                <th scope="col">Place Id</th>
                                 <th scope="col">Place Name</th>
-                                <th scope="col">Company Id</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col" class="action-column">Action</th>
                             </tr>

@@ -16,11 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Employee::updateOrCreate(
-            ['id' => 'employee-001'],
             [
                 'name' => 'Super Admin PDU',
                 'username' => 'superadmin',
-                'companyId' => 'company-001',
+                'companyId' => 'c60d1108-130c-42c7-9e94-c773460bdfe1',
                 'role' => 'superAdmin',
                 'password' => 'superadmin1234',
             ]

@@ -31,7 +31,7 @@ $(document).ready(function () {
                     dataSrc: "",
                 },
                 columns: [
-                    { data: "id" },
+                    { data: "id", visible: false }, // Kolom ID disembunyikan
                     { data: "name" },
                     { data: "username" },
                     { data: "companyId" },

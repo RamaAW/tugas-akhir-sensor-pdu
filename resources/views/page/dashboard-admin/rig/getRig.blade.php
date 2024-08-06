@@ -25,11 +25,8 @@
                                 <th scope="col">Rig Power</th>
                                 <th scope="col">Rig Activity</th>
                                 <th scope="col">Rig Status</th>
-                                <th scope="col">Well Id</th>
                                 <th scope="col">Well Name</th>
-                                <th scope="col">Place Id</th>
                                 <th scope="col">Place Name</th>
-                                <th scope="col">Company Id</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col" class="action-column">Action</th>
                             </tr>

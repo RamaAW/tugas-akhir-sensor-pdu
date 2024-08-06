@@ -31,7 +31,7 @@ $(document).ready(function () {
                     dataSrc: "",
                 },
                 columns: [
-                    { data: "id" },
+                    { data: "id", visible: false }, // Kolom ID disembunyikan
                     { data: "rigName" },
                     { data: "rigType" },
                     { data: "rigPower" },
@@ -44,11 +44,8 @@ $(document).ready(function () {
                                 : '<span class="font-weight-bold text-danger">Inactive</span>';
                         },
                     },
-                    { data: "wellId" },
                     { data: "wellName" },
-                    { data: "placeId" },
                     { data: "placeName" },
-                    { data: "companyId" },
                     { data: "companyName" },
                     {
                         data: null,

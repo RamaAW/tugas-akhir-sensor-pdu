@@ -17,10 +17,6 @@
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <form id="wellForm" method="POST">
                     <div class="form-group">
-                        <label for="wellId">Well ID</label>
-                        <input type="text" class="form-control" id="wellId" name="id" required>
-                    </div>
-                    <div class="form-group">
                         <label for="wellName">Well Name</label>
                         <input type="text" class="form-control" id="wellName" name="name" required>
                     </div>

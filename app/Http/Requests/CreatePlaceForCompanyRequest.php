@@ -12,7 +12,6 @@ class CreatePlaceForCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|unique:places',
             'name' => 'required|string',
             'address' => 'required|string',
             'latitude' => 'required|numeric',
@@ -23,8 +22,6 @@ class CreatePlaceForCompanyRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'The id field is required.',
-            'id.unique' => 'The id must be unique.',
             'name.required' => 'The name field is required.',
             'address.required' => 'The address field is required.',
             'latitude.required' => 'The latitude field is required.',

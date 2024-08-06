@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Company;
@@ -60,7 +61,7 @@ class EmployeeController extends Controller
      * @param  \App\Http\Requests\EmployeeStoreRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(EmployeeStoreRequest $request)
+    public function store(EmployeeRequest $request)
     {
         try {
             $employee = Employee::create($request->validated());
@@ -80,7 +81,7 @@ class EmployeeController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(EmployeeUpdateRequest $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
         try {
             $employee = Employee::findOrFail($id);

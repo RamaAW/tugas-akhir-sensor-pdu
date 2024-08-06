@@ -31,14 +31,12 @@ $(document).ready(function () {
                     dataSrc: "",
                 },
                 columns: [
-                    { data: "id" },
+                    { data: "id", visible: false }, // Kolom ID disembunyikan
                     { data: "name" },
                     { data: "address" },
                     { data: "latitude" },
                     { data: "longitude" },
-                    { data: "placeId" },
                     { data: "placeName" },
-                    { data: "companyId" },
                     { data: "companyName" },
                     {
                         data: null,

@@ -17,10 +17,6 @@
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <form id="companyForm" method="POST">
                     <div class="form-group">
-                        <label for="companyId">Company ID</label>
-                        <input type="text" class="form-control" id="companyId" name="id" required>
-                    </div>
-                    <div class="form-group">
                         <label for="companyName">Name</label>
                         <input type="text" class="form-control" id="companyName" name="name" required>
                     </div>

@@ -22,7 +22,6 @@ class CompanyStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|unique:companies',
             'name' => 'required|string',
             'address' => 'required|string',
         ];
@@ -31,8 +30,6 @@ class CompanyStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'The id field is required.',
-            'id.unique' => 'The id must be unique.',
             'name.required' => 'The name field is required.',
             'address.required' => 'The address field is required.',
         ];

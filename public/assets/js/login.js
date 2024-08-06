@@ -30,8 +30,8 @@ $(document).ready(function () {
                 console.log(response);
                 var authToken = response.token;
                 var userId = response.id;
-                localStorage.setCookie("authToken", authToken);
-                localStorage.setCookie("userId", userId);
+                localStorage.setItem("authToken", authToken);
+                localStorage.setItem("userId", userId);
                 window.location.href = "/chooseCompany-Well";
             },
             error: function (xhr, status, error) {

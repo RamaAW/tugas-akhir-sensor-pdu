@@ -24,7 +24,6 @@
                                 <th scope="col">Place Address</th>
                                 <th scope="col">Place Latitude</th>
                                 <th scope="col">Place Longitude</th>
-                                <th scope="col">Company Id</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col" class="action-column">Action</th>
                             </tr>

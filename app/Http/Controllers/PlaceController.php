@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateWellForPlaceRequest;
+use App\Http\Requests\PlaceRequest;
 use App\Http\Requests\PlaceStoreRequest;
 use App\Http\Requests\PlaceUpdateRequest;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class PlaceController extends Controller
      * @param  \App\Http\Requests\PlaceStoreRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(PlaceStoreRequest $request)
+    public function store(PlaceRequest $request)
     {
         try {
             $place = Place::create($request->validated());
@@ -112,7 +113,7 @@ class PlaceController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(PlaceUpdateRequest $request, $id)
+    public function update(PlaceRequest $request, $id)
     {
         try {
             $place = Place::findOrFail($id);

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddEmployeeToCompanyRequest;
 use App\Http\Requests\AddPlaceToCompanyRequest;
-use App\Http\Requests\CompanyStoreRequest;
-use App\Http\Requests\CompanyUpdateRequest;
+use App\Http\Requests\CompanyRequest;
 use App\Http\Requests\CreatePlaceForCompanyRequest;
 use App\Models\Company;
 use App\Models\Employee;
@@ -40,12 +39,12 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $company = Company::find($id);
-        if (!empty($company)) {
+        try {
+            $company = Company::findOrFail($id);
             return response()->json($company);
-        } else {
+        } catch (ModelNotFoundException $e) {
             return response()->json([
-                "message" => "Company Not Found"
+                "message" => "Company not found."
             ], 404);
         }
     }
@@ -58,13 +57,7 @@ class CompanyController extends Controller
         return response()->json($companies);
     }
 
-    /**
-     * Store a new Company
-     *
-     * @param  \App\Http\Requests\CompanyStoreRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(CompanyStoreRequest $request)
+    public function store(CompanyRequest $request)
     {
         try {
             $company = Company::create($request->validated());
@@ -109,7 +102,7 @@ class CompanyController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CompanyUpdateRequest $request, $id)
+    public function update(CompanyRequest $request, $id)
     {
         try {
             $company = Company::findOrFail($id);
