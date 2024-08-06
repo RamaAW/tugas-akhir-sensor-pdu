@@ -28,6 +28,11 @@
             text-align: center;
         }
 
+        .action-records-column {
+            width: 25%;
+            text-align: center;
+        }
+
         .action-btns {
             display: flex;
             justify-content: center;

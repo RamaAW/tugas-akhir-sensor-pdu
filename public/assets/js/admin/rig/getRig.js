@@ -49,6 +49,18 @@ $(document).ready(function () {
                     { data: "companyName" },
                     {
                         data: null,
+                        className: "action-records-column",
+                        render: function (data, type, row) {
+                            return `
+                                <div class="action-btns">
+                                    <button class="btn btn-sm btn-warning delete-all-btn" data-id="${row.id}"><i class="fas fa-trash-alt"></i> Delete All Records</button>
+                                    <input type="file" class="form-control-file csv-upload" data-id="${row.id}" />
+                                </div>
+                            `;
+                        },
+                    },
+                    {
+                        data: null,
                         className: "action-column",
                         render: function (data, type, row) {
                             return `
@@ -63,6 +75,7 @@ $(document).ready(function () {
             });
         }
         fetchRigs();
+
         $("#rigTable").on("click", ".delete-btn", function () {
             var rigId = $(this).data("id");
 
@@ -92,6 +105,81 @@ $(document).ready(function () {
                     },
                 });
             }
+        });
+
+        $("#rigTable").on("click", ".delete-all-btn", function () {
+            var rigId = $(this).data("id");
+
+            if (
+                confirm(
+                    "Are you sure you want to delete all records associated with this rig?"
+                )
+            ) {
+                $.ajax({
+                    url: `http://project-akhir.test/api/records/rig/${rigId}`,
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + authToken,
+                    },
+                    success: function () {
+                        alert("All records for this rig deleted successfully.");
+                        $("#rigTable").DataTable().ajax.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error deleting records:", error);
+                        try {
+                            const errorData = JSON.parse(xhr.responseText);
+                            displayErrors(errorData.errors || errorData);
+                        } catch (err) {
+                            displayErrors({
+                                general:
+                                    "An unexpected error occurred. Please try again later.",
+                            });
+                        }
+                    },
+                });
+            }
+        });
+
+        $("#rigTable").on("change", ".csv-upload", function () {
+            var rigId = $(this).data("id");
+            var fileInput = $(this)[0];
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append("csv_file", file);
+            formData.append("rigId", rigId);
+
+            $.ajax({
+                url: `http://project-akhir.test/api/records/uploadCsv`,
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: "Bearer " + authToken,
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert(
+                        "CSV file uploaded successfully. " +
+                            response.records_created +
+                            " records created."
+                    );
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error uploading CSV:", error);
+                    try {
+                        const errorData = JSON.parse(xhr.responseText);
+                        displayErrors(errorData.errors || errorData);
+                    } catch (err) {
+                        displayErrors({
+                            general:
+                                "An unexpected error occurred. Please try again later.",
+                        });
+                    }
+                },
+            });
         });
 
         $("#rigTable tbody").on("click", ".edit-btn", function () {

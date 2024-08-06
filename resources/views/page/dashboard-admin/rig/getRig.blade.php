@@ -28,6 +28,7 @@
                                 <th scope="col">Well Name</th>
                                 <th scope="col">Place Name</th>
                                 <th scope="col">Company Name</th>
+                                <th scope="col" class="action-records-column">Action Record</th>
                                 <th scope="col" class="action-column">Action</th>
                             </tr>
                         </thead>
