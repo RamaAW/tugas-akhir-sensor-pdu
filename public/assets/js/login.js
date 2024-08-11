@@ -27,12 +27,17 @@ $(document).ready(function () {
                 password: password,
             }),
             success: function (response) {
-                console.log(response);
                 var authToken = response.token;
                 var userId = response.id;
+                var userRole = response.role;
                 localStorage.setItem("authToken", authToken);
                 localStorage.setItem("userId", userId);
-                window.location.href = "/chooseCompany-Well";
+
+                if (userRole === "admin") {
+                    window.location.href = "/admin/company";
+                } else {
+                    window.location.href = "/chooseCompany-Well";
+                }
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);

@@ -24,7 +24,7 @@
                         <label for="companyAddress">Address</label>
                         <input type="text" class="form-control" id="companyAddress" name="address" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Add Company</button>
                 </form>
             </div>
         </div>

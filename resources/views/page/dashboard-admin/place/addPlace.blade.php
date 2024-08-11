@@ -38,7 +38,7 @@
                         <label for="placeLongitude">Longitude</label>
                         <input type="text" class="form-control" id="placeLongitude" name="longitude" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Place to Company</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Place</button>
                 </form>
             </div>
 

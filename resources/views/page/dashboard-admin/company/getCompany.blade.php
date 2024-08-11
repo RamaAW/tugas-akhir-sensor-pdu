@@ -16,6 +16,9 @@
                 <h2 class="text-danger" style="font-family: 'Arial', sans-serif; font-weight:bold;">Company</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <div class="table-responsive">
+                    <div class="mb-3">
+                        <a href="{{ url('/admin/company/add') }}" class="btn btn-primary">Add Company</a>
+                    </div>
                     <table id="companyTable" class="table table-striped table-bordered">
                         <thead class="bg-success text-white">
                             <tr>
@@ -27,9 +30,6 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <div class="mb-3">
-                        <a href="{{ url('/admin/company/add') }}" class="btn btn-primary">Add Company</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -42,6 +42,7 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <!-- Custom JS for company management -->
     <script src="{{ asset('assets/js/admin/company/getCompany.js') }}"></script>
+    <script src="{{ asset('assets/js/admin/userRole.js') }}"></script>
     <script src="{{asset('assets/js/userDetails.js')}}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('import/assets/js/sb-admin-2.min.js') }}"></script>

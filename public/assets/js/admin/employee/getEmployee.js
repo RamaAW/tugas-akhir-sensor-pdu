@@ -34,7 +34,6 @@ $(document).ready(function () {
                     { data: "id", visible: false }, // Kolom ID disembunyikan
                     { data: "name" },
                     { data: "username" },
-                    { data: "companyId" },
                     { data: "companyName" },
                     { data: "role" },
                     {

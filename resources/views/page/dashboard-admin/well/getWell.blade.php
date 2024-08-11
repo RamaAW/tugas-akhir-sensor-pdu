@@ -16,6 +16,9 @@
                 <h2 class="text-danger" style="font-family: 'Arial', sans-serif; font-weight:bold;">Well</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <div class="table-responsive">
+                    <div class="mb-3">
+                        <a href="{{ url('/admin/well/add') }}" class="btn btn-primary">Add Well</a>
+                    </div>
                     <table id="wellTable" class="table table-striped table-bordered">
                         <thead class="bg-success text-white">
                             <tr>
@@ -31,9 +34,6 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <div class="mb-3">
-                        <a href="{{ url('/admin/well/add') }}" class="btn btn-primary">Add Well</a>
-                    </div>
                 </div>
             </div>
         </div>

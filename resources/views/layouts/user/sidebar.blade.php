@@ -10,7 +10,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/homepage">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/history">
             <i class="fas fa-history"></i>
         </a>
     </li>

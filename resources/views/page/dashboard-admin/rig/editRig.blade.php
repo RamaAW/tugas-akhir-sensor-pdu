@@ -46,7 +46,7 @@
                             <option value="">Select Well</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update Rig</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
 

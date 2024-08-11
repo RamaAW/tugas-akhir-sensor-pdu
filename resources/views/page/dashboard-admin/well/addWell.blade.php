@@ -38,7 +38,7 @@
                         <label for="wellLongitude">Well Longitude</label>
                         <input type="text" class="form-control" id="wellLongitude" name="longitude" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Well to Place</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Well</button>
                 </form>
             </div>
 

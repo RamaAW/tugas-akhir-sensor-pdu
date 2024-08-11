@@ -16,13 +16,15 @@
                 <h2 class="text-danger" style="font-family: 'Arial', sans-serif; font-weight:bold;">User</h2>
                 <div id="error-messages" class="alert alert-danger" style="display: none;"></div>
                 <div class="table-responsive">
+                    <div class="mb-3">
+                        <a href="{{ url('/admin/employee/add') }}" class="btn btn-primary">Add User</a>
+                    </div>
                     <table id="employeeTable" class="table table-striped table-bordered">
                         <thead class="bg-success text-white">
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Employee Name</th>
                                 <th scope="col">Username</th>
-                                <th scope="col">Company Id</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col">Role</th>
                                 <th scope="col" class="action-column">Action</th>
@@ -30,9 +32,6 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <div class="mb-3">
-                        <a href="{{ url('/admin/employee/add') }}" class="btn btn-primary">Add User</a>
-                    </div>
                 </div>
             </div>
         </div>

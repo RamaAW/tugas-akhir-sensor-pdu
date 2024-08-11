@@ -35,14 +35,13 @@
                         <select class="form-control" id="role" name="role" required>
                             <option value="user">User</option>
                             <option value="admin">Admin</option>
-                            <option value="superAdmin">Super Admin</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Employee to Company</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Employee</button>
                 </form>
             </div>
 

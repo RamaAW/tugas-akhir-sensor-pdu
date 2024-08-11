@@ -39,7 +39,7 @@
                         <label for="wellLongitude">Well Longitude</label>
                         <input type="text" class="form-control" id="wellLongitude" name="longitude" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update Well</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
 

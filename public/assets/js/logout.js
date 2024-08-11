@@ -1,8 +1,6 @@
 $(document).ready(function () {
     var authToken = localStorage.getItem("authToken");
-    var selectedCompanyId = localStorage.getItem("selectedCompanyId");
-    var selectedWellId = localStorage.getItem("selectedWellId");
-    if (!authToken || !selectedCompanyId || !selectedWellId) {
+    if (!authToken) {
         window.location.href = "/chooseCompany-Well";
     } else {
         // Function to fetch companies

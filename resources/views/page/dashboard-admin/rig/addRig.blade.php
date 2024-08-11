@@ -45,7 +45,7 @@
                             <option value="">Select Well</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-5">Add Rig to Well</button>
+                    <button type="submit" class="btn btn-primary mb-5">Add Rig</button>
                 </form>
             </div>
 

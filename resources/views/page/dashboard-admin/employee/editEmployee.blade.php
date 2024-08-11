@@ -36,7 +36,6 @@
                         <select class="form-control" id="employeeRole" name="role" required>
                             <option value="user">User</option>
                             <option value="admin">Admin</option>
-                            <option value="superAdmin">Super Admin</option>
                         </select>
                     </div>
                     <div class="form-group">
