@@ -52,19 +52,44 @@
             border-top: 1px solid #ddd;
         }
 
-        .sidebar .nav-item.active a,
-        .sidebar .nav-item a:active,
-        .sidebar .nav-item a:focus,
-        .sidebar .nav-item a:hover {
-            background-color: white !important;
-            color: black
+        /* Updated sidebar styles */
+        .sidebar {
+            width: 150px !important;
         }
 
-        .sidebar .nav-item a {
+        .sidebar .nav-item .nav-link {
+            text-align: left;
+            padding: 1rem;
+            width: 150px;
             color: white;
-            /* Default color */
-            transition: color 0.3s ease;
-            /* Smooth transition for color change */
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .sidebar .nav-item .nav-link span {
+            font-size: 0.85rem;
+            display: inline;
+            padding-left: 1rem;
+        }
+
+        .sidebar .nav-item .nav-link i {
+            font-size: 0.85rem;
+            margin-right: 0.25rem;
+        }
+
+        .sidebar .nav-item .nav-link.active,
+        .sidebar .nav-item .nav-link:active,
+        .sidebar .nav-item .nav-link:focus,
+        .sidebar .nav-item .nav-link:hover {
+            background-color: white !important;
+            color: black;
+        }
+
+        .sidebar-brand .sidebar-brand-icon {
+            font-size: 2rem;
+        }
+
+        .sidebar-brand .sidebar-brand-text {
+            font-size: 1.2rem;
         }
     </style>
 </head>
