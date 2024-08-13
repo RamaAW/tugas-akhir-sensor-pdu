@@ -58,11 +58,17 @@
                     </div>
                 </div>
             </div>
+
             <div class="card mb-4">
                 <div class="col-12 mx-auto">
-                    <canvas id="stackedChart" style="height: 700px;"></canvas>
+                    <div class="box">
+                        <div class="subbox">
+                            <canvas id="stackedChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
         <div class="col-md-3">
             <div class="card mb-3">
@@ -114,7 +120,11 @@
             </div>
             <div class="card mb-4">
                 <div class="col-12 mx-auto">
-                    <canvas id="stackedChart2" style="height: 700px;"></canvas>
+                    <div class="box">
+                        <div class="subbox">
+                            <canvas id="stackedChart2"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -178,7 +188,11 @@
             </div>
             <div class="card mb-4">
                 <div class="col-12 mx-auto">
-                    <canvas id="stackedChart3" style="height: 700px;"></canvas>
+                    <div class="box">
+                        <div class="subbox">
+                            <canvas id="stackedChart3"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,7 +256,11 @@
             </div>
             <div class="card mb-4">
                 <div class="col-12 mx-auto">
-                    <canvas id="stackedChart4" style="height: 700px;"></canvas>
+                    <div class="box">
+                        <div class="subbox">
+                            <canvas id="stackedChart4"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -281,7 +299,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Mud Conduct In',
+                        label: 'MudConductIn',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
@@ -319,7 +337,7 @@
             var stackedData2 = {
                 labels: [],
                 datasets: [{
-                        label: 'Mud Conduct Out',
+                        label: 'MudConductOut',
                         data: [],
                         borderColor: 'rgb(0, 0, 255)',
                         lineTension: 0,
@@ -365,7 +383,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Mud Flow Out(%)',
+                        label: 'MudFlowOut(%)',
                         data: [],
                         borderColor: 'rgb(50, 205, 50)',
                         lineTension: 0,
@@ -381,7 +399,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Standpipe Press',
+                        label: 'Sp Press',
                         data: [],
                         borderColor: 'rgb(0, 191, 255)',
                         lineTension: 0,
@@ -389,7 +407,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Mud Flow In',
+                        label: 'MudFlowIn',
                         data: [],
                         borderColor: 'rgb(164, 0, 0)',
                         lineTension: 0,
@@ -435,7 +453,7 @@
                         pointRadius: 1
                     },
                     {
-                        label: 'Tank Vol. (total)',
+                        label: 'TankVol.(total)',
                         data: [],
                         borderColor: 'rgb(164, 0, 0)',
                         lineTension: 0,
@@ -479,13 +497,13 @@
                             zoom: {
                                 wheel: {
                                     enabled: true, // Enable zooming with mouse wheel
-                                    speed: 0.01,
+                                    speed: 0.05,
                                 },
                                 pinch: {
                                     enabled: true, // Enable zooming with pinch gestures
                                     speed: 0.01,
                                 },
-                                mode: 'xy', // Allow zooming in both x and y axes
+                                mode: 'y', // Allow zooming in both x and y axes
                             },
                             pan: {
                                 enabled: true, // Enable panning
@@ -530,16 +548,22 @@
                             intersect: true,
                         },
                         zoom: {
-                            wheel: {
-                                enabled: true,
+                            zoom: {
+                                wheel: {
+                                    enabled: true, // Enable zooming with mouse wheel
+                                    speed: 0.05,
+                                },
+                                pinch: {
+                                    enabled: true, // Enable zooming with pinch gestures
+                                    speed: 0.01,
+                                },
+                                mode: 'y', // Allow zooming in both x and y axes
                             },
-                            drag: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true,
-                            },
-                            mode: 'x',
+                            pan: {
+                                enabled: true, // Enable panning
+                                speed: 0.01,
+                                mode: 'xy', // Allow panning in both x and y axes
+                            }
                         }
                     },
                 }
@@ -578,16 +602,22 @@
                             intersect: true,
                         },
                         zoom: {
-                            wheel: {
-                                enabled: true,
+                            zoom: {
+                                wheel: {
+                                    enabled: true, // Enable zooming with mouse wheel
+                                    speed: 0.05,
+                                },
+                                pinch: {
+                                    enabled: true, // Enable zooming with pinch gestures
+                                    speed: 0.01,
+                                },
+                                mode: 'y', // Allow zooming in both x and y axes
                             },
-                            drag: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true,
-                            },
-                            mode: 'x',
+                            pan: {
+                                enabled: true, // Enable panning
+                                speed: 0.01,
+                                mode: 'xy', // Allow panning in both x and y axes
+                            }
                         }
                     },
                 }
@@ -626,23 +656,27 @@
                             intersect: true,
                         },
                         zoom: {
-                            wheel: {
-                                enabled: true,
+                            zoom: {
+                                wheel: {
+                                    enabled: true, // Enable zooming with mouse wheel
+                                    speed: 0.05,
+                                },
+                                pinch: {
+                                    enabled: true, // Enable zooming with pinch gestures
+                                    speed: 0.01,
+                                },
+                                mode: 'y', // Allow zooming in both x and y axes
                             },
-                            drag: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true,
-                            },
-                            mode: 'x',
+                            pan: {
+                                enabled: true, // Enable panning
+                                speed: 0.01,
+                                mode: 'xy', // Allow panning in both x and y axes
+                            }
                         }
                     },
                 }
             };
 
-            Chart.register(ChartZoom);
-            var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(
                 document.getElementById('stackedChart'),
                 stackedConfig
@@ -662,8 +696,6 @@
                 document.getElementById('stackedChart4'),
                 stackedConfig4
             );
-
-            allCharts = [myChart, myChart2, myChart3, myChart4];
         </script>
     </footer>
 </div>

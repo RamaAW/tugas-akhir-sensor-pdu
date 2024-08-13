@@ -31,6 +31,7 @@
                         <button type="button" class="btn btn-primary mt-4" id="searchButton">Search</button>
                     </div>
                 </form>
+                <button type="button" class="btn btn-success mt-4 ms-2" id="downloadCsvButton">Download CSV</button>
             </div>
 
             <!-- Page Content -->

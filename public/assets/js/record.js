@@ -4,8 +4,6 @@ $(document).ready(function () {
     var selectedWellId = localStorage.getItem("selectedWellId");
     var selectedRigId = localStorage.getItem("selectedRigId");
     let updateInterval;
-    let currentStart = 0;
-    let dataWindowSize = 30;
     console.log("au:", authToken);
     console.log("company:", selectedCompanyId);
     console.log("well:", selectedWellId);
@@ -48,9 +46,9 @@ $(document).ready(function () {
             });
         }
 
-        function fetchDataRecords(rigId, start, limit) {
+        function fetchDataRecords(rigId) {
             $.ajax({
-                url: `http://project-akhir.test/api/records/rig/${rigId}?start=${start}&limit=${limit}`,
+                url: `http://project-akhir.test/api/records/rig/${rigId}/getLast30`,
                 method: "GET",
                 dataType: "json",
                 headers: {
@@ -58,7 +56,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (Array.isArray(data) && data.length > 0) {
-                        const latestData = data[data.length - 1];
+                        const latestData = data[0]; // The first item is now the latest
                         $("#bitDepth, .bitDepth").text(latestData.BitDepth);
                         $("#scfm, .scfm").text(latestData.Scfm);
                         $("#mudCondIn, .mudCondIn").text(latestData.MudCondIn);
@@ -92,7 +90,7 @@ $(document).ready(function () {
 
                         $("#rigDetails").text(latestData.RigId);
 
-                        updateCharts(data);
+                        updateCharts(data.reverse()); // Reverse to get chronological order
                     }
                 },
                 error: function (xhr, status, error) {
@@ -103,13 +101,10 @@ $(document).ready(function () {
 
         function fetchNotifications(rigId) {
             $.ajax({
-                url: "http://project-akhir.test/api/notifications/",
+                url: `http://project-akhir.test/api/notification/rig/${rigId}`,
                 type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
-                },
-                data: {
-                    rigId: rigId,
                 },
                 success: function (data) {
                     $("#notificationContainer").empty();
@@ -141,13 +136,13 @@ $(document).ready(function () {
                 clearInterval(updateInterval);
             }
 
-            fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
-            fetchNotifications(selectedRigId);
+            fetchDataRecords(rigId);
+            fetchNotifications(rigId);
 
             updateInterval = setInterval(function () {
-                fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
-                fetchNotifications(selectedRigId);
-            }, 3000);
+                fetchDataRecords(rigId);
+                fetchNotifications(rigId);
+            }, 5000);
         }
 
         function updateCharts(data) {
@@ -255,18 +250,6 @@ $(document).ready(function () {
             }
             myChart4.update();
         }
-
-        // Scroll event handler
-        $(".chart-container").on("scroll", function () {
-            // Check if scrolled to the bottom
-            if (
-                $(this).scrollTop() + $(this).innerHeight() >=
-                this.scrollHeight
-            ) {
-                currentStart += dataWindowSize;
-                fetchDataRecords(selectedRigId, currentStart, dataWindowSize);
-            }
-        });
         fetchCompaniesDetails(selectedCompanyId);
         fetchWellDetails(selectedWellId);
         startAutoUpdate(selectedRigId);
