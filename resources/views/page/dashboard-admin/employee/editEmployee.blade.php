@@ -39,7 +39,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="employeePassword">Password</label>
+                        <label for="employeePassword">Password
+                            <div style="color: red;">(*Only Fill if You Want to Change the Password)</div>
+                        </label>
                         <input type="password" class="form-control" id="employeePassword" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
