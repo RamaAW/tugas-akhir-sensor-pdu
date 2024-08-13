@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
+    var authToken = sessionStorage.getItem("authToken");
     if (!authToken) {
         window.location.href = "/chooseCompany-Well";
     } else {
@@ -14,7 +14,7 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (response) {
-                    localStorage.removeItem("authToken");
+                    sessionStorage.removeItem("authToken");
                     window.location.href = "/login";
                 },
                 error: function (xhr, status, error) {

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
+    var authToken = sessionStorage.getItem("authToken");
     console.log("au:", authToken);
 
     if (!authToken) {

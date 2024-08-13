@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Check if a token exists in local storage when the page loads
-    var userId = localStorage.getItem("userId");
-    var token = localStorage.getItem("authToken");
+    var userId = sessionStorage.getItem("userId");
+    var token = sessionStorage.getItem("authToken");
     if (userId) {
         fetchUserDetails(userId);
     }

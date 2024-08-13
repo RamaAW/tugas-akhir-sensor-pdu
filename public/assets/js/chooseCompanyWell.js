@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
+    var authToken = sessionStorage.getItem("authToken");
     console.log("au:", authToken);
     if (!authToken) {
         window.location.href = "/login";
@@ -76,11 +76,10 @@ $(document).ready(function () {
                 success: function (rigData) {
                     console.log("Rig Data Response:", rigData); // Debugging line
                     if (rigData.length > 0) {
-                        // Save the first rig to localStorage
-                        localStorage.setItem("selectedRigId", rigData[0].id);
+                        sessionStorage.setItem("selectedRigId", rigData[0].id);
                         console.log("Selected Rig ID saved:", rigData[0].id);
                     } else {
-                        localStorage.removeItem("selectedRigId");
+                        sessionStorage.removeItem("selectedRigId");
                     }
                 },
                 error: function (xhr, status, error) {
@@ -97,7 +96,7 @@ $(document).ready(function () {
             console.log("Selected Company ID:", companyId);
             if (companyId) {
                 fetchWellsByCompany(companyId);
-                localStorage.setItem("selectedCompanyId", companyId);
+                sessionStorage.setItem("selectedCompanyId", companyId);
             }
         });
 
@@ -105,7 +104,7 @@ $(document).ready(function () {
         $("#wellSelect").change(function () {
             var wellId = $(this).val();
             if (wellId) {
-                localStorage.setItem("selectedWellId", wellId);
+                sessionStorage.setItem("selectedWellId", wellId);
                 $("#submitSelection").prop("disabled", false);
                 fetchRigsByWell(wellId);
             }
@@ -113,9 +112,9 @@ $(document).ready(function () {
 
         // Redirect to homepage if both selections are made
         $("#submitSelection").click(function () {
-            var selectedCompanyId = localStorage.getItem("selectedCompanyId");
-            var selectedWellId = localStorage.getItem("selectedWellId");
-            var selectedRigId = localStorage.getItem("selectedRigId");
+            var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
+            var selectedWellId = sessionStorage.getItem("selectedWellId");
+            var selectedRigId = sessionStorage.getItem("selectedRigId");
 
             if (!selectedCompanyId) {
                 alert("Please select a company.");
@@ -129,5 +128,14 @@ $(document).ready(function () {
         });
 
         fetchCompanies();
+
+        $("#backToLogin").click(function () {
+            sessionStorage.removeItem("authToken"); // Hapus token dari sessionStorage
+            sessionStorage.removeItem("userId");
+            sessionStorage.removeItem("selectedCompanyId");
+            sessionStorage.removeItem("selectedWellId");
+            sessionStorage.removeItem("selectedRigId");
+            window.location.href = "/login"; // Arahkan ke halaman login
+        });
     }
 });

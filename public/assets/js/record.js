@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
-    var selectedCompanyId = localStorage.getItem("selectedCompanyId");
-    var selectedWellId = localStorage.getItem("selectedWellId");
-    var selectedRigId = localStorage.getItem("selectedRigId");
+    var authToken = sessionStorage.getItem("authToken");
+    var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
+    var selectedWellId = sessionStorage.getItem("selectedWellId");
+    var selectedRigId = sessionStorage.getItem("selectedRigId");
     let updateInterval;
     console.log("au:", authToken);
     console.log("company:", selectedCompanyId);

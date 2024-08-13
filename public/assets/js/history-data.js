@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
-    var selectedCompanyId = localStorage.getItem("selectedCompanyId");
-    var selectedWellId = localStorage.getItem("selectedWellId");
-    var selectedRigId = localStorage.getItem("selectedRigId");
+    var authToken = sessionStorage.getItem("authToken");
+    var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
+    var selectedWellId = sessionStorage.getItem("selectedWellId");
+    var selectedRigId = sessionStorage.getItem("selectedRigId");
     console.log("au:", authToken);
     console.log("company:", selectedCompanyId);
     console.log("well:", selectedWellId);
@@ -131,12 +131,12 @@ $(document).ready(function () {
             $.ajax({
                 url:
                     "http://project-akhir.test/api/records/rig/" +
-                    localStorage.getItem("selectedRigId"),
+                    sessionStorage.getItem("selectedRigId"),
                 method: "GET",
                 dataType: "json",
                 headers: {
                     Authorization:
-                        "Bearer " + localStorage.getItem("authToken"),
+                        "Bearer " + sessionStorage.getItem("authToken"),
                 },
                 success: function (data) {
                     const filteredData = data.filter((record) => {

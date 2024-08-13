@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Check if a token exists in local storage when the page loads
-    var token = localStorage.getItem("authToken");
+    var token = sessionStorage.getItem("authToken");
     if (token) {
         window.location.href = "/dashboard";
         return; // Exit the function if token exists
@@ -30,8 +30,8 @@ $(document).ready(function () {
                 var authToken = response.token;
                 var userId = response.id;
                 var userRole = response.role;
-                localStorage.setItem("authToken", authToken);
-                localStorage.setItem("userId", userId);
+                sessionStorage.setItem("authToken", authToken);
+                sessionStorage.setItem("userId", userId);
 
                 if (userRole === "admin") {
                     window.location.href = "/admin/company";

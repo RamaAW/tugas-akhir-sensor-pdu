@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    var authToken = localStorage.getItem("authToken");
-    var selectedCompanyId = localStorage.getItem("selectedCompanyId");
-    var selectedWellId = localStorage.getItem("selectedWellId");
-    var selectedRigId = localStorage.getItem("selectedRigId");
+    var authToken = sessionStorage.getItem("authToken");
+    var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
+    var selectedWellId = sessionStorage.getItem("selectedWellId");
+    var selectedRigId = sessionStorage.getItem("selectedRigId");
 
     function fetchWellsByCompany(companyId) {
         $.ajax({
@@ -47,17 +47,17 @@ $(document).ready(function () {
                     $("#wellName")
                         .text(firstWell.name)
                         .attr("data-well-id", firstWell.id);
-                    localStorage.setItem("selectedWellId", firstWell.id);
-                    localStorage.setItem("selectedWellName", firstWell.name);
+                    sessionStorage.setItem("selectedWellId", firstWell.id);
+                    sessionStorage.setItem("selectedWellName", firstWell.name);
                     fetchRigsByWell(firstWell.id);
                 } else {
                     $("#wellName").text("Select Well").attr("data-well-id", "");
                     $("#rigName").text("Select Rig").attr("data-rig-id", "");
                     $("#rigDropdownMenu").empty();
-                    localStorage.removeItem("selectedWellId");
-                    localStorage.removeItem("selectedWellName");
-                    localStorage.removeItem("selectedRigId");
-                    localStorage.removeItem("selectedRigName");
+                    sessionStorage.removeItem("selectedWellId");
+                    sessionStorage.removeItem("selectedWellName");
+                    sessionStorage.removeItem("selectedRigId");
+                    sessionStorage.removeItem("selectedRigName");
                 }
                 $("#wellName").dropdown("update");
             },
@@ -123,12 +123,12 @@ $(document).ready(function () {
 
     function updateSelectedRig(rigId, rigName) {
         if (rigId && rigName) {
-            localStorage.setItem("selectedRigId", rigId);
-            localStorage.setItem("selectedRigName", rigName);
+            sessionStorage.setItem("selectedRigId", rigId);
+            sessionStorage.setItem("selectedRigName", rigName);
             selectedRigId = rigId;
         } else {
-            localStorage.removeItem("selectedRigId");
-            localStorage.removeItem("selectedRigName");
+            sessionStorage.removeItem("selectedRigId");
+            sessionStorage.removeItem("selectedRigName");
             selectedRigId = null;
         }
         location.reload();
@@ -144,8 +144,8 @@ $(document).ready(function () {
         var wellId = $(this).data("well-id");
         var wellName = $(this).text();
         $("#wellName").text(wellName).attr("data-well-id", wellId);
-        localStorage.setItem("selectedWellId", wellId);
-        localStorage.setItem("selectedWellName", wellName);
+        sessionStorage.setItem("selectedWellId", wellId);
+        sessionStorage.setItem("selectedWellName", wellName);
         selectedWellId = wellId;
         fetchRigsByWell(wellId);
     });
