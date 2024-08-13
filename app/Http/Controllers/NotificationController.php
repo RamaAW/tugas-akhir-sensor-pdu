@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NotificationStoreRequest;
 use App\Models\Notification;
 use App\Models\Record;
+use App\Models\Rig;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -19,41 +20,10 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $rigId = $request->input('rigId');
-        $notifications = Notification::whereHas('records', function ($query) use ($rigId) {
-            $query->where('RigId', $rigId);
-        })
-            ->with('records.rigs.wells')
-            ->get()
-            ->map(function ($notification) {
-                return [
-                    'id' => $notification->id,
-                    'title' => $notification->title,
-                    'message' => $notification->message,
-                    'recordId' => $notification->recordId,
-                    'created_at' => $notification->created_at,
-                    'updated_at' => $notification->updated_at,
-                    'seen' => $notification->seen,
-                    'records' => [
-                        'Date-Time' => $notification->records->{"Date-Time"},
-                        'Torque' => $notification->records->Torque,
-                        'RigName' => $notification->records->rigs->rigName,
-                        'WellName' => $notification->records->rigs->wells->name
-                    ]
-                ];
-            });
-        return response()->json($notifications);
-    }
 
-    //pake gak ya
-    public function getNotificationsByRigId($rigId)
+    public function index()
     {
-        $recordIds = Record::where('RigId', $rigId)->pluck('id');
-
-        // Mengambil notifikasi yang terkait dengan recordIds
-        $notifications = Notification::whereIn('recordId', $recordIds)->get();
+        $notifications = Notification::all();
         return response()->json($notifications);
     }
 
@@ -75,6 +45,43 @@ class NotificationController extends Controller
         }
     }
 
+    public function getNotificationByRigId($rigId)
+    {
+        // Cari rig berdasarkan ID
+        $rig = Rig::find($rigId);
+
+        if (!$rig) {
+            return response()->json(['error' => 'Rig not found'], 404);
+        }
+
+        // Ambil semua notifikasi yang terkait dengan rig ini
+        $notifications = Notification::whereHas('records', function ($query) use ($rigId) {
+            $query->where('RigId', $rigId);
+        })
+            ->with('records.rigs.wells')
+            ->get();
+
+        // Format outputnya
+        $formattedNotifications = $notifications->map(function ($notification) {
+            return [
+                'id' => $notification->id,
+                'title' => $notification->title,
+                'message' => $notification->message,
+                'recordId' => $notification->recordId,
+                'created_at' => $notification->created_at,
+                'updated_at' => $notification->updated_at,
+                'seen' => $notification->seen,
+                'records' => [
+                    'Date-Time' => $notification->records->{"Date-Time"},
+                    'Torque' => $notification->records->Torque,
+                    'RigName' => $notification->records->rigs->rigName,
+                    'WellName' => $notification->records->rigs->wells->name
+                ]
+            ];
+        });
+
+        return response()->json($formattedNotifications);
+    }
     /**
      * Store a new notification
      *

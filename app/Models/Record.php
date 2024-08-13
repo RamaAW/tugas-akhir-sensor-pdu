@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\WebSocketHandler;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,12 +34,28 @@ class Record extends Model
         'MudTempIn',
         'MudTempOut',
         'TankVolTot',
-        'WellId'
+        'RigId',
+        'created_at',
     ];
 
-    public function wells()
+    public function rigs()
     {
-        return $this->belongsTo(Well::class, 'WellId');
+        return $this->belongsTo(Rig::class, 'RigId');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'recordId');
+    }
+
+    public function getRigNameAttribute()
+    {
+        return $this->rigs ? $this->rigs->rigName : null;
+    }
+
+    public function getWellNameAttribute()
+    {
+        return $this->rigs && $this->rigs->wells  ? $this->rigs->wells->name : null;
     }
 
     protected $attributes = [

@@ -39,6 +39,18 @@ class RecordController extends Controller
         return response()->json($records);
     }
 
+    public function getLastRecords(Request $request, $rigId)
+    {
+        $rig = Rig::findOrFail($rigId);
+
+        $records = $rig->records()
+            ->orderBy('id', 'desc')
+            ->limit(30)
+            ->get();
+
+        return response()->json($records);
+    }
+
     /**
      * Get a specific record
      *
@@ -121,7 +133,15 @@ class RecordController extends Controller
             if ($record->Torque > 25) {
                 Notification::create([
                     'title' => 'Torque Alert',
-                    'message' => 'Torque value exceeded the threshold: ' . $record->Torque,
+                    'message' => 'Torque value exceeded the threshold: ' . $record->Torque . ' klb.ft ' . 'at depth: ' . $record->BitDepth . ' m',
+                    'recordId' => $record->id,
+                    'seen' => false // Default to unseen
+                ]);
+            }
+            if ($record->RPM < 80 && $record->Torque > 15) {
+                Notification::create([
+                    'title' => 'RPM & Torque Alert',
+                    'message' => 'RPM is low: ' . $record->RPM . '<br>and Torque is high: ' . $record->Torque . ' klb.ft' . '<br>at depth: ' . $record->BitDepth . ' m',
                     'recordId' => $record->id,
                     'seen' => false // Default to unseen
                 ]);
@@ -221,7 +241,15 @@ class RecordController extends Controller
                 if ($record->Torque > 25) {
                     Notification::create([
                         'title' => 'Torque Alert',
-                        'message' => 'Torque value exceeded the threshold: ' . $record->Torque,
+                        'message' => 'Torque value exceeded the threshold: ' . $record->Torque . ' klb.ft ' . 'at depth: ' . $record->BitDepth . ' m',
+                        'recordId' => $record->id,
+                        'seen' => false // Default to unseen
+                    ]);
+                }
+                if ($record->RPM < 80 && $record->Torque > 15) {
+                    Notification::create([
+                        'title' => 'RPM & Torque Alert',
+                        'message' => 'RPM is low: ' . $record->RPM . '<br>and Torque is high: ' . $record->Torque . ' klb.ft' . '<br>at depth: ' . $record->BitDepth . ' m',
                         'recordId' => $record->id,
                         'seen' => false // Default to unseen
                     ]);
@@ -253,17 +281,36 @@ class RecordController extends Controller
         // Membuat file CSV menggunakan League CSV
         $csv = Writer::createFromString('');
         $csv->insertOne([
-            'Date-Time', 'BitDepth', 'Scfm', 'MudCondIn', 'BlockPos',
-            'WOB', 'ROPi', 'BVDepth', 'MudCondOut', 'Torque',
-            'RPM', 'Hkld', 'LogDepth', 'H2S_1', 'MudFlowOutp',
-            'TotSPM', 'SpPress', 'MudFlowIn', 'CO2_1', 'Gas',
-            'MudTempIn', 'MudTempOut', 'TankVolTot', 'Stuck' // Menambahkan kolom Stuck
+            'Date-Time',
+            'BitDepth',
+            'Scfm',
+            'MudCondIn',
+            'BlockPos',
+            'WOB',
+            'ROPi',
+            'BVDepth',
+            'MudCondOut',
+            'Torque',
+            'RPM',
+            'Hkld',
+            'LogDepth',
+            'H2S_1',
+            'MudFlowOutp',
+            'TotSPM',
+            'SpPress',
+            'MudFlowIn',
+            'CO2_1',
+            'Gas',
+            'MudTempIn',
+            'MudTempOut',
+            'TankVolTot',
+            'Stuck' // Menambahkan kolom Stuck
         ]);
 
         // Menambahkan data record ke file CSV
         foreach ($records as $record) {
             // Tentukan nilai untuk kolom Stuck
-            $stuckValue = $record->Torque > 25 ? 1 : 0;
+            $stuckValue = $record->Torque > 25 || $record->RPM < 80 && $record->Torque > 15 ? 1 : 0;
 
             $csv->insertOne([
                 $record->created_at->format('Y-m-d H:i:s'), // Date-Time
@@ -294,6 +341,98 @@ class RecordController extends Controller
         }
 
         // Simpan file CSV ke sistem penyimpanan
+        $csvContent = $csv->toString();
+        $fileName = 'records_' . $rigId . '_' . now()->format('Ymd_His') . '.csv';
+        $filePath = 'csv/' . $fileName;
+
+        Storage::disk('local')->put($filePath, $csvContent);
+
+        return response()->json([
+            'message' => 'CSV file saved successfully',
+            'file_path' => Storage::url($filePath),
+        ]);
+    }
+
+    public function saveCsvByTime(Request $request, $rigId)
+    {
+        // Validate input
+        $request->validate([
+            'startDateTime' => 'required|date_format:Y-m-d H:i:s',
+            'endDateTime' => 'required|date_format:Y-m-d H:i:s|after:startDateTime',
+        ]);
+
+        // Validate rigId
+        $rig = Rig::find($rigId);
+        if (!$rig) {
+            return response()->json(['error' => 'Rig not found'], 404);
+        }
+
+        // Get records for the specified rig and time range
+        $records = Record::where('RigId', $rigId)
+            ->whereBetween('created_at', [$request->startDateTime, $request->endDateTime])
+            ->get();
+
+        // Create CSV file (using League CSV as before)
+        $csv = Writer::createFromString('');
+        $csv->insertOne([
+            'Date-Time',
+            'BitDepth',
+            'Scfm',
+            'MudCondIn',
+            'BlockPos',
+            'WOB',
+            'ROPi',
+            'BVDepth',
+            'MudCondOut',
+            'Torque',
+            'RPM',
+            'Hkld',
+            'LogDepth',
+            'H2S_1',
+            'MudFlowOutp',
+            'TotSPM',
+            'SpPress',
+            'MudFlowIn',
+            'CO2_1',
+            'Gas',
+            'MudTempIn',
+            'MudTempOut',
+            'TankVolTot',
+            'Stuck' // Menambahkan kolom Stuck
+        ]);
+
+        foreach ($records as $record) {
+            $stuckValue = $record->Torque > 25 || $record->RPM < 80 && $record->Torque > 15 ? 1 : 0;
+
+            $csv->insertOne([
+                $record->created_at->format('Y-m-d H:i:s'), // Date-Time
+                $record->BitDepth,
+                $record->Scfm,
+                $record->MudCondIn,
+                $record->BlockPos,
+                $record->WOB,
+                $record->ROPi,
+                $record->BVDepth,
+                $record->MudCondOut,
+                $record->Torque,
+                $record->RPM,
+                $record->Hkld,
+                $record->LogDepth,
+                $record->H2S_1,
+                $record->MudFlowOutp,
+                $record->TotSPM,
+                $record->SpPress,
+                $record->MudFlowIn,
+                $record->CO2_1,
+                $record->Gas,
+                $record->MudTempIn,
+                $record->MudTempOut,
+                $record->TankVolTot,
+                $stuckValue // Menambahkan nilai Stuck
+            ]);
+        }
+
+        // Save and return file as before
         $csvContent = $csv->toString();
         $fileName = 'records_' . $rigId . '_' . now()->format('Ymd_His') . '.csv';
         $filePath = 'csv/' . $fileName;
