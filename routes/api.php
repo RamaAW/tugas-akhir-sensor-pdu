@@ -34,67 +34,68 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //yang sementara dipakai
 
     //employee
-    Route::get('employees', [EmployeeController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('employee/{id}', [EmployeeController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::post('employee', [EmployeeController::class, 'store'])->middleware('role:admin,superAdmin');
-    // Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin,superAdmin');;
-    Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::get('employees', [EmployeeController::class, 'index'])->middleware('role:user,admin');
+    Route::get('employee/{id}', [EmployeeController::class, 'show'])->middleware('role:user,admin');
+    Route::post('employee', [EmployeeController::class, 'store'])->middleware('role:admin');
+    // Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin');;
+    Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin');
+    Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin');
 
     //company
-    Route::get('companies', [CompanyController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('company/{id}', [CompanyController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::get('companies-for-employee', [CompanyController::class, 'getCompaniesForEmployee'])->middleware('role:user,admin,superAdmin');
-    Route::post('company', [CompanyController::class, 'store'])->middleware('role:superAdmin');
-    Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:superAdmin');
+    Route::get('companies', [CompanyController::class, 'index'])->middleware('role:user,admin');
+    Route::get('company/{id}', [CompanyController::class, 'show'])->middleware('role:user,admin');
+    Route::get('companies-for-employee', [CompanyController::class, 'getCompaniesForEmployee'])->middleware('role:user,admin');
+    Route::post('company', [CompanyController::class, 'store'])->middleware('role:admin');
+    Route::put('company/{id}', [CompanyController::class, 'update'])->middleware('role:admin');
+    Route::delete('company/{id}', [CompanyController::class, 'destroy'])->middleware('role:admin');
 
     //place
-    Route::post('company/{companyId}/place', [CompanyController::class, 'createPlace'])->middleware('role:admin,superAdmin');
-    Route::get('places', [PlaceController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('place/{id}', [PlaceController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::post('places', [PlaceController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::put('place/{id}', [PlaceController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('place/{id}', [PlaceController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::post('company/{companyId}/place', [CompanyController::class, 'createPlace'])->middleware('role:admin');
+    Route::get('places', [PlaceController::class, 'index'])->middleware('role:user,admin');
+    Route::get('place/{id}', [PlaceController::class, 'show'])->middleware('role:user,admin');
+    Route::post('places', [PlaceController::class, 'store'])->middleware('role:admin');
+    Route::put('place/{id}', [PlaceController::class, 'update'])->middleware('role:admin');
+    Route::delete('place/{id}', [PlaceController::class, 'destroy'])->middleware('role:admin');
 
     //well
-    Route::post('company/{companyId}/place/{placeId}/well', [PlaceController::class, 'createWell'])->middleware('role:admin,superAdmin');
-    Route::get('wells', [WellController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('well/{id}', [WellController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::get('/companies/{companyId}/wells', [WellController::class, 'showByCompanyId'])->middleware('role:user,admin,superAdmin');
-    Route::get('/companies/{companyId}/places/{placeId?}', [WellController::class, 'showByPlaceId'])->middleware('role:user,admin,superAdmin');
+    Route::post('company/{companyId}/place/{placeId}/well', [PlaceController::class, 'createWell'])->middleware('role:admin');
+    Route::get('wells', [WellController::class, 'index'])->middleware('role:user,admin');
+    Route::get('well/{id}', [WellController::class, 'show'])->middleware('role:user,admin');
+    Route::get('/companies/{companyId}/wells', [WellController::class, 'showByCompanyId'])->middleware('role:user,admin');
+    Route::get('/companies/{companyId}/places/{placeId?}', [WellController::class, 'showByPlaceId'])->middleware('role:user,admin');
 
-    Route::post('wells', [WellController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::put('well/{id}', [WellController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('well/{id}', [WellController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::post('wells', [WellController::class, 'store'])->middleware('role:admin');
+    Route::put('well/{id}', [WellController::class, 'update'])->middleware('role:admin');
+    Route::delete('well/{id}', [WellController::class, 'destroy'])->middleware('role:admin');
 
     //rig
-    Route::post('rig', [RigController::class, 'store'])->middleware('role:admin,superAdmin');
-    Route::get('rigs', [RigController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('rig/{id}', [RigController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::get('rig/well/{wellId}', [RigController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
-    Route::put('rig/{id}', [RigController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('rig/{id}', [RigController::class, 'destroy'])->middleware('role:admin,superAdmin');
+    Route::post('rig', [RigController::class, 'store'])->middleware('role:admin');
+    Route::get('rigs', [RigController::class, 'index'])->middleware('role:user,admin');
+    Route::get('rig/{id}', [RigController::class, 'show'])->middleware('role:user,admin');
+    Route::get('rig/well/{wellId}', [RigController::class, 'showByWellId'])->middleware('role:user,admin');
+    Route::put('rig/{id}', [RigController::class, 'update'])->middleware('role:admin');
+    Route::delete('rig/{id}', [RigController::class, 'destroy'])->middleware('role:admin');
 
     //record
-    Route::get('records', [RecordController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('records/{id}', [RecordController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::get('records/rig/{rigId}', [RecordController::class, 'showByRigId'])->middleware('role:user,admin,superAdmin');
-    Route::get('records/well/{wellId}', [RecordController::class, 'showByWellId'])->middleware('role:user,admin,superAdmin');
-    Route::delete('records/{id}', [RecordController::class, 'destroy'])->middleware('role:admin,superAdmin');
-    Route::delete('/records/rig/{rigId}', [RecordController::class, 'destroyByRig'])->middleware('role:admin,superAdmin');;
-    Route::post('records/uploadCsv', [RecordController::class, 'uploadCsv']);
+    Route::get('records', [RecordController::class, 'index'])->middleware('role:user,admin');
+    Route::get('records/{id}', [RecordController::class, 'show'])->middleware('role:user,admin');
+    Route::get('records/rig/{rigId}/getLast30', [RecordController::class, 'getLastRecords'])->middleware('role:user,admin');
+    Route::get('records/rig/{rigId}', [RecordController::class, 'showByRigId'])->middleware('role:user,admin');
+    Route::get('records/well/{wellId}', [RecordController::class, 'showByWellId'])->middleware('role:user,admin');
+    Route::delete('records/{id}', [RecordController::class, 'destroy'])->middleware('role:admin');
+    Route::delete('/records/rig/{rigId}', [RecordController::class, 'destroyByRig'])->middleware('role:admin');
+    Route::post('records/uploadCsv', [RecordController::class, 'uploadCsv'])->middleware('role:admin');
 
     //notification
-    Route::get('notifications', [NotificationController::class, 'index'])->middleware('role:user,admin,superAdmin');
-    Route::get('notification/{id}', [NotificationController::class, 'show'])->middleware('role:user,admin,superAdmin');
-    Route::get('notifications/well/{wellId}', [NotificationController::class, 'getNotificationsByWellId'])->middleware('role:user,admin,superAdmin');
-    Route::put('notification/{id}', [NotificationController::class, 'update'])->middleware('role:admin,superAdmin');
-    Route::delete('notification/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin,superAdmin');
-});
-Route::post('records', [RecordController::class, 'store']);
-Route::get('records/save-csv/{rigId}', [RecordController::class, 'saveCsv'])->name('save.csv');
-Route::post('notification', [NotificationController::class, 'store']);
-Route::post('generate-dummy-record', [RecordController::class, 'generateDummyRecord']);
+    Route::get('notifications', [NotificationController::class, 'index'])->middleware('role:user,admin');
+    Route::get('notification/{id}', [NotificationController::class, 'show'])->middleware('role:user,admin');
+    Route::get('notification/rig/{rigId}', [NotificationController::class, 'getNotificationByRigId'])->middleware('role:user,admin');
+    Route::put('notification/{id}', [NotificationController::class, 'update'])->middleware('role:admin');
+    Route::delete('notification/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin');
 
+    Route::post('records', [RecordController::class, 'store'])->middleware('role:user');
+    Route::get('records/save-csv/{rigId}', [RecordController::class, 'saveCsv'])->name('save.csv')->middleware('role:user');
+    Route::get('records/save-csv-byTime/{rigId}', [RecordController::class, 'saveCsvByTime'])->name('saveByTime.csv')->middleware('role:user');
+    Route::post('notification', [NotificationController::class, 'store'])->middleware('role:user');
+});
 Route::post('/logout', [EmployeeAuthController::class, 'logout'])->middleware('auth:sanctum');

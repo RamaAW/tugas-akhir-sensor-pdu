@@ -46,7 +46,7 @@ $(document).ready(function () {
 
         function fetchNotifications(rigId, startDateTime, endDateTime) {
             $.ajax({
-                url: `http://project-akhir.test/api/notifications/?rigId=${rigId}`,
+                url: `http://project-akhir.test/api/notification/rig/${rigId}`,
                 type: "GET",
                 headers: {
                     Authorization: "Bearer " + authToken,
@@ -190,8 +190,18 @@ $(document).ready(function () {
             $("#rigDetails").text(latestData.RigId);
         }
 
+        function adjustChartHeight(chartId, chart) {
+            const subbox = document
+                .querySelector(`#${chartId}`)
+                .closest(".subbox");
+            subbox.style.height = "800px";
+            if (chart.data.labels.length > 7) {
+                const newHeight = 800 + (chart.data.labels.length - 7) * 1;
+                subbox.style.height = `${newHeight}px`;
+            }
+        }
+
         function updateCharts(data) {
-            var maxDataPoints = 30;
             var times = data.map((item) => {
                 var parts = item["Date-Time"].split(" ");
                 var timePart = parts[1];
@@ -215,13 +225,8 @@ $(document).ready(function () {
             stackedData.datasets[4].data = data.map((item) =>
                 parseFloat(item.ROPi)
             );
-            if (stackedData.labels.length > maxDataPoints) {
-                stackedData.labels = stackedData.labels.slice(-maxDataPoints);
-                stackedData.datasets.forEach((dataset) => {
-                    dataset.data = dataset.data.slice(-maxDataPoints);
-                });
-            }
             myChart.update();
+            adjustChartHeight("stackedChart", myChart);
 
             // Update untuk myChart2 (stackedChart2)
             stackedData2.labels = times;
@@ -237,13 +242,8 @@ $(document).ready(function () {
             stackedData2.datasets[3].data = data.map((item) =>
                 parseFloat(item.Hkld)
             );
-            if (stackedData2.labels.length > maxDataPoints) {
-                stackedData2.labels = stackedData2.labels.slice(-maxDataPoints);
-                stackedData2.datasets.forEach((dataset) => {
-                    dataset.data = dataset.data.slice(-maxDataPoints);
-                });
-            }
             myChart2.update();
+            adjustChartHeight("stackedChart2", myChart2);
 
             // Update untuk myChart3 (stackedChart3)
             stackedData3.labels = times;
@@ -262,13 +262,8 @@ $(document).ready(function () {
             stackedData3.datasets[4].data = data.map((item) =>
                 parseFloat(item.MudFlowIn)
             );
-            if (stackedData3.labels.length > maxDataPoints) {
-                stackedData3.labels = stackedData3.labels.slice(-maxDataPoints);
-                stackedData3.datasets.forEach((dataset) => {
-                    dataset.data = dataset.data.slice(-maxDataPoints);
-                });
-            }
             myChart3.update();
+            adjustChartHeight("stackedChart3", myChart3);
 
             // Update untuk myChart4 (stackedChart4)
             stackedData4.labels = times;
@@ -287,17 +282,63 @@ $(document).ready(function () {
             stackedData4.datasets[4].data = data.map((item) =>
                 parseFloat(item.TankVolTot)
             );
-            if (stackedData4.labels.length > maxDataPoints) {
-                stackedData4.labels = stackedData4.labels.slice(-maxDataPoints);
-                stackedData4.datasets.forEach((dataset) => {
-                    dataset.data = dataset.data.slice(-maxDataPoints);
-                });
-            }
             myChart4.update();
+            adjustChartHeight("stackedChart4", myChart4);
+        }
+
+        function downloadCsv() {
+            const inputDate = document.getElementById("inputDate").value;
+            const timeStart = document.getElementById("timeStart").value;
+            const timeEnd = document.getElementById("timeEnd").value;
+
+            if (!inputDate || !timeStart || !timeEnd) {
+                alert("Please select a date and both start time and end time.");
+                return;
+            }
+
+            // Format datetime strings for the API request
+            var startDateTime = `${inputDate} ${timeStart}:00`;
+            var endDateTime = `${inputDate} ${timeEnd}:00`;
+            console.log(startDateTime);
+            console.log(endDateTime);
+            $.ajax({
+                url: `http://project-akhir.test/api/records/save-csv-byTime/${selectedRigId}`,
+                type: "GET",
+                headers: {
+                    Authorization: "Bearer " + authToken,
+                },
+                data: {
+                    startDateTime: startDateTime,
+                    endDateTime: endDateTime,
+                },
+                success: function (response) {
+                    // Create a temporary anchor element to trigger the download
+                    var link = document.createElement("a");
+                    link.href = response.file_path;
+                    link.download = `rig_data_${inputDate}.csv`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error generating CSV:", error);
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        alert(
+                            "Failed to generate CSV: " +
+                                xhr.responseJSON.message
+                        );
+                    } else {
+                        alert(
+                            "Failed to generate CSV. Please try again later."
+                        );
+                    }
+                },
+            });
         }
 
         fetchCompaniesDetails(selectedCompanyId);
         fetchWellDetails(selectedWellId);
         $("#searchButton").click(validateTimes);
+        $("#downloadCsvButton").click(downloadCsv);
     }
 });
