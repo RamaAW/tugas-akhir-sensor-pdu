@@ -369,7 +369,7 @@ class RecordController extends Controller
 
         // Get records for the specified rig and time range
         $records = Record::where('RigId', $rigId)
-            ->whereBetween('created_at', [$request->startDateTime, $request->endDateTime])
+            ->whereBetween('Date-Time', [$request->startDateTime, $request->endDateTime])
             ->get();
 
         // Create CSV file (using League CSV as before)
