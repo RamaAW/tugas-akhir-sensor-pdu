@@ -93,9 +93,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('notification/{id}', [NotificationController::class, 'update'])->middleware('role:admin');
     Route::delete('notification/{id}', [NotificationController::class, 'destroy'])->middleware('role:admin');
 
-    Route::post('records', [RecordController::class, 'store'])->middleware('role:user');
-    Route::get('records/save-csv/{rigId}', [RecordController::class, 'saveCsv'])->name('save.csv')->middleware('role:user');
-    Route::get('records/save-csv-byTime/{rigId}', [RecordController::class, 'saveCsvByTime'])->name('saveByTime.csv')->middleware('role:user');
-    Route::post('notification', [NotificationController::class, 'store'])->middleware('role:user');
+    Route::post('records', [RecordController::class, 'store'])->middleware('role:user,admin');
+    Route::get('records/save-csv/{rigId}', [RecordController::class, 'saveCsv'])->name('save.csv')->middleware('role:user,admin');
+    Route::get('records/save-csv-byTime/{rigId}', [RecordController::class, 'saveCsvByTime'])->name('saveByTime.csv')->middleware('role:admin,user');
+    Route::post('notification', [NotificationController::class, 'store'])->middleware('role:user,admin');
 });
 Route::post('/logout', [EmployeeAuthController::class, 'logout'])->middleware('auth:sanctum');
