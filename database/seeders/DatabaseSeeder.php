@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         Employee::updateOrCreate(
             [
-                'name' => 'Super Admin PDU',
-                'username' => 'superadmin',
+                'name' => 'Admin PDU',
+                'username' => 'adminpdu',
                 'companyId' => 'c60d1108-130c-42c7-9e94-c773460bdfe1',
-                'role' => 'superAdmin',
-                'password' => 'superadmin1234',
+                'role' => 'admin',
+                'password' => '@adminpdu123',
             ]
         );
     }

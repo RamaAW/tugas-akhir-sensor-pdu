@@ -35,6 +35,7 @@ class EmployeeAuthController extends Controller
         return response()->json([
             'token' => $token,
             'id' => $employee->id,
+            'role' => $employee->role,
         ], 200);
     }
 
