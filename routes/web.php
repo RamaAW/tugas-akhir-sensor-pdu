@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,18 +19,18 @@ Auth::routes();
 
 Route::get('/login', function () {
     return view('page.login');
-})->name('login')->middleware('checkToken');
+})->name('login');
 
 Route::get('/chooseCompany-Well', function () {
     return view('page.dashboard-user.company-well');
 });
 
 Route::get('/dashboard', function () {
-    return view('page.dashboard-user.homepage-backup');
+    return view('page.dashboard-user.dashboard');
 });
 
-Route::get('/homepage', function () {
-    return view('page.dashboard-user.homepage');
+Route::get('/history', function () {
+    return view('page.dashboard-user.history');
 });
 
 Route::prefix('admin')->group(function () {
