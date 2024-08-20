@@ -31,13 +31,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [EmployeeAuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    //yang sementara dipakai
 
     //employee
     Route::get('employees', [EmployeeController::class, 'index'])->middleware('role:user,admin');
     Route::get('employee/{id}', [EmployeeController::class, 'show'])->middleware('role:user,admin');
     Route::post('employee', [EmployeeController::class, 'store'])->middleware('role:admin');
-    // Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin');;
     Route::put('employee/{id}', [EmployeeController::class, 'update'])->middleware('role:admin');
     Route::delete('employee/{id}', [EmployeeController::class, 'destroy'])->middleware('role:admin');
 
@@ -99,3 +97,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('notification', [NotificationController::class, 'store'])->middleware('role:user,admin');
 });
 Route::post('/logout', [EmployeeAuthController::class, 'logout'])->middleware('auth:sanctum');
+
+// Route::post('/company/{companyId}/employee', [CompanyController::class, 'addEmployee'])->middleware('role:admin');;

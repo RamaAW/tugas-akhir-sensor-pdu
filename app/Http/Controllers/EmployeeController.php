@@ -31,7 +31,7 @@ class EmployeeController extends Controller
                 'name' => $employee->name,
                 'username' => $employee->username,
                 'companyId' => $employee->companyId,
-                'companyName' => $employee->companyName, // Add companyName
+                'companyName' => $employee->companyName,
                 'role' => $employee->role,
             ];
         }));

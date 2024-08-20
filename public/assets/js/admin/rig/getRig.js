@@ -31,7 +31,7 @@ $(document).ready(function () {
                     dataSrc: "",
                 },
                 columns: [
-                    { data: "id", visible: false }, // Kolom ID disembunyikan
+                    { data: "id", visible: false },
                     { data: "rigName" },
                     { data: "rigType" },
                     { data: "rigPower" },

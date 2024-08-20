@@ -48,7 +48,6 @@
                     <button type="submit" class="btn btn-primary mb-5">Add Rig</button>
                 </form>
             </div>
-
         </div>
     </div>
     <!-- Include jQuery -->

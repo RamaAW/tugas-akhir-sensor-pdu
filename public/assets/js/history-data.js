@@ -208,7 +208,6 @@ $(document).ready(function () {
                 return timePart;
             });
 
-            // Update untuk myChart (stackedChart)
             stackedData.labels = times;
             stackedData.datasets[0].data = data.map((item) =>
                 parseFloat(item.Scfm)
@@ -228,7 +227,6 @@ $(document).ready(function () {
             myChart.update();
             adjustChartHeight("stackedChart", myChart);
 
-            // Update untuk myChart2 (stackedChart2)
             stackedData2.labels = times;
             stackedData2.datasets[0].data = data.map((item) =>
                 parseFloat(item.MudCondOut)
@@ -245,7 +243,6 @@ $(document).ready(function () {
             myChart2.update();
             adjustChartHeight("stackedChart2", myChart2);
 
-            // Update untuk myChart3 (stackedChart3)
             stackedData3.labels = times;
             stackedData3.datasets[0].data = data.map((item) =>
                 parseFloat(item.H2S_1)
@@ -265,7 +262,6 @@ $(document).ready(function () {
             myChart3.update();
             adjustChartHeight("stackedChart3", myChart3);
 
-            // Update untuk myChart4 (stackedChart4)
             stackedData4.labels = times;
             stackedData4.datasets[0].data = data.map((item) =>
                 parseFloat(item.CO2_1)

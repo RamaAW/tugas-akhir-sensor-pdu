@@ -1,9 +1,8 @@
 $(document).ready(function () {
-    // Check if a token exists in local storage when the page loads
     var token = sessionStorage.getItem("authToken");
     if (token) {
         window.location.href = "/dashboard";
-        return; // Exit the function if token exists
+        return;
     }
     $("#loginForm").on("submit", function (e) {
         e.preventDefault();
@@ -11,7 +10,6 @@ $(document).ready(function () {
         const username = $("#username").val();
         const password = $("#password").val();
 
-        // Validate input fields
         if (!username || !password) {
             alert("Username and password must be filled out.");
             return;
