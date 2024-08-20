@@ -135,7 +135,7 @@ class RecordController extends Controller
                     'title' => 'Torque Alert',
                     'message' => 'Torque value exceeded the threshold: ' . $record->Torque . ' klb.ft ' . 'at depth: ' . $record->BitDepth . ' m',
                     'recordId' => $record->id,
-                    'seen' => false // Default to unseen
+                    'seen' => false
                 ]);
             }
             if ($record->RPM < 80 && $record->Torque > 15) {
@@ -143,7 +143,7 @@ class RecordController extends Controller
                     'title' => 'RPM & Torque Alert',
                     'message' => 'RPM is low: ' . $record->RPM . '<br>and Torque is high: ' . $record->Torque . ' klb.ft' . '<br>at depth: ' . $record->BitDepth . ' m',
                     'recordId' => $record->id,
-                    'seen' => false // Default to unseen
+                    'seen' => false
                 ]);
             }
 

@@ -34,7 +34,7 @@ class PlaceController extends Controller
                 'latitude' => $place->latitude,
                 'longitude' => $place->longitude,
                 'companyId' => $place->companyId,
-                'companyName' => $place->companyName, // Add companyName
+                'companyName' => $place->companyName,
             ];
         }));
     }

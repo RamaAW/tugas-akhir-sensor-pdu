@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('address');
-            $table->decimal('latitude', 10, 8); // Assuming latitude values have a maximum of 10 digits with 8 decimal places
-            $table->decimal('longitude', 11, 8); // Assuming longitude values have a maximum of 11 digits with 8 decimal places
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->string('placeId');
             $table->timestamps();
 
