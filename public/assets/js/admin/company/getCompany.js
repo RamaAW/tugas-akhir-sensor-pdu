@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var authToken = sessionStorage.getItem("authToken");
-    console.log("au:", authToken);
     if (!authToken) {
         window.location.href = "/login";
     } else {
@@ -64,7 +63,7 @@ $(document).ready(function () {
                     },
                     success: function () {
                         alert("Company deleted successfully.");
-                        $("#companyTable").DataTable().ajax.reload(); // Reload the table data
+                        $("#companyTable").DataTable().ajax.reload();
                     },
                     error: function (xhr, status, error) {
                         console.error("Error deleting company:", error);

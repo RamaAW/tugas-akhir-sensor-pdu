@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // Check if a token exists in local storage when the page loads
     var userId = sessionStorage.getItem("userId");
     var token = sessionStorage.getItem("authToken");
     if (userId) {
@@ -8,7 +7,7 @@ $(document).ready(function () {
 
     function fetchUserDetails(id) {
         $.ajax({
-            url: "http://project-akhir.test/api/employee/" + id, // Replace this with the correct endpoint
+            url: "http://project-akhir.test/api/employee/" + id,
             type: "GET",
             headers: {
                 Authorization: "Bearer " + token,

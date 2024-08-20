@@ -4,12 +4,10 @@ $(document).ready(function () {
     if (!authToken) {
         window.location.href = "/login";
     } else {
-        // Get the company ID from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const companyId = urlParams.get("id");
 
         if (companyId) {
-            // Fetch company details and populate the form
             $.ajax({
                 url: `http://project-akhir.test/api/company/${companyId}`,
                 type: "GET",
@@ -26,7 +24,6 @@ $(document).ready(function () {
                 },
             });
 
-            // Handle form submission
             $("#editCompanyForm").on("submit", function (e) {
                 e.preventDefault();
 
@@ -42,7 +39,6 @@ $(document).ready(function () {
                         Authorization: "Bearer " + authToken,
                     },
                     success: function (data) {
-                        console.log("Company Updated:", data);
                         window.location.href = "/admin/company";
                     },
                     error: function (error) {

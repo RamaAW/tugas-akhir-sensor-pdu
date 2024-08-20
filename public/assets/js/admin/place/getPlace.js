@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var authToken = sessionStorage.getItem("authToken");
-    console.log("au:", authToken);
     if (!authToken) {
         window.location.href = "/login";
     } else {
@@ -31,7 +30,7 @@ $(document).ready(function () {
                     dataSrc: "",
                 },
                 columns: [
-                    { data: "id", visible: false }, // Kolom ID disembunyikan
+                    { data: "id", visible: false },
                     { data: "name" },
                     { data: "address" },
                     { data: "latitude" },
@@ -86,7 +85,6 @@ $(document).ready(function () {
 
         $("#placeTable tbody").on("click", ".edit-btn", function () {
             var id = $(this).data("id");
-            // Implement your edit logic here
             window.location.href = "/admin/place/edit";
         });
     }

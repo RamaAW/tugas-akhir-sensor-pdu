@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var authToken = sessionStorage.getItem("authToken");
-    console.log("au:", authToken);
     if (!authToken) {
         window.location.href = "/login";
     } else {
@@ -48,8 +47,6 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         window.location.href = "/admin/well";
-                        console.log("Well Registered:", data);
-                        // Handle success
                     },
                     error: function (xhr, status, error) {
                         console.error("Error updating well:", error);

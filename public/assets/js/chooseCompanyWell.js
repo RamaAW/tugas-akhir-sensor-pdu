@@ -1,10 +1,8 @@
 $(document).ready(function () {
     var authToken = sessionStorage.getItem("authToken");
-    console.log("au:", authToken);
     if (!authToken) {
         window.location.href = "/login";
     } else {
-        // Function to fetch companies
         function fetchCompanies() {
             $.ajax({
                 url: "http://project-akhir.test/api/companies-for-employee/",
@@ -22,7 +20,6 @@ $(document).ready(function () {
                             company.name +
                             "</option>";
                     });
-                    console.log("comp:", options);
                     $("#companySelect").html(options);
                 },
                 error: function (xhr, status, error) {
@@ -33,7 +30,6 @@ $(document).ready(function () {
         }
 
         function fetchWellsByCompany(companyId) {
-            console.log("Fetching wells for company ID:", companyId); // Debugging line
             $.ajax({
                 url:
                     "http://project-akhir.test/api/companies/" +
@@ -44,7 +40,6 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (wellData) {
-                    console.log("Well Data Response:", wellData); // Debugging line
                     var wellOptions = '<option value="">Select Well</option>';
                     wellData.forEach(function (well) {
                         wellOptions +=
@@ -58,7 +53,6 @@ $(document).ready(function () {
                     $("#wellForm").show();
                 },
                 error: function (xhr, status, error) {
-                    console.log("Wells Options:", wellOptions); // Debugging line
                     console.error("Error fetching wells:", error);
                     alert("Failed to fetch wells. Please try again later.");
                 },
@@ -66,7 +60,6 @@ $(document).ready(function () {
         }
 
         function fetchRigsByWell(wellId) {
-            console.log("Fetching rigs for well ID:", wellId); // Debugging line
             $.ajax({
                 url: "http://project-akhir.test/api/rig/well/" + wellId,
                 type: "GET",
@@ -74,10 +67,8 @@ $(document).ready(function () {
                     Authorization: "Bearer " + authToken,
                 },
                 success: function (rigData) {
-                    console.log("Rig Data Response:", rigData); // Debugging line
                     if (rigData.length > 0) {
                         sessionStorage.setItem("selectedRigId", rigData[0].id);
-                        console.log("Selected Rig ID saved:", rigData[0].id);
                     } else {
                         sessionStorage.removeItem("selectedRigId");
                     }
@@ -89,18 +80,15 @@ $(document).ready(function () {
             });
         }
 
-        // Handle company form submission
         $("#companyForm").change(function (event) {
             event.preventDefault();
             var companyId = $("#companySelect").val();
-            console.log("Selected Company ID:", companyId);
             if (companyId) {
                 fetchWellsByCompany(companyId);
                 sessionStorage.setItem("selectedCompanyId", companyId);
             }
         });
 
-        // Handle well selection and potential form submission (adapt based on your logic)
         $("#wellSelect").change(function () {
             var wellId = $(this).val();
             if (wellId) {
@@ -110,7 +98,6 @@ $(document).ready(function () {
             }
         });
 
-        // Redirect to homepage if both selections are made
         $("#submitSelection").click(function () {
             var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
             var selectedWellId = sessionStorage.getItem("selectedWellId");
@@ -130,12 +117,12 @@ $(document).ready(function () {
         fetchCompanies();
 
         $("#backToLogin").click(function () {
-            sessionStorage.removeItem("authToken"); // Hapus token dari sessionStorage
+            sessionStorage.removeItem("authToken");
             sessionStorage.removeItem("userId");
             sessionStorage.removeItem("selectedCompanyId");
             sessionStorage.removeItem("selectedWellId");
             sessionStorage.removeItem("selectedRigId");
-            window.location.href = "/login"; // Arahkan ke halaman login
+            window.location.href = "/login";
         });
     }
 });

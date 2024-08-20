@@ -35,12 +35,10 @@ $(document).ready(function () {
             });
         }
         fetchCompanies();
-        // Get the company ID from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const placeId = urlParams.get("id");
 
         if (placeId) {
-            // Fetch company details and populate the form
             $.ajax({
                 url: `http://project-akhir.test/api/place/${placeId}`,
                 type: "GET",
@@ -63,7 +61,6 @@ $(document).ready(function () {
                 },
             });
 
-            // Handle form submission
             $("#editPlaceForm").on("submit", function (e) {
                 e.preventDefault();
 
@@ -79,7 +76,6 @@ $(document).ready(function () {
                         Authorization: "Bearer " + authToken,
                     },
                     success: function (data) {
-                        console.log("Place Updated:", data);
                         window.location.href = "/admin/place";
                     },
                     error: function (xhr, status, error) {

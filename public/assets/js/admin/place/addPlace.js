@@ -1,11 +1,9 @@
 $(document).ready(function () {
     var authToken = sessionStorage.getItem("authToken");
-    console.log("au:", authToken);
 
     if (!authToken) {
         window.location.href = "/login";
     } else {
-        // Fetch companies for the dropdown
         function fetchCompanies() {
             $.ajax({
                 url: "http://project-akhir.test/api/companies/",
@@ -33,14 +31,12 @@ $(document).ready(function () {
         }
         fetchCompanies();
 
-        // Handle form submission
         $("#placeForm").on("submit", function (e) {
             e.preventDefault();
 
             let formData = new FormData(this);
             let jsonData = Object.fromEntries(formData.entries());
 
-            // Assuming the company ID is obtained from the selected company in the dropdown
             let companyId = $("#companySelect").val();
             if (!companyId) {
                 displayErrors({ general: "Please select a company." });
@@ -57,8 +53,6 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     window.location.href = "/admin/place";
-                    console.log("Place Registered:", data);
-                    // Handle success
                 },
                 error: function (xhr, status, error) {
                     console.error("Error registering place:", error);
@@ -80,7 +74,6 @@ $(document).ready(function () {
             });
         });
 
-        // Function to display errors
         function displayErrors(errors) {
             var errorMessages = "";
             for (var key in errors) {

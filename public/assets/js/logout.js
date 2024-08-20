@@ -3,7 +3,6 @@ $(document).ready(function () {
     if (!authToken) {
         window.location.href = "/chooseCompany-Well";
     } else {
-        // Function to fetch companies
         function logout() {
             $.ajax({
                 url: "http://project-akhir.test/api/logout",

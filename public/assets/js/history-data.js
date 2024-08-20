@@ -3,10 +3,6 @@ $(document).ready(function () {
     var selectedCompanyId = sessionStorage.getItem("selectedCompanyId");
     var selectedWellId = sessionStorage.getItem("selectedWellId");
     var selectedRigId = sessionStorage.getItem("selectedRigId");
-    console.log("au:", authToken);
-    console.log("company:", selectedCompanyId);
-    console.log("well:", selectedWellId);
-    console.log("rig:", selectedRigId);
     if (!authToken || !selectedCompanyId || !selectedWellId || !selectedRigId) {
         window.location.href = "/chooseCompany-Well";
     } else {
@@ -75,7 +71,7 @@ $(document).ready(function () {
 
         function displayNotifications(notifications) {
             const notificationsContainer = $("#notificationContainer");
-            notificationsContainer.empty(); // Clear the notifications container
+            notificationsContainer.empty();
 
             if (notifications.length > 0) {
                 notifications.forEach((notification) => {
@@ -97,18 +93,15 @@ $(document).ready(function () {
         }
 
         function validateTimes() {
-            // Ambil nilai input waktu dan tanggal
             const inputDate = document.getElementById("inputDate").value;
             const timeStart = document.getElementById("timeStart").value;
             const timeEnd = document.getElementById("timeEnd").value;
 
-            // Periksa apakah input waktu dan tanggal diisi
             if (!inputDate || !timeStart || !timeEnd) {
                 alert("Please select a date and both start time and end time.");
                 return;
             }
 
-            // Bandingkan waktu mulai dan waktu akhir
             if (timeEnd < timeStart) {
                 alert("End time cannot be earlier than start time.");
             } else {
@@ -121,10 +114,7 @@ $(document).ready(function () {
             }
         }
 
-        // Function to display notifications
-
         function fetchDataBetweenTimes(date, startTime, endTime) {
-            // Format datetime strings for comparison
             const startDateTime = `${date} ${startTime}`;
             const endDateTime = `${date} ${endTime}`;
 
@@ -292,11 +282,8 @@ $(document).ready(function () {
                 return;
             }
 
-            // Format datetime strings for the API request
             var startDateTime = `${inputDate} ${timeStart}:00`;
             var endDateTime = `${inputDate} ${timeEnd}:00`;
-            console.log(startDateTime);
-            console.log(endDateTime);
             $.ajax({
                 url: `http://project-akhir.test/api/records/save-csv-byTime/${selectedRigId}`,
                 type: "GET",

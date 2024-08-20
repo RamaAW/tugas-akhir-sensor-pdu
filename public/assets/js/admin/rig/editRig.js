@@ -34,12 +34,11 @@ $(document).ready(function () {
             });
         }
         fetchWells();
-        // Get the company ID from URL parameters
+
         const urlParams = new URLSearchParams(window.location.search);
         const rigId = urlParams.get("id");
 
         if (rigId) {
-            // Fetch company details and populate the form
             $.ajax({
                 url: `http://project-akhir.test/api/rig/${rigId}`,
                 type: "GET",
@@ -60,7 +59,6 @@ $(document).ready(function () {
                 },
             });
 
-            // Handle form submission
             $("#editRigForm").on("submit", function (e) {
                 e.preventDefault();
 
@@ -76,7 +74,6 @@ $(document).ready(function () {
                         Authorization: "Bearer " + authToken,
                     },
                     success: function (data) {
-                        console.log("Rig Updated:", data);
                         window.location.href = "/admin/rig";
                     },
                     error: function (xhr, status, error) {
@@ -99,7 +96,7 @@ $(document).ready(function () {
                 });
             });
         } else {
-            console.error("Company ID not found in URL.");
+            console.error("Rig ID not found in URL.");
             window.location.href = "/admin/rig";
         }
         function displayErrors(errors) {

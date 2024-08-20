@@ -42,7 +42,6 @@ $(document).ready(function () {
                         .attr("data-well-id", selectedWellId);
                     fetchRigsByWell(selectedWellId);
                 } else if (wellData.length > 0) {
-                    // If no well is selected or the selected well is not in the new list, select the first one
                     var firstWell = wellData[0];
                     $("#wellName")
                         .text(firstWell.name)
@@ -102,7 +101,6 @@ $(document).ready(function () {
                         .text(selectedRigName)
                         .attr("data-rig-id", selectedRigId);
                 } else if (rigData.length > 0) {
-                    // If no rig is selected or the selected rig is not in the new list, select the first one
                     var firstRig = rigData[0];
                     $("#rigName")
                         .text(firstRig.rigName)
