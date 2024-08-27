@@ -12,7 +12,7 @@ $(document).ready(function () {
             } else {
                 for (var key in errors) {
                     if (errors.hasOwnProperty(key)) {
-                        errorMessages += errors[key] + "<br>";
+                        errorMessages += errors[key];
                     }
                 }
             }
@@ -170,12 +170,45 @@ $(document).ready(function () {
                     console.error("Error uploading CSV:", error);
                     try {
                         const errorData = JSON.parse(xhr.responseText);
-                        displayErrors(errorData.errors || errorData);
+                        let errorMessage = "";
+
+                        if (errorData.error) {
+                            // If the response contains an 'error' key, handle it
+                            if (typeof errorData.error === "object") {
+                                for (const key in errorData.error) {
+                                    if (Array.isArray(errorData.error[key])) {
+                                        errorData.error[key].forEach(function (
+                                            msg
+                                        ) {
+                                            errorMessage += msg + "\n";
+                                        });
+                                    } else {
+                                        errorMessage +=
+                                            errorData.error[key] + "\n";
+                                    }
+                                }
+                            } else {
+                                errorMessage = errorData.error;
+                            }
+                        } else if (errorData.errors) {
+                            // If the response contains an 'errors' key, handle it
+                            for (const field in errorData.errors) {
+                                errorData.errors[field].forEach(function (
+                                    message
+                                ) {
+                                    errorMessage += message + "\n";
+                                });
+                            }
+                        } else {
+                            errorMessage =
+                                "An unexpected error occurred. Please try again later.";
+                        }
+
+                        displayErrors(errorMessage.trim());
                     } catch (err) {
-                        displayErrors({
-                            general:
-                                "An unexpected error occurred. Please try again later.",
-                        });
+                        displayErrors(
+                            "An unexpected error occurred. Please try again later."
+                        );
                     }
                 },
             });
