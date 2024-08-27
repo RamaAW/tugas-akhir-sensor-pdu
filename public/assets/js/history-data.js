@@ -295,7 +295,6 @@ $(document).ready(function () {
                     endDateTime: endDateTime,
                 },
                 success: function (response) {
-                    // Create a temporary anchor element to trigger the download
                     var link = document.createElement("a");
                     link.href = response.file_path;
                     link.download = `rig_data_${inputDate}.csv`;
