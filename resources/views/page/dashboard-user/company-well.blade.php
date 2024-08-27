@@ -61,7 +61,7 @@
                                     </div>
 
                                     <div class="pt-1 mb-4">
-                                        <button id="submitSelection" class="btn btn-dark btn-lg btn-block" type="button">Go to Homepage</button>
+                                        <button id="submitSelection" class="btn btn-dark btn-lg btn-block" type="button">Go to Dashboard Monitoring</button>
                                     </div>
                                     <div class="pt-1 mb-4">
                                         <button id="backToLogin" class="btn btn-danger btn-lg btn-block" type="button">Back to Login</button>

@@ -496,19 +496,19 @@
                         zoom: {
                             zoom: {
                                 wheel: {
-                                    enabled: true, // Enable zooming with mouse wheel
+                                    enabled: true,
                                     speed: 0.05,
                                 },
                                 pinch: {
-                                    enabled: true, // Enable zooming with pinch gestures
+                                    enabled: true,
                                     speed: 0.01,
                                 },
-                                mode: 'y', // Allow zooming in both x and y axes
+                                mode: 'y',
                             },
                             pan: {
-                                enabled: true, // Enable panning
+                                enabled: true,
                                 speed: 0.01,
-                                mode: 'xy', // Allow panning in both x and y axes
+                                mode: 'xy',
                             }
                         }
                     },

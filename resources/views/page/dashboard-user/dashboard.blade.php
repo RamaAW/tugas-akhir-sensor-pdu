@@ -28,10 +28,6 @@
                 </div>
             </div>
             <!-- End of Page Content -->
-
-            <!-- Footer -->
-            @include('layouts.user.footer')
-            <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
     </div>
