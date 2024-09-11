@@ -160,42 +160,27 @@ class RecordController extends Controller
 
     public function uploadCsv(Request $request)
     {
-        // Validate the uploaded file and rigId
         $validator = Validator::make($request->all(), [
             'csv_file' => 'required|file|mimes:csv,txt|max:2048',
             'rigId' => 'required|exists:rigs,id',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-
-        // Get the uploaded file and rigId
         $file = $request->file('csv_file');
         $rigId = $request->input('rigId');
-
-        // Verify if the Rig exists
         $rig = Rig::find($rigId);
         if (!$rig) {
             return response()->json(['error' => 'Rig not found'], 404);
         }
-
-        // Read the CSV file
         $csv = Reader::createFromPath($file->getPathname(), 'r');
         $csv->setHeaderOffset(0);
-
         $records = [];
         $errors = [];
-        $notifications = []; // Array to store notifications
-
+        $notifications = [];
         foreach ($csv as $offset => $row) {
-            // Remove the 'Stuck' column if it exists
             unset($row['Stuck']);
-
-            // Add RigId to the row data
             $row['RigId'] = $rigId;
-
-            // Validate each row
             $validator = Validator::make($row, [
                 'Date-Time' => 'required|date',
                 'BitDepth' => 'nullable|numeric',
@@ -221,44 +206,51 @@ class RecordController extends Controller
                 'MudTempOut' => 'nullable|numeric',
                 'TankVolTot' => 'nullable|numeric',
             ]);
-
             if ($validator->fails()) {
-                $errors[] = "Row {$offset}: " . implode(', ', $validator->errors()->all());
-                continue;
+                $errors = [];
+                if ($validator->errors()->has('csv_file')) {
+                    foreach ($validator->errors()->get('csv_file') as $error) {
+                        if (strpos($error, 'required') !== false) {
+                            $errors['csv_file'][] = 'The CSV file is required.';
+                        } elseif (strpos($error, 'file') !== false) {
+                            $errors['csv_file'][] = 'The uploaded file must be a valid file type.';
+                        } elseif (strpos($error, 'mimes') !== false) {
+                            $errors['csv_file'][] = 'The file must be a CSV or TXT file.';
+                        } elseif (strpos($error, 'max') !== false) {
+                            $errors['csv_file'][] = 'The file must not exceed 2MB in size.';
+                        }
+                    }
+                }
             }
-
-            // Create a new Record
             try {
-                // Set created_at from Date-Time
                 $createdAt = Carbon::parse($row['Date-Time']);
-
                 $record = new Record($row);
                 $record->created_at = $createdAt;
                 $record->save();
-
                 $records[] = $record;
-
                 if ($record->Torque > 25) {
                     Notification::create([
                         'title' => 'Torque Alert',
-                        'message' => 'Torque value exceeded the threshold: ' . $record->Torque . ' klb.ft ' . 'at depth: ' . $record->BitDepth . ' m',
+                        'message' => 'Torque value exceeded the threshold: ' . $record->Torque . 
+                        ' klb.ft ' . 'at depth: ' . $record->BitDepth . ' m',
                         'recordId' => $record->id,
-                        'seen' => false // Default to unseen
+                        'seen' => false
                     ]);
                 }
                 if ($record->RPM < 80 && $record->Torque > 15) {
                     Notification::create([
                         'title' => 'RPM & Torque Alert',
-                        'message' => 'RPM is low: ' . $record->RPM . '<br>and Torque is high: ' . $record->Torque . ' klb.ft' . '<br>at depth: ' . $record->BitDepth . ' m',
+                        'message' => 'RPM is low: ' . $record->RPM . 
+                        '<br>and Torque is high: ' . $record->Torque . 
+                        ' klb.ft' . '<br>at depth: ' . $record->BitDepth . ' m',
                         'recordId' => $record->id,
-                        'seen' => false // Default to unseen
+                        'seen' => false
                     ]);
                 }
             } catch (\Exception $e) {
                 $errors[] = "Row {$offset}: Failed to create record - " . $e->getMessage();
             }
         }
-
         return response()->json([
             'message' => 'CSV file processed',
             'rigId' => $rigId,
